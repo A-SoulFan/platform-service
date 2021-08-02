@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.asoulfan.asfbbs.admin.mapper.UmsAdminMapper">
+  <resultMap id="BaseResultMap" type="com.asoulfan.asfbbs.admin.domain.UmsAdmin">
+    <!--@mbg.generated-->
+    <!--@Table ums_admin-->
+    <id column="id" property="id" />
+    <result column="username" property="username" />
+    <result column="password" property="password" />
+    <result column="icon" property="icon" />
+    <result column="email" property="email" />
+    <result column="note" property="note" />
+    <result column="create_time" property="createTime" />
+    <result column="login_time" property="loginTime" />
+    <result column="status" property="status" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated-->
+    id, username, `password`, icon, email, note, create_time, login_time, `status`
+  </sql>
+
+  <select id="selectByUsername" parameterType="java.lang.String" resultMap="BaseResultMap">
+    <!--@mbg.generated-->
+    select
+    <include refid="Base_Column_List" />
+    from ums_admin
+    where username = #{username}
+  </select>
+</mapper>
