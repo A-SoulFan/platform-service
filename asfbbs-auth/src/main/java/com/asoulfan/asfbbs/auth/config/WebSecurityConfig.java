@@ -28,9 +28,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/rsa/publicKey").permitAll()
                 .antMatchers("/doc/**").permitAll()
                 .anyRequest()
-                .authenticated()
-                .and()
-                .httpBasic();
+                .authenticated();
     }
 
     @Bean

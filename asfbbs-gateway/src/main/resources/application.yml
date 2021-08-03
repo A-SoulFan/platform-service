@@ -36,5 +36,5 @@ secure:
   ignore:
     urls:
       - "/doc/debug-all.html"
-      - "/oauth/token"
-      - "/oauth/authorize"
+      - "/asfbbs-auth/oauth/token"
+      - "/asfbbs-auth/oauth/authorize"

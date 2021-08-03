@@ -1,5 +1,6 @@
 package com.asoulfan.asfbbs.admin.service;
 
+import com.asoulfan.asfbbs.api.CommonResult;
 import com.asoulfan.asfbbs.domain.UserDto;
 
 /**
@@ -10,5 +11,9 @@ import com.asoulfan.asfbbs.domain.UserDto;
  * @date: 2021-08-01 03:10
  **/
 public interface UmsAdminService {
+
     UserDto loadUserByUsername(String username);
+
+    CommonResult login(String username, String password);
+
 }
