@@ -20,7 +20,13 @@ public class UmsTestController {
 
     @RequestMapping(value = "/test1", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult create() {
+    public CommonResult test1() {
         return CommonResult.success("test123");
+    }
+
+    @RequestMapping(value = "/info", method = RequestMethod.GET)
+    @ResponseBody
+    public CommonResult info() {
+        return CommonResult.success("哈哈哈");
     }
 }

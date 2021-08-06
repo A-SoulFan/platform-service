@@ -16,7 +16,10 @@ import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.management.relation.RoleList;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -44,8 +47,12 @@ public class UmsAdminServiceImpl implements UmsAdminService {
         UmsAdmin umsAdmin = umsAdminMapper.selectOne(umsAdminQueryWrapper);*/
         UmsAdmin umsAdmin = umsAdminMapper.selectByUsername(username);
         if (umsAdmin != null) {
+            List<String> rolesList = new ArrayList<>();
+            rolesList.add("5_超级管理员");
+
             UserDto userDTO = new UserDto();
             BeanUtils.copyProperties(umsAdmin, userDTO);
+            userDTO.setRoles(rolesList);
             return userDTO;
         }
 

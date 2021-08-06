@@ -32,7 +32,6 @@ import reactor.core.publisher.Mono;
 @Configuration
 @EnableWebFluxSecurity
 public class ResourceServerConfig {
-
     private final AuthorizationManager authorizationManager;
     private final IgnoreUrlsConfig ignoreUrlsConfig;
     private final RestfulAccessDeniedHandler restfulAccessDeniedHandler;
@@ -48,7 +47,7 @@ public class ResourceServerConfig {
         //对白名单路径，直接移除JWT请求头
         http.addFilterBefore(ignoreUrlsRemoveJwtFilter, SecurityWebFiltersOrder.AUTHENTICATION);
         http.authorizeExchange()
-                .pathMatchers(ArrayUtil.toArray(ignoreUrlsConfig.getUrls(),String.class)).permitAll()//白名单配置
+                .pathMatchers(ArrayUtil.toArray(ignoreUrlsConfig.getUrls(), String.class)).permitAll()//白名单配置
                 .anyExchange().access(authorizationManager)//鉴权管理器配置
                 .and().exceptionHandling()
                 .accessDeniedHandler(restfulAccessDeniedHandler)//处理未授权
@@ -66,4 +65,5 @@ public class ResourceServerConfig {
         jwtAuthenticationConverter.setJwtGrantedAuthoritiesConverter(jwtGrantedAuthoritiesConverter);
         return new ReactiveJwtAuthenticationConverterAdapter(jwtAuthenticationConverter);
     }
+
 }

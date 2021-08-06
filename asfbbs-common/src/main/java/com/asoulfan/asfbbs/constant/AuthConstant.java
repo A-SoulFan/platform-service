@@ -32,7 +32,7 @@ public interface AuthConstant {
     /**
      * 后台管理接口路径匹配
      */
-    String ADMIN_URL_PATTERN = "/asf-admin/**";
+    String ADMIN_URL_PATTERN = "/asfbbs-admin/**";
 
     /**
      * Redis缓存权限规则key

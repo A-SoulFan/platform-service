@@ -23,10 +23,7 @@ import reactor.core.publisher.Mono;
 
 import java.net.URI;
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -41,7 +38,6 @@ public class AuthorizationManager implements ReactiveAuthorizationManager<Author
 
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
-
     @Autowired
     private IgnoreUrlsConfig ignoreUrlsConfig;
 
@@ -51,63 +47,59 @@ public class AuthorizationManager implements ReactiveAuthorizationManager<Author
         ServerHttpRequest request = authorizationContext.getExchange().getRequest();
         URI uri = request.getURI();
         PathMatcher pathMatcher = new AntPathMatcher();
-
-        // 白名单放行
+        //白名单路径直接放行
         List<String> ignoreUrls = ignoreUrlsConfig.getUrls();
         for (String ignoreUrl : ignoreUrls) {
             if (pathMatcher.match(ignoreUrl, uri.getPath())) {
                 return Mono.just(new AuthorizationDecision(true));
             }
         }
-        // 放行跨域预检查的options
+        //对应跨域的预检请求直接放行
         if (request.getMethod() == HttpMethod.OPTIONS) {
             return Mono.just(new AuthorizationDecision(true));
         }
-
+        //不同用户体系登录不允许互相访问
         try {
-            // 不同用户体系登录限制
             String token = request.getHeaders().getFirst(AuthConstant.JWT_TOKEN_HEADER);
             if (StrUtil.isEmpty(token)) {
                 return Mono.just(new AuthorizationDecision(false));
             }
-            // token去掉前缀
             String realToken = token.replace(AuthConstant.JWT_TOKEN_PREFIX, "");
-            JWSObject tokenObj = JWSObject.parse(realToken);
-            String userStr = tokenObj.getPayload().toString();
-
-            // 转为用户对象
+            JWSObject jwsObject = JWSObject.parse(realToken);
+            String userStr = jwsObject.getPayload().toString();
             UserDto userDto = JSONUtil.toBean(userStr, UserDto.class);
-            // 不同用户体系登录不允许互相访问
             if (AuthConstant.ADMIN_CLIENT_ID.equals(userDto.getClientId()) && !pathMatcher.match(AuthConstant.ADMIN_URL_PATTERN, uri.getPath())) {
                 return Mono.just(new AuthorizationDecision(false));
             }
             if (AuthConstant.PORTAL_CLIENT_ID.equals(userDto.getClientId()) && pathMatcher.match(AuthConstant.ADMIN_URL_PATTERN, uri.getPath())) {
                 return Mono.just(new AuthorizationDecision(false));
             }
-
         } catch (ParseException e) {
             e.printStackTrace();
             return Mono.just(new AuthorizationDecision(false));
         }
-
-        // 非管理端路径直接放行
+        //非管理端路径直接放行
         if (!pathMatcher.match(AuthConstant.ADMIN_URL_PATTERN, uri.getPath())) {
             return Mono.just(new AuthorizationDecision(true));
         }
-        // 管理端路径需要校验权限
+        //管理端路径需校验权限
         Map<Object, Object> resourceRolesMap = redisTemplate.opsForHash().entries(AuthConstant.RESOURCE_ROLES_MAP_KEY);
         Iterator<Object> iterator = resourceRolesMap.keySet().iterator();
         List<String> authorities = new ArrayList<>();
         while (iterator.hasNext()) {
-            String pattern = iterator.next().toString();
+            String pattern = (String) iterator.next();
+            System.out.println(pattern);
             if (pathMatcher.match(pattern, uri.getPath())) {
                 authorities.addAll(Convert.toList(String.class, resourceRolesMap.get(pattern)));
             }
         }
-        // 权限列表
         authorities = authorities.stream().map(i -> i = AuthConstant.AUTHORITY_PREFIX + i).collect(Collectors.toList());
 
-        // 认证通过且角色匹配的用户可访问当前路径
+        //认证通过且角色匹配的用户可访问当前路径
+        /*if (authorities.size() > 0) {
+            return Mono.just(new AuthorizationDecision(true));
+        }*/
+
         return mono
                 .filter(Authentication::isAuthenticated)
                 .flatMapIterable(Authentication::getAuthorities)
@@ -116,6 +108,5 @@ public class AuthorizationManager implements ReactiveAuthorizationManager<Author
                 .map(AuthorizationDecision::new)
                 .defaultIfEmpty(new AuthorizationDecision(false));
     }
-
 
 }

@@ -44,3 +44,10 @@ spring:
       key-prefix: admin-
       time-to-live: 1800 # 过期时间（毫秒）
 
+feign:
+  okhttp:
+    enabled: true
+ribbon:
+  ConnectTimeout: 3000 #服务请求连接超时时间（毫秒）
+  ReadTimeout: 3000 #服务请求处理超时时间（毫秒）
+

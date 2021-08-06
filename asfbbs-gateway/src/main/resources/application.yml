@@ -22,7 +22,7 @@ spring:
           filters:
             - StripPrefix=1
   redis:
-    database: 1
+    database: 0
     port: 6379
     host: localhost
     password:
@@ -38,3 +38,5 @@ secure:
       - "/doc/debug-all.html"
       - "/asfbbs-auth/oauth/token"
       - "/asfbbs-auth/oauth/authorize"
+      - "/asfbbs-auth/rsa/publicKey"
+      - "/asfbbs-admin/admin/login"

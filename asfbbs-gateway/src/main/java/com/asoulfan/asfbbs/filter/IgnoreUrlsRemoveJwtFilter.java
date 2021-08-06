@@ -24,24 +24,22 @@ import java.util.List;
  **/
 @Component
 public class IgnoreUrlsRemoveJwtFilter implements WebFilter {
-
     @Autowired
     private IgnoreUrlsConfig ignoreUrlsConfig;
-
     @Override
-    public Mono<Void> filter(ServerWebExchange serverWebExchange, WebFilterChain webFilterChain) {
-        ServerHttpRequest request = serverWebExchange.getRequest();
+    public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
+        ServerHttpRequest request = exchange.getRequest();
         URI uri = request.getURI();
         PathMatcher pathMatcher = new AntPathMatcher();
         //白名单路径移除JWT请求头
         List<String> ignoreUrls = ignoreUrlsConfig.getUrls();
         for (String ignoreUrl : ignoreUrls) {
             if (pathMatcher.match(ignoreUrl, uri.getPath())) {
-                request = serverWebExchange.getRequest().mutate().header(AuthConstant.JWT_TOKEN_HEADER, "").build();
-                serverWebExchange = serverWebExchange.mutate().request(request).build();
-                return webFilterChain.filter(serverWebExchange);
+                request = exchange.getRequest().mutate().header(AuthConstant.JWT_TOKEN_HEADER, "").build();
+                exchange = exchange.mutate().request(request).build();
+                return chain.filter(exchange);
             }
         }
-        return webFilterChain.filter(serverWebExchange);
+        return chain.filter(exchange);
     }
 }
