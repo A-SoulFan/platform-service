@@ -25,6 +25,13 @@ public class UmsAdminController {
     @Autowired
     private UmsAdminService umsAdminService;
 
+
+    /**
+     * 登录接口
+     *
+     * @param umsAdminLoginParam
+     * @return
+     */
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult login(@Validated @RequestBody UmsAdminLoginParam umsAdminLoginParam) {
