@@ -5,7 +5,9 @@ ASF2.0后端
 
 #### 软件架构
 springcloud gateway网关入口 -> 应用服务集群 -> nacos中心集群
-
+docker 部署本地nacos 
+docker pull docker.io/nacos/nacos-server
+run --env MODE=standalone --name nacos -d -p 8848:8848 nacos/nacos-server
 
 #### 本地环境
 
