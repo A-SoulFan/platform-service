@@ -4,6 +4,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <!-- 当前项目 -->
     <groupId>com.asoulfan.asfbbs</groupId>
     <artifactId>asfbbs-admin</artifactId>
     <version>1.0</version>
@@ -12,6 +13,7 @@
     <name>asfbbs-admin</name>
     <description>asfbbs-admin project for asfbbs</description>
 
+    <!-- 根pom管理版本 -->
     <parent>
         <artifactId>asfbbs</artifactId>
         <groupId>com.asoulfan.asfbbs</groupId>
@@ -19,14 +21,25 @@
     </parent>
 
     <dependencies>
+        <!-- 公共模块 -->
         <dependency>
             <groupId>com.asoulfan.asfbbs</groupId>
             <artifactId>asfbbs-common</artifactId>
+            <!-- 根据情况排除common依赖 -->
+            <!--<exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-web</artifactId>
+                </exclusion>
+            </exclusions>-->
         </dependency>
+
+        <!-- 必选 -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-discovery</artifactId>
         </dependency>
+        <!-- 必选 -->
         <dependency>
             <groupId>com.alibaba.cloud</groupId>
             <artifactId>spring-cloud-starter-alibaba-nacos-config</artifactId>
@@ -35,6 +48,7 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
+        <!-- 服务间使用feign方式调用 -->
         <dependency>
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-starter-openfeign</artifactId>
@@ -43,6 +57,7 @@
             <groupId>io.github.openfeign</groupId>
             <artifactId>feign-okhttp</artifactId>
         </dependency>
+        <!-- mybatis-plus -->
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>mybatis-plus-boot-starter</artifactId>
@@ -51,6 +66,7 @@
             <groupId>mysql</groupId>
             <artifactId>mysql-connector-java</artifactId>
         </dependency>
+        <!-- 多数据源 -->
         <dependency>
             <groupId>com.baomidou</groupId>
             <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
@@ -61,6 +77,7 @@
         </dependency>
     </dependencies>
 
+    <!-- smart-doc文档生成插件 -->
     <build>
         <finalName>alpha-asfbbs-admin</finalName>
 
