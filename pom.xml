@@ -14,6 +14,7 @@
         <module>asfbbs-gateway</module>
         <module>asfbbs-auth</module>
         <module>asfbbs-admin</module>
+        <module>asfbbs-user</module>
     </modules>
 
     <parent>
@@ -38,6 +39,7 @@
         <hutool.version>5.7.5</hutool.version>
         <jjwt.version>0.9.0</jjwt.version>
         <nimbus-jose-jwt.version>8.16</nimbus-jose-jwt.version>
+        <jasypt.version>2.1.1</jasypt.version>
 
         <asfbbs-common.version>1.0</asfbbs-common.version>
     </properties>
@@ -159,6 +161,12 @@
                 <groupId>com.nimbusds</groupId>
                 <artifactId>nimbus-jose-jwt</artifactId>
                 <version>${nimbus-jose-jwt.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.github.ulisesbocchio</groupId>
+                <artifactId>jasypt-spring-boot-starter</artifactId>
+                <version>${jasypt.version}</version>
             </dependency>
 
         </dependencies>

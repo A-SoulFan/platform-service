@@ -12,6 +12,7 @@ import com.asoulfan.asfbbs.constant.AuthConstant;
 import com.asoulfan.asfbbs.domain.UserDto;
 import com.asoulfan.asfbbs.exception.Asserts;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import org.jasypt.util.text.BasicTextEncryptor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -6,12 +6,12 @@
 
     <!-- 当前项目 -->
     <groupId>com.asoulfan.asfbbs</groupId>
-    <artifactId>asfbbs-admin</artifactId>
+    <artifactId>asfbbs-user</artifactId>
     <version>1.0</version>
     <packaging>jar</packaging>
 
-    <name>asfbbs-admin</name>
-    <description>asfbbs-admin project for asfbbs</description>
+    <name>asfbbs-user</name>
+    <description>asfbbs-user project for asfbbs</description>
 
     <!-- 根pom管理版本 -->
     <parent>
@@ -25,13 +25,6 @@
         <dependency>
             <groupId>com.asoulfan.asfbbs</groupId>
             <artifactId>asfbbs-common</artifactId>
-            <!-- 根据情况排除common依赖 -->
-            <!--<exclusions>
-                <exclusion>
-                    <groupId>org.springframework.boot</groupId>
-                    <artifactId>spring-boot-starter-web</artifactId>
-                </exclusion>
-            </exclusions>-->
         </dependency>
 
         <!-- 必选 -->

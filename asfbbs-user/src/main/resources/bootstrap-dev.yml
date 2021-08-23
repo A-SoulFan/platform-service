@@ -1,0 +1,9 @@
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: http://localhost:8848
+        group: ASF_BBS
+      config:
+        server-addr: http://localhost:8848
+        file-extension: yaml
