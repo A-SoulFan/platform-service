@@ -2,6 +2,7 @@ package com.asoulfan.asfbbs.admin.domain;
 
 import java.util.Date;
 
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import lombok.Data;
@@ -28,6 +29,7 @@ public class Permission {
     /**
      * 权限说明
      */
+    @TableField("`desc`")
     private String desc;
 
 

@@ -31,7 +31,8 @@ public class RoleController {
 
     @RequestMapping(value = "/user/{userId}/reset_roles", method = RequestMethod.POST)
     @ResponseBody
-    public void updateUserRoles(@PathVariable Long userId, @RequestBody Set<Long> roleIds) {
+    public CommonResult updateUserRoles(@PathVariable Long userId, @RequestBody Set<Long> roleIds) {
         roleService.resetUserRoles(userId, roleIds);
+        return CommonResult.success("success");
     }
 }

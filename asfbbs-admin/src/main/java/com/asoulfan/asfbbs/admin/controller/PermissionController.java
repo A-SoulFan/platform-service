@@ -28,22 +28,24 @@ public class PermissionController {
 
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
-    public void add(@RequestBody Permission permission) {
+    public CommonResult add(@RequestBody Permission permission) {
         permissionService.addPermission(permission);
+        return CommonResult.success("success");
     }
 
     @RequestMapping(value = "/{permissionId}/delete", method = RequestMethod.DELETE)
     @ResponseBody
-    public void delete(@PathVariable Long permissionId) {
+    public CommonResult delete(@PathVariable Long permissionId) {
         permissionService.deletePermission(permissionId);
+        return CommonResult.success("success");
 
     }
 
     @RequestMapping(value = "/{permissionId}/update", method = RequestMethod.PUT)
     @ResponseBody
-    public void update(@PathVariable Long permissionId, @RequestBody Permission permission) {
+    public CommonResult update(@PathVariable Long permissionId, @RequestBody Permission permission) {
         permission.setId(permissionId);
         permissionService.updatePermission(permission);
-
+        return CommonResult.success("success");
     }
 }
