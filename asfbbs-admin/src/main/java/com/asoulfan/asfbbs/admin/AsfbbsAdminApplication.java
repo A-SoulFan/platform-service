@@ -7,7 +7,7 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 
 @EnableFeignClients
 @EnableDiscoveryClient
-@SpringBootApplication
+@SpringBootApplication(scanBasePackages = "com.asoulfan.asfbbs")
 public class AsfbbsAdminApplication {
 
     public static void main(String[] args) {
