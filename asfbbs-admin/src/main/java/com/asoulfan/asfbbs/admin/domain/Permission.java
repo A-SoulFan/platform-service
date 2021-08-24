@@ -12,11 +12,18 @@ public class Permission {
 
     
    private Long id;
+   
+   private Long parentId;
 
     /**
-     * 权限代码
+     * 接口权限
      */
-   private String code;
+   private String url;
+
+    /**
+     * 路由权限
+     */
+    private String component;
 
     /**
      * 权限说明

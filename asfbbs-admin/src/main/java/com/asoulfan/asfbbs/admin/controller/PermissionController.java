@@ -32,14 +32,14 @@ public class PermissionController {
         permissionService.addPermission(permission);
     }
 
-    @RequestMapping(value = "/{permissionId}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{permissionId}/delete", method = RequestMethod.DELETE)
     @ResponseBody
     public void delete(@PathVariable Long permissionId) {
         permissionService.deletePermission(permissionId);
 
     }
 
-    @RequestMapping(value = "/{permissionId}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/{permissionId}/update", method = RequestMethod.PUT)
     @ResponseBody
     public void update(@PathVariable Long permissionId, @RequestBody Permission permission) {
         permission.setId(permissionId);

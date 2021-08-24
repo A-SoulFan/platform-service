@@ -33,16 +33,28 @@ public class PermissionServiceImpl implements PermissionService {
 
     @Override
     public void addPermission(Permission permission) {
-        Permission dbVal = this.getPermissionByCode(permission.getCode());
+        Permission dbVal = null;
+        if (permission.getUrl() != null) {
+            dbVal = this.getPermissionByUrl(permission.getUrl());
+
+        }else if (permission.getComponent() != null) {
+            dbVal = this.getPermissionByComponent(permission.getComponent());
+        }
         if (dbVal != null) {
-            Asserts.fail("权限code已存在！");
+            Asserts.fail("权限已存在！");
         }
         permissionMapper.insert(permission);
     }
 
-    private Permission getPermissionByCode(String code) {
+    private Permission getPermissionByComponent(String component) {
         QueryWrapper<Permission> wrapper = new QueryWrapper<>();
-        wrapper.eq("code", code);
+        wrapper.eq("component", component);
+        return permissionMapper.selectOne(wrapper);
+    }
+
+    private Permission getPermissionByUrl(String url) {
+        QueryWrapper<Permission> wrapper = new QueryWrapper<>();
+        wrapper.eq("url", url);
         return permissionMapper.selectOne(wrapper);
     }
 
