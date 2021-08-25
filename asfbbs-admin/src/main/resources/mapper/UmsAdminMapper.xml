@@ -23,7 +23,7 @@
     <!--@mbg.generated-->
     select
     <include refid="Base_Column_List" />
-    from ums_admin
+    from asf_user
     where username = #{username}
   </select>
 </mapper>
