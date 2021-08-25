@@ -18,7 +18,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.asoulfan.asfbbs.admin.service.RoleService;
 import com.asoulfan.asfbbs.api.CommonResult;
 
-
+/**
+ * 角色管理
+ *
+ * @program: ASFBBS
+ * @description: 角色管理
+ * @packagename: com.asoulfan.asfbbs.admin
+ **/
 @Controller
 @RequestMapping("/role")
 public class RoleController {

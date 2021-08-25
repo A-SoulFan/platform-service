@@ -16,10 +16,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
+
 /**
+ * 角色管理
+ *
+ * @program: ASFBBS
+ * @description: 角色管理
+ * @packagename: com.asoulfan.asfbbs.admin
  * @author ZGQ
  * @create 2021-08-24-13:15
- */
+ **/
 @Controller
 @RequestMapping("/permission")
 public class PermissionController {

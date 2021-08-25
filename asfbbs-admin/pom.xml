@@ -81,28 +81,4 @@
         </dependency>
     </dependencies>
 
-    <!-- smart-doc文档生成插件 -->
-    <build>
-        <finalName>alpha-asfbbs-admin</finalName>
-
-        <plugins>
-            <plugin>
-                <groupId>com.github.shalousun</groupId>
-                <artifactId>smart-doc-maven-plugin</artifactId>
-                <configuration>
-                    <configFile>smart-doc.json</configFile>
-                    <projectName>projectName</projectName>
-                </configuration>
-                <executions>
-                    <execution>
-                        <id>smart-api-devTools</id>
-                        <goals>
-                            <goal>html</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-        </plugins>
-    </build>
-
 </project>

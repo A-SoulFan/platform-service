@@ -31,3 +31,7 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### smart-doc ###
+/asfbbs-admin/src/main/resources/static/doc/
+/asfbbs-user/src/main/resources/static/doc/
