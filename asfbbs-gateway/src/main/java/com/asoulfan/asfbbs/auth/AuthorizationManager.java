@@ -94,12 +94,13 @@ public class AuthorizationManager implements ReactiveAuthorizationManager<Author
                 authorities.addAll(Convert.toList(String.class, resourceRolesMap.get(pattern)));
             }
         }
-        authorities = authorities.stream().map(i -> i = AuthConstant.AUTHORITY_PREFIX + i).collect(Collectors.toList());
+        // authorities = authorities.stream().map(i -> i = AuthConstant.AUTHORITY_PREFIX + i).collect(Collectors.toList());
 
-        //认证通过且角色匹配的用户可访问当前路径
-        /*if (authorities.size() > 0) {
+        
+        // 认证通过且角色匹配的用户可访问当前路径
+        if (authorities.size() > 0) {
             return Mono.just(new AuthorizationDecision(true));
-        }*/
+        }
         return mono
                 .filter(Authentication::isAuthenticated)
                 .flatMapIterable(Authentication::getAuthorities)
