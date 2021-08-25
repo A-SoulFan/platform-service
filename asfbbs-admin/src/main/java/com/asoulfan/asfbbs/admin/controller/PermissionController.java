@@ -56,12 +56,26 @@ public class PermissionController {
 
     }
 
+    /**
+     * 功能描述:查询权限列表
+     * @param: 
+     * @return: 
+     * @author: liurd
+     * @date: 2021/8/25 
+     */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ResponseBody
     public CommonResult find() {
         return CommonResult.success(permissionService.findPermissions());
     }
 
+    /**
+     * 功能描述: 添加新权限
+     * @param: 
+     * @return: 
+     * @author: liurd
+     * @date: 2021/8/25 
+     */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult add(@RequestBody Permission permission) {
@@ -69,6 +83,13 @@ public class PermissionController {
         return CommonResult.success("success");
     }
 
+    /**
+     * 功能描述: 删除已有权限
+     * @param: permissionId
+     * @return: 
+     * @author: liurd
+     * @date: 2021/8/25 
+     */
     @RequestMapping(value = "/{permissionId}/delete", method = RequestMethod.DELETE)
     @ResponseBody
     public CommonResult delete(@PathVariable Long permissionId) {
@@ -77,6 +98,13 @@ public class PermissionController {
 
     }
 
+    /**
+     * 功能描述: 更新权限信息
+     * @param: 
+     * @return: 
+     * @author: liurd
+     * @date: 2021/8/25 
+     */
     @RequestMapping(value = "/{permissionId}/update", method = RequestMethod.PUT)
     @ResponseBody
     public CommonResult update(@PathVariable Long permissionId, @RequestBody Permission permission) {
