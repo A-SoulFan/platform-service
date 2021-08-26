@@ -40,7 +40,7 @@ public class PermissionController {
      */
     @RequestMapping(value = "/getUserPermissionById", method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult<?> getUserPermissionByToken(@RequestParam("userId") String userId) {
+    public CommonResult<List<Permission>> getUserPermissionByToken(@RequestParam("userId") Long userId) {
             List<Permission> permissionList = permissionService.getByUserId(userId);
             return CommonResult.success(permissionList);
     }
@@ -71,7 +71,7 @@ public class PermissionController {
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ResponseBody
-    public CommonResult find() {
+    public CommonResult<List<Permission>> find() {
         return CommonResult.success(permissionService.findPermissions());
     }
 

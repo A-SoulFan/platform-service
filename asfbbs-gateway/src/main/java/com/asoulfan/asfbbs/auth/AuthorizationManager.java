@@ -98,6 +98,7 @@ public class AuthorizationManager implements ReactiveAuthorizationManager<Author
 
         
         // 认证通过且角色匹配的用户可访问当前路径
+        // todo 需要判断角色是否匹配
         if (authorities.size() > 0) {
             return Mono.just(new AuthorizationDecision(true));
         }

@@ -180,6 +180,7 @@
             <plugin>
                 <groupId>com.github.shalousun</groupId>
                 <artifactId>smart-doc-maven-plugin</artifactId>
+                <version>2.2.4</version>
                 <configuration>
                     <configFile>smart-doc.json</configFile>
                     <projectName>projectName</projectName>

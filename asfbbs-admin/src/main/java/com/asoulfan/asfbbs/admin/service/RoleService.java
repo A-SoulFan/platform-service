@@ -11,4 +11,6 @@ public interface RoleService {
     List<Role> findRoles();
 
     void resetUserRoles(Long userId, Set<Long> roleIds);
+
+    Set<Long> findRoleIdByUserId(Long userId);
 }
