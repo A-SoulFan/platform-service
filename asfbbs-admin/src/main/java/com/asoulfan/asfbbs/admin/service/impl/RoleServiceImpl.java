@@ -3,6 +3,7 @@ package com.asoulfan.asfbbs.admin.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import javax.annotation.Resource;
 
@@ -44,6 +45,14 @@ public class RoleServiceImpl implements RoleService {
             userRole.setUserId(userId);
             userRoleMapper.insert(userRole);
         }   
+    }
+
+    @Override
+    public Set<Long> findRoleIdByUserId(Long userId) {
+        QueryWrapper<UserRole> wrapper = new QueryWrapper<>();
+        wrapper.eq("user_id", userId);
+        List<UserRole> userRoles = userRoleMapper.selectList(wrapper);
+        return userRoles.stream().map(UserRole::getRoleId).collect(Collectors.toSet());
     }
 
     private void deleteUserRoleByUserId(Long userId) {
