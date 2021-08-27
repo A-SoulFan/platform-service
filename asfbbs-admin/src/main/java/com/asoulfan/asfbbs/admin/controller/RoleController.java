@@ -7,6 +7,7 @@ import java.util.Map;
 import java.util.Set;
 import javax.annotation.Resource;
 
+import com.asoulfan.asfbbs.admin.domain.Permission;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -53,7 +54,7 @@ public class RoleController {
      * @param: userId roleIds
      * @return: 
      * @author: liurd
-     * @date: 2021/8/25 
+     * @date: 2021/8/25
      */
     @RequestMapping(value = "/user/{userId}/reset_roles", method = RequestMethod.POST)
     @ResponseBody
@@ -61,4 +62,65 @@ public class RoleController {
         roleService.resetUserRoles(userId, param.getRoleIds());
         return CommonResult.success("success");
     }
+    /**
+     * 功能描述：创建角色
+     * @param
+     * @return:
+     * @author:ZGQ
+     * @date: 2021/8/27
+     * */
+    @RequestMapping(value = "/add",method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult<?> addRole(@Validated @RequestBody Role role){
+        roleService.add(role);
+        return CommonResult.success("添加成功");
+    }
+    /**
+     * 功能描述: 删除已有角色
+     * @param: roleId
+     * @return:
+     * @author: ZGQ
+     * @date: 2021/8/27
+     */
+    @RequestMapping(value = "/{roleId}/delete", method = RequestMethod.DELETE)
+    @ResponseBody
+    public CommonResult delete(@PathVariable Long roleId) {
+        roleService.delete(roleId);
+        return CommonResult.success("success");
+
+    }
+
+    /**
+     * 功能描述: 更新权限信息
+     * @param:
+     * @return:
+     * @author: ZGQ
+     * @date: 2021/8/27
+     */
+    @RequestMapping(value = "/{roleId}/update", method = RequestMethod.PUT)
+    @ResponseBody
+    public CommonResult update(@PathVariable Long roleId, @Validated @RequestBody Role role) {
+        role.setId(roleId);
+        roleService.update(role);
+        return CommonResult.success("success");
+    }
+    /**
+     * 功能描述:通过id查询
+     * @param id
+     * @return
+     * @author: ZGQ
+     * @date: 2021/8/24
+     */
+    @RequestMapping(value = "/queryById", method = RequestMethod.GET)
+    public CommonResult<?> queryById(@RequestParam(name="id",required=true) String id) {
+
+        Role role = roleService.getById(id);
+        if(role==null) {
+            CommonResult.failed("未找到对应实体");
+        }else {
+            CommonResult.success(role);
+        }
+        return CommonResult.success("success");
+    }
+
 }

@@ -55,6 +55,31 @@ public class RoleServiceImpl implements RoleService {
         return userRoles.stream().map(UserRole::getRoleId).collect(Collectors.toSet());
     }
 
+    @Override
+    public void add(Role role) {
+         roleMapper.insert(role);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void delete(Long roleId) {
+        //1.删除角色和用户关系
+        roleMapper.deleteRoleUserRelation(roleId);
+        //2.删除角色和权限关系
+        roleMapper.deleteRolePermissionRelation(roleId);
+        this.delete(roleId);
+    }
+
+    @Override
+    public void update(Role role) {
+        roleMapper.updateById(role);
+    }
+
+    @Override
+    public Role getById(String id) {
+        return roleMapper.selectById(id);
+    }
+
     private void deleteUserRoleByUserId(Long userId) {
         QueryWrapper<UserRole> wrapper = new QueryWrapper<>();
         wrapper.eq("user_id", userId);

@@ -6,6 +6,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 
 import lombok.Data;
 
+import javax.validation.constraints.NotNull;
+
 
 @Data
 @TableName("asf_role")
@@ -16,11 +18,13 @@ public class Role {
     /**
      * 角色代码
      */
+    @NotNull(message = "角色代码不能为空")
    private String code;
 
     /**
      * 角色名
      */
+    @NotNull(message = "角色名不能为空")
     private String name;
 
     /**
