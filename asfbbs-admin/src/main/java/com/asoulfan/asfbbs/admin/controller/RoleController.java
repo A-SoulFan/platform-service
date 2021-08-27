@@ -8,6 +8,7 @@ import java.util.Set;
 import javax.annotation.Resource;
 
 import com.asoulfan.asfbbs.admin.domain.Permission;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -19,6 +20,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.asoulfan.asfbbs.admin.domain.Role;
 import com.asoulfan.asfbbs.admin.dto.ResetRoleParam;
+import com.asoulfan.asfbbs.admin.dto.ResetRolePermissionParam;
+import com.asoulfan.asfbbs.admin.service.PermissionService;
 import com.asoulfan.asfbbs.admin.service.RoleService;
 import com.asoulfan.asfbbs.api.CommonResult;
 
@@ -32,16 +35,20 @@ import com.asoulfan.asfbbs.api.CommonResult;
 @Controller
 @RequestMapping("/role")
 public class RoleController {
-    
+
     @Resource
     private RoleService roleService;
 
+    @Resource
+    private PermissionService permissionService;
+
     /**
      * 功能描述: 获取角色列表
-     * @param: 
-     * @return: 
+     *
+     * @param:
+     * @return:
      * @author: liurd
-     * @date: 2021/8/25 
+     * @date: 2021/8/25
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ResponseBody
@@ -51,8 +58,9 @@ public class RoleController {
 
     /**
      * 功能描述: 设置用户角色
+     *
      * @param: userId roleIds
-     * @return: 
+     * @return:
      * @author: liurd
      * @date: 2021/8/25
      */
@@ -62,21 +70,25 @@ public class RoleController {
         roleService.resetUserRoles(userId, param.getRoleIds());
         return CommonResult.success("success");
     }
+
     /**
      * 功能描述：创建角色
+     *
      * @param
      * @return:
      * @author:ZGQ
      * @date: 2021/8/27
-     * */
-    @RequestMapping(value = "/add",method = RequestMethod.POST)
+     */
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
-    public CommonResult<?> addRole(@Validated @RequestBody Role role){
+    public CommonResult<?> addRole(@Validated @RequestBody Role role) {
         roleService.add(role);
         return CommonResult.success("添加成功");
     }
+
     /**
      * 功能描述: 删除已有角色
+     *
      * @param: roleId
      * @return:
      * @author: ZGQ
@@ -86,12 +98,14 @@ public class RoleController {
     @ResponseBody
     public CommonResult delete(@PathVariable Long roleId) {
         roleService.delete(roleId);
+        permissionService.pubPermissionInRedis();
         return CommonResult.success("success");
 
     }
 
     /**
-     * 功能描述: 更新权限信息
+     * 功能描述: 更新角色
+     *
      * @param:
      * @return:
      * @author: ZGQ
@@ -102,24 +116,42 @@ public class RoleController {
     public CommonResult update(@PathVariable Long roleId, @Validated @RequestBody Role role) {
         role.setId(roleId);
         roleService.update(role);
+        permissionService.pubPermissionInRedis();
         return CommonResult.success("success");
     }
+
     /**
      * 功能描述:通过id查询
+     *
      * @param id
      * @return
      * @author: ZGQ
      * @date: 2021/8/24
      */
     @RequestMapping(value = "/queryById", method = RequestMethod.GET)
-    public CommonResult<?> queryById(@RequestParam(name="id",required=true) String id) {
+    @ResponseBody
+    public CommonResult<Role> queryById(@RequestParam Long id) {
 
         Role role = roleService.getById(id);
-        if(role==null) {
-            CommonResult.failed("未找到对应实体");
-        }else {
-            CommonResult.success(role);
+        if (role == null) {
+            return CommonResult.failed("未找到对应实体");
+        } else {
+            return CommonResult.success(role);
         }
+    }
+
+
+    /**
+     * 功能描述: 重新设置角色权限
+     * @param: 
+     * @return: 
+     * @author: liurd
+     * @date: 2021/8/27 
+     */
+    @RequestMapping(value = "/{roleId}/reset_permission", method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult resetRolePermissions(@PathVariable Long roleId, @Validated @RequestBody ResetRolePermissionParam param) {
+        permissionService.resetRolePermissions(roleId, param.getPermissionIds());
         return CommonResult.success("success");
     }
 

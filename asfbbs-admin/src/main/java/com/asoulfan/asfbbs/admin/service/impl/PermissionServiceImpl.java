@@ -1,4 +1,5 @@
 package com.asoulfan.asfbbs.admin.service.impl;
+import java.util.Date;
 
 import com.asoulfan.asfbbs.admin.domain.Permission;
 import com.asoulfan.asfbbs.admin.domain.Role;
@@ -159,5 +160,23 @@ public class PermissionServiceImpl implements PermissionService {
     public void updatePermission(Permission permission) {
         permissionMapper.updateById(permission);
         this.pubPermissionInRedis();
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void resetRolePermissions(Long roleId, Set<Long> permissionIds) {
+        QueryWrapper<RolePermission> wrapper = new QueryWrapper<>();
+        wrapper.eq("role_id", roleId);
+        rolePermissionMapper.delete(wrapper);
+
+        for (Long permissionId : permissionIds) {
+            RolePermission rolePermission = new RolePermission();
+            rolePermission.setRoleId(roleId);
+            rolePermission.setPermissionId(permissionId);
+            rolePermissionMapper.insert(rolePermission);
+        }
+        
+        this.pubPermissionInRedis();
+
     }
 }

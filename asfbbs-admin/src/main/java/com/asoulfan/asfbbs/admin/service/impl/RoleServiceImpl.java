@@ -15,6 +15,7 @@ import com.asoulfan.asfbbs.admin.domain.UserRole;
 import com.asoulfan.asfbbs.admin.mapper.RoleMapper;
 import com.asoulfan.asfbbs.admin.mapper.UserRoleMapper;
 import com.asoulfan.asfbbs.admin.service.RoleService;
+import com.asoulfan.asfbbs.exception.Asserts;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.conditions.update.UpdateWrapper;
 
@@ -57,7 +58,17 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public void add(Role role) {
-         roleMapper.insert(role);
+        Role db = this.getRoleByCode(role.getCode());
+        if (db != null) {
+            Asserts.fail("角色代码已存在！");
+        }
+        roleMapper.insert(role);
+    }
+
+    private Role getRoleByCode(String code) {
+        QueryWrapper<Role> wrapper = new QueryWrapper<>();
+        wrapper.eq("code", code);
+        return roleMapper.selectOne(wrapper);
     }
 
     @Override
@@ -67,7 +78,8 @@ public class RoleServiceImpl implements RoleService {
         roleMapper.deleteRoleUserRelation(roleId);
         //2.删除角色和权限关系
         roleMapper.deleteRolePermissionRelation(roleId);
-        this.delete(roleId);
+        
+        roleMapper.deleteById(roleId);
     }
 
     @Override
@@ -76,7 +88,7 @@ public class RoleServiceImpl implements RoleService {
     }
 
     @Override
-    public Role getById(String id) {
+    public Role getById(Long id) {
         return roleMapper.selectById(id);
     }
 

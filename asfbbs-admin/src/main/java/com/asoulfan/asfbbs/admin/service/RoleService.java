@@ -20,5 +20,5 @@ public interface RoleService {
 
     void update(Role role);
 
-    Role getById(String id);
+    Role getById(Long id);
 }
