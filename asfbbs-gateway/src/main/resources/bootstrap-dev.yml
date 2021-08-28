@@ -7,3 +7,12 @@ spring:
       config:
         server-addr: http://localhost:8848
         file-extension: yaml
+#开启网关路由查询 http://127.0.0.1:8201/actuator/gateway/routes
+management:
+  endpoints:
+    web:
+      exposure:
+        include: gateway
+  endpoint:
+    gateway:
+      enabled: true

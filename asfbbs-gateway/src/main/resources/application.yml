@@ -1,12 +1,6 @@
-server:
-  port: 8201
 spring:
   cloud:
     gateway:
-      discovery:
-        locator:
-          enabled: true
-          lower-case-service-id: true #使用小写service-id
       #配置路由路径
       routes:
         - id: asfbbs-auth
@@ -15,6 +9,11 @@ spring:
             - Path=/asfbbs-auth/**
           filters:
             - StripPrefix=1
+            - name: RequestRateLimiter
+              args:
+                keyResolver: '#{@ipAddressKeyResolver}'
+                redis-rate-limiter.replenishRate: 1  # 令牌桶放入的速度
+                redis-rate-limiter.burstCapacity: 1  # 令牌桶的容积
         - id: asfbbs-admin
           uri: lb://asfbbs-admin
           predicates:
