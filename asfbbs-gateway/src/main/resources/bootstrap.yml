@@ -3,3 +3,10 @@ spring:
     active: dev
   application:
     name: asfbbs-gateway
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: false
+server:
+  port: 8241
