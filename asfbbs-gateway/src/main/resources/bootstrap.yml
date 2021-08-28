@@ -9,4 +9,4 @@ spring:
         locator:
           enabled: false
 server:
-  port: 8241
+  port: 8201
