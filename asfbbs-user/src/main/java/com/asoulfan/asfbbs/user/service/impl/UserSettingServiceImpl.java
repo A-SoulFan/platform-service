@@ -21,7 +21,12 @@ public class UserSettingServiceImpl implements UserSettingService {
         QueryWrapper<UserSetting> wrapper = new QueryWrapper<>();
         wrapper.eq("user_id", userId);
         wrapper.eq("scope", scope);
-        return userSettingMapper.selectOne(wrapper);
+        UserSetting userSetting = userSettingMapper.selectOne(wrapper);
+        if (userSetting == null) {
+            Asserts.fail("用户配置不存在");
+        }
+        return userSetting;
+
     }
 
     @Override
