@@ -14,11 +14,20 @@ import java.util.Map;
  **/
 @Data
 public class UserSettingUpdateParam {
+    /**
+     * 用户id
+     */
     Long userId;
 
+    /**
+     * 要更新的配置选项
+     */
     @NotEmpty
     Map<String, String> setting;
 
+    /**
+     * 生效的页面范围
+     */
     @NotEmpty
     String scope;
 }

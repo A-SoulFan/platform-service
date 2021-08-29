@@ -26,13 +26,23 @@ public class UserSettingController {
     @Autowired
     UserSettingService userSettingService;
 
-
+    /**
+     * 获取用户配置
+     * @param userId 用户id
+     * @param scope 生效的页面范围
+     * @return
+     */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ResponseBody
     public CommonResult getUserSetting(Long userId, String scope) {
         return CommonResult.success(userSettingService.getUserSetting(userId, scope));
     }
 
+    /**
+     * 更新用户配置
+     * @param userSettingUpdateParam
+     * @return
+     */
     @RequestMapping(value = "/update", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult updateUserSetting(@Validated @RequestBody UserSettingUpdateParam userSettingUpdateParam) {
@@ -40,6 +50,11 @@ public class UserSettingController {
         return CommonResult.success("success");
     }
 
+    /**
+     * 创建用户配置
+     * @param userSettingUpdateParam
+     * @return
+     */
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult createUserSetting(@Validated @RequestBody UserSettingUpdateParam userSettingUpdateParam) {
