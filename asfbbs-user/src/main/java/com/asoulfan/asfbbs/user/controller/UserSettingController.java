@@ -1,9 +1,12 @@
 package com.asoulfan.asfbbs.user.controller;
 
 import com.asoulfan.asfbbs.api.CommonResult;
+import com.asoulfan.asfbbs.user.dto.UserSettingUpdateParam;
 import com.asoulfan.asfbbs.user.service.UserSettingService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -28,5 +31,19 @@ public class UserSettingController {
     @ResponseBody
     public CommonResult getUserSetting(Long userId, String scope) {
         return CommonResult.success(userSettingService.getUserSetting(userId, scope));
+    }
+
+    @RequestMapping(value = "/update", method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult updateUserSetting(@Validated @RequestBody UserSettingUpdateParam userSettingUpdateParam) {
+        userSettingService.updateUserSetting(userSettingUpdateParam);
+        return CommonResult.success("success");
+    }
+
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    @ResponseBody
+    public CommonResult createUserSetting(@Validated @RequestBody UserSettingUpdateParam userSettingUpdateParam) {
+        userSettingService.createUserSetting(userSettingUpdateParam);
+        return CommonResult.success("success");
     }
 }
