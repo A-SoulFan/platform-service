@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 
 /**
+ * 个人配置页
+ *
  * @program: ASFBBS
  * @description: 用户配置
  * @packagename: com.asoulfan.asfbbs.user.controller
