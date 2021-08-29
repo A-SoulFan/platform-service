@@ -1,6 +1,6 @@
 {
   "projectName": "asfbbs-user",
-  "pathPrefix": "/admin",
+  "pathPrefix": "/user",
   "isStrict": false,
   "allInOne": true,
   "outPath": "src/main/resources/static/doc",

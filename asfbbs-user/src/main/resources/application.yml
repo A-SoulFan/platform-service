@@ -1,7 +1,7 @@
 server:
-  port: 8081
+  port: 8083
   servlet:
-    context-path: /admin
+    context-path: /user
 spring:
   application:
     name: @project.artifactId@
@@ -49,10 +49,16 @@ spring:
 feign:
   okhttp:
     enabled: true
+
 ribbon:
   ConnectTimeout: 3000 #服务请求连接超时时间（毫秒）
   ReadTimeout: 3000 #服务请求处理超时时间（毫秒）
-jasypt:
-  encryptor:
-    password: xiangwan123jiaran
 
+#jasypt:
+#  encryptor:
+#    password: xiangwan123jiaran
+
+#调用b站绑定服务url
+b-bot:
+  token: http://localhost/initiate/
+  confirm: http://localhost/confirm/

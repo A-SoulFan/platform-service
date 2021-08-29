@@ -21,6 +21,12 @@ spring:
             - Path=/asfbbs-admin/**
           filters:
             - StripPrefix=1
+        - id: asfbbs-user
+            uri: lb://asfbbs-user
+            predicates:
+              - Path=/asfbbs-user/**
+            filters:
+              - StripPrefix=1
   redis:
     database: 0
     port: 6379
