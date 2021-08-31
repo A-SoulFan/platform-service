@@ -1,7 +1,5 @@
 server:
   port: 8083
-  servlet:
-    context-path: /user
 spring:
   application:
     name: @project.artifactId@
@@ -43,7 +41,7 @@ spring:
   cache:
     type: redis
     redis:
-      key-prefix: admin-
+      key-prefix: user-
       time-to-live: 1800 # 过期时间（毫秒）
 
 feign:
@@ -54,9 +52,9 @@ ribbon:
   ConnectTimeout: 3000 #服务请求连接超时时间（毫秒）
   ReadTimeout: 3000 #服务请求处理超时时间（毫秒）
 
-#jasypt:
-#  encryptor:
-#    password: xiangwan123jiaran
+jasypt:
+  encryptor:
+    password: xiangwan123jiaran
 
 #调用b站绑定服务url
 b-bot:

@@ -22,11 +22,11 @@ spring:
           filters:
             - StripPrefix=1
         - id: asfbbs-user
-            uri: lb://asfbbs-user
-            predicates:
-              - Path=/asfbbs-user/**
-            filters:
-              - StripPrefix=1
+          uri: lb://asfbbs-user
+          predicates:
+            - Path=/asfbbs-user/**
+          filters:
+            - StripPrefix=1
   redis:
     database: 0
     port: 6379
@@ -46,3 +46,6 @@ secure:
       - "/asfbbs-auth/oauth/authorize"
       - "/asfbbs-auth/rsa/publicKey"
       - "/asfbbs-admin/admin/login"
+      - "/asfbbs-user/user/login"
+      - "/asfbbs-user/user/getCapt"
+      - "/asfbbs-user/user/register"
