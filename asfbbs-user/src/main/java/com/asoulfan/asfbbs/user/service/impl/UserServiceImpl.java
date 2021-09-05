@@ -1,10 +1,8 @@
 package com.asoulfan.asfbbs.user.service.impl;
 
 import java.util.HashMap;
-import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
-
 import javax.annotation.Resource;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
@@ -24,8 +22,8 @@ import com.asoulfan.asfbbs.constant.UserConstant;
 import com.asoulfan.asfbbs.exception.Asserts;
 import com.asoulfan.asfbbs.user.component.MyBCryptPasswordEncoder;
 import com.asoulfan.asfbbs.user.domain.Oauth2TokenDto;
-import com.asoulfan.asfbbs.user.dto.UserDto;
 import com.asoulfan.asfbbs.user.dto.RegisterVo;
+import com.asoulfan.asfbbs.user.dto.UserDto;
 import com.asoulfan.asfbbs.user.mapper.UserMapper;
 import com.asoulfan.asfbbs.user.service.AuthService;
 import com.asoulfan.asfbbs.user.service.IUserService;
@@ -33,7 +31,6 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 
 import cn.hutool.core.lang.Tuple;
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.crypto.SecureUtil;
 import cn.hutool.extra.mail.MailUtil;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONArray;
@@ -82,6 +79,7 @@ public class UserServiceImpl implements IUserService {
         params.put("password", password);
         CommonResult<Oauth2TokenDto> restResult = authService.getAccessToken(params);
         System.out.println(JSONUtil.toJsonStr(restResult));
+        // FIXME 2021/9/5 请求从网关来，不能直接setcookie，和anti老师沟通下setcookie的返回值约定，看是不是在common包里建一个setcookie的rsp类
         if (ResultCode.SUCCESS.getCode() == restResult.getCode() && restResult.getData() != null) {
             //TODO：线上需要setDomain
             Cookie token = new Cookie("token", restResult.getData().getToken());
@@ -114,6 +112,7 @@ public class UserServiceImpl implements IUserService {
         //插入10min过期的tokenA，这段时间内用户可以重复答题
         redisTemplate.opsForValue().set(UserConstant.REGISTER_REDIS_KEY + vo.getUsername(), "1", 10, TimeUnit.MINUTES);
         //插入30min过期的用户信息
+        // FIXME 2021/9/5 用户信息在这里存到redis会导致30分钟内用同一用户名注册的人密码头像等信息被覆盖
         redisTemplate.opsForValue().set(UserConstant.USERINFO_REDIS_KEY + vo.getUsername(), JSONUtil.toJsonStr(newUser), 30, TimeUnit.MINUTES);
         return true;
 
@@ -131,7 +130,7 @@ public class UserServiceImpl implements IUserService {
         Object o = redisTemplate.opsForValue().get(UserConstant.EMAIL_VALID_REDIS_KEY + username);
         if (o == null || !"1".equals(o.toString())) {
             Asserts.fail("已超过邮箱发送时限，本次注册失败");
-        }
+        }   
         String random = RandomStringUtils.random(4, "0123456789");
         Tuple tuple = new Tuple(email, random);
         redisTemplate.opsForValue().set(UserConstant.EMAIL_REDIS_KEY + username, JSONUtil.parse(tuple), 5, TimeUnit.MINUTES);

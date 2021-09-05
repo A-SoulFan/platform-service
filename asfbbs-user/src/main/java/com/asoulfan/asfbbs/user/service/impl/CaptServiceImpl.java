@@ -47,6 +47,7 @@ public class CaptServiceImpl implements ICaptService {
     private String initCapt(HttpServletResponse response) {
         LineCaptcha lineCaptcha = CaptchaUtil.createLineCaptcha(200, 100);
         try {
+            // FIXME 2021/9/5 验证码图片转base64给前端，直接写入rsp流会导致返回值不是json
             lineCaptcha.write(response.getOutputStream());
         } catch (IOException ioException) {
             log.error("读取response io 失败，ex:" + ioException.getMessage());

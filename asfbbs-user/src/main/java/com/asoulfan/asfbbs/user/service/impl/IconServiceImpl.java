@@ -34,6 +34,7 @@ public class IconServiceImpl implements IIconService {
 
     @Override
     public String upload(MultipartFile file) {
+        // FIXME 2021/9/5 使用base64传递图片消息，并限制大小
         String filename = file.getOriginalFilename();
         if (StrUtil.isNotBlank(filename)) {
             try (InputStream is = file.getInputStream()) {
