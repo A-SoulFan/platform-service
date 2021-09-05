@@ -6,11 +6,13 @@ import javax.validation.constraints.Email;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.asoulfan.asfbbs.api.CommonResult;
 import com.asoulfan.asfbbs.user.dto.LoginResponse;
@@ -19,6 +21,7 @@ import com.asoulfan.asfbbs.user.dto.QuestionsVo;
 import com.asoulfan.asfbbs.user.dto.RegisterVo;
 import com.asoulfan.asfbbs.user.dto.ScoreVo;
 import com.asoulfan.asfbbs.user.service.ICaptService;
+import com.asoulfan.asfbbs.user.service.IIconService;
 import com.asoulfan.asfbbs.user.service.IQuestionService;
 import com.asoulfan.asfbbs.user.service.IUserService;
 
@@ -45,20 +48,26 @@ public class UserController {
     @Autowired
     private IQuestionService questionService;
 
+    @Autowired
+    private IIconService iconService;
+
     /**
      * 用户登录
+     *
      * @param vo
      * @param response
      * @return
      */
     @PostMapping("/login")
-    public CommonResult<LoginResponse> login(@RequestBody LoginVo vo, HttpServletResponse response) {
+    public CommonResult<Boolean> login(@RequestBody LoginVo vo, HttpServletResponse response) {
         captService.verify(vo.getCaptId(), vo.getCaptCode());
-        return CommonResult.success(userService.login(vo.getUsername(), vo.getPassword(), response));
+        userService.login(vo.getUsername(), vo.getPassword(), response);
+        return CommonResult.success(true);
     }
 
     /**
      * 获取验证码
+     *
      * @param response
      * @return
      */
@@ -69,6 +78,7 @@ public class UserController {
 
     /**
      * 用户注册
+     *
      * @param vo
      * @return
      */
@@ -126,7 +136,7 @@ public class UserController {
     /**
      * 绑定b站账号
      *
-     * @param username 用户账号
+     * @param username 用户账号，后期优化后应该不需要传参数，直接从token中获取
      * @return
      */
     @GetMapping("/blbl/token")
@@ -137,11 +147,33 @@ public class UserController {
     /**
      * 确认绑定
      *
-     * @param username 用户账号
+     * @param username 用户账号，后期优化后应该不需要传参数，直接从token中获取
      * @return
      */
     @GetMapping("/blbl/confirm")
     public CommonResult<Boolean> confirm(String username) {
         return CommonResult.success(userService.confirm(username));
+    }
+
+    /**
+     * 上传头像
+     *
+     * @param file 图片文件，目前只支持jpg/jpeg/png
+     * @return 文件id，作为注册接口中的参数
+     */
+    @PostMapping("/icon/upload")
+    public CommonResult<String> upload(@RequestParam("file") MultipartFile file) {
+        return CommonResult.success(iconService.upload(file));
+    }
+
+    /**
+     * 下载头像图片
+     *
+     * @param id       文件id
+     * @param response
+     */
+    @GetMapping("/icon/{id}")
+    public void get(@PathVariable String id, HttpServletResponse response) {
+        iconService.get(id, response);
     }
 }

@@ -1,6 +1,10 @@
 package com.asoulfan.asfbbs.user.dto;
 
 
+import java.util.List;
+
+import com.asoulfan.asfbbs.user.domain.Options;
+
 import lombok.Data;
 
 /**
@@ -26,6 +30,6 @@ public class QuestionsVo {
     /**
      * 选项list
      */
-    private String options;
+    private List<Options> options;
 
 }

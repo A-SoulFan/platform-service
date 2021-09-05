@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import com.asoulfan.asfbbs.constant.UserConstant;
 import com.asoulfan.asfbbs.exception.Asserts;
 import com.asoulfan.asfbbs.user.domain.Answer;
+import com.asoulfan.asfbbs.user.domain.Options;
 import com.asoulfan.asfbbs.user.dto.QuestionDto;
 import com.asoulfan.asfbbs.user.dto.QuestionsVo;
 import com.asoulfan.asfbbs.user.dto.ScoreVo;
@@ -24,6 +25,8 @@ import com.asoulfan.asfbbs.user.service.IQuestionService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 
 import cn.hutool.core.util.NumberUtil;
+import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
 
 /**
  * @program: ASFBBS
@@ -43,16 +46,19 @@ public class QuestionServiceImpl implements IQuestionService {
 
     @Override
     public List<QuestionsVo> getList(String username) {
-        Object o = redisTemplate.opsForValue().get(UserConstant.REGISTER_REDIS_KEY + username);
-        if (o == null || !"1".equals(o.toString())) {
-            Asserts.fail("已超过答题时限，本次注册失败");
-        }
+        // Object o = redisTemplate.opsForValue().get(UserConstant.REGISTER_REDIS_KEY + username);
+        // if (o == null || !"1".equals(o.toString())) {
+        //     Asserts.fail("已超过答题时限，本次注册失败");
+        // }
         //TODO:设计随机生成题库算法
         List<QuestionDto> questionList = questionMapper.selectList(new QueryWrapper<>());
         List<QuestionsVo> vos = new ArrayList<>();
         questionList.forEach(a -> {
+            List<Options> options = JSONUtil.toList(a.getOptions(), Options.class);
             QuestionsVo vo = new QuestionsVo();
-            BeanUtils.copyProperties(a, vo);
+            vo.setQuestion(a.getQuestion());
+            vo.setId(a.getId());
+            vo.setOptions(options);
             vos.add(vo);
         });
         return vos;
@@ -64,7 +70,7 @@ public class QuestionServiceImpl implements IQuestionService {
         if (o == null || !"1".equals(o.toString())) {
             Asserts.fail("已超过答题时限，本次注册失败");
         }
-        //TODO: 1.判断是否是同一套题 2.返回对应分数？
+        //TODO: 1.判断是否是同一套题
         List<QuestionDto> questions = questionMapper.selectList(
                 new QueryWrapper<QuestionDto>()
                         .in("id", vo.getAnswers().stream().map(Answer::getId).collect(Collectors.toList())));

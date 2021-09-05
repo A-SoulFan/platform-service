@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.asoulfan.asfbbs.api.CommonResult;
-import com.asoulfan.asfbbs.user.domain.Oauth2Token;
+import com.asoulfan.asfbbs.user.domain.Oauth2TokenDto;
 
 /**
  * @program: ASFBBS
@@ -19,5 +19,5 @@ import com.asoulfan.asfbbs.user.domain.Oauth2Token;
 @FeignClient("asfbbs-auth")
 public interface AuthService {
     @PostMapping(value = "/oauth/token")
-    CommonResult<Oauth2Token> getAccessToken(@RequestParam Map<String, String> parameters);
+    CommonResult<Oauth2TokenDto> getAccessToken(@RequestParam Map<String, String> parameters);
 }

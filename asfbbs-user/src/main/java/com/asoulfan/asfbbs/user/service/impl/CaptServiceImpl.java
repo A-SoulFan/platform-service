@@ -40,7 +40,6 @@ public class CaptServiceImpl implements ICaptService {
             redisTemplate.opsForValue().set(UserConstant.CAPT_REDIS_KEY + simpleId, code, 1, TimeUnit.MINUTES);
             return simpleId;
         }
-        //TODO：抛出异常还需要return？
         Asserts.fail("生成验证码失败");
         return null;
     }

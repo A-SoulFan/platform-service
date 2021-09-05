@@ -58,5 +58,8 @@ jasypt:
 
 #调用b站绑定服务url
 b-bot:
-  token: http://localhost/initiate/
-  confirm: http://localhost/confirm/
+  token: http://localhost:5000/initiate/
+  confirm: http://localhost:5000/confirm/
+
+imgFile:
+  storage: D:/img

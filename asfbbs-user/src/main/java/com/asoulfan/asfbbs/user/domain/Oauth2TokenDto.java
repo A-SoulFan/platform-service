@@ -10,7 +10,7 @@ import lombok.Data;
  * @date: 2021-08-28
  **/
 @Data
-public class Oauth2Token {
+public class Oauth2TokenDto {
 
     /**
      * 访问令牌

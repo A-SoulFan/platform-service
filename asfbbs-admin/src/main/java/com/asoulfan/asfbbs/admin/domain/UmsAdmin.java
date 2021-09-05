@@ -30,20 +30,20 @@ public class UmsAdmin {
      */
     private String email;
 
-    /**
-     * 备注信息
-     */
-    private String note;
+    // /**
+    //  * 备注信息
+    //  */
+    // private String note;
 
     /**
      * 创建时间
      */
     private Date createTime;
 
-    /**
-     * 最后登录时间
-     */
-    private Date loginTime;
+    // /**
+    //  * 最后登录时间
+    //  */
+    // private Date loginTime;
 
     /**
      * 帐号启用状态：0->禁用；1->启用
