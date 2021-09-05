@@ -46,10 +46,10 @@ public class QuestionServiceImpl implements IQuestionService {
 
     @Override
     public List<QuestionsVo> getList(String username) {
-        // Object o = redisTemplate.opsForValue().get(UserConstant.REGISTER_REDIS_KEY + username);
-        // if (o == null || !"1".equals(o.toString())) {
-        //     Asserts.fail("已超过答题时限，本次注册失败");
-        // }
+        Object o = redisTemplate.opsForValue().get(UserConstant.REGISTER_REDIS_KEY + username);
+        if (o == null || !"1".equals(o.toString())) {
+            Asserts.fail("已超过答题时限，本次注册失败");
+        }
         //TODO:设计随机生成题库算法
         List<QuestionDto> questionList = questionMapper.selectList(new QueryWrapper<>());
         List<QuestionsVo> vos = new ArrayList<>();
