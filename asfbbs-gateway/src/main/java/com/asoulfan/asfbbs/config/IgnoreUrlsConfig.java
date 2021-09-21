@@ -8,12 +8,12 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 
 /**
- * @program: ASFBBS
- * @description: 网关白名单配置
- * @packagename: com.asoulfan.asfbbs.config
- * @author: Cscar
- * @date: 2021-07-26 11:32
- **/
+
+ * : 网关白名单配置
+
+ * @author Cscar
+ * @since 2021-07-26 11:32
+ */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Component

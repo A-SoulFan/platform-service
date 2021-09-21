@@ -12,12 +12,12 @@ import org.springframework.web.bind.annotation.*;
 /**
  * 后台用户管理
  *
- * @program: ASFBBS
- * @description: 后台用户管理
- * @packagename: com.asoulfan.asfbbs.admin
- * @author: Cscar
- * @date: 2021-08-01 03:05
- **/
+
+ * : 后台用户管理
+
+ * @author Cscar
+ * @since 2021-08-01 03:05
+ */
 @Controller
 @RequestMapping("/admin")
 public class UmsAdminController {

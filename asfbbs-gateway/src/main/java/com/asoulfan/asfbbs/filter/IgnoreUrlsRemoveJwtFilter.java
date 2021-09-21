@@ -16,12 +16,12 @@ import java.net.URI;
 import java.util.List;
 
 /**
- * @program: ASFBBS
- * @description: 白名单路径访问移除请求头
- * @packagename: com.asoulfan.asfbbs.filter
- * @author: Cscar
- * @date: 2021-07-28 16:36
- **/
+
+ * : 白名单路径访问移除请求头
+
+ * @author Cscar
+ * @since 2021-07-28 16:36
+ */
 @Component
 public class IgnoreUrlsRemoveJwtFilter implements WebFilter {
     @Autowired

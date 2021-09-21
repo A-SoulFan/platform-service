@@ -22,12 +22,12 @@ import org.springframework.security.web.server.SecurityWebFilterChain;
 import reactor.core.publisher.Mono;
 
 /**
- * @program: ASFBBS
- * @description: 资源服务器配置
- * @packagename: com.asoulfan.asfbbs.config
- * @author: Cscar
- * @date: 2021-07-28 16:34
- **/
+
+ * : 资源服务器配置
+
+ * @author Cscar
+ * @since 2021-07-28 16:34
+ */
 @AllArgsConstructor
 @Configuration
 @EnableWebFluxSecurity

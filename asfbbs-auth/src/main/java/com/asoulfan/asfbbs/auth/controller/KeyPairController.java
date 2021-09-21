@@ -13,12 +13,12 @@ import java.util.Map;
 /**
  * 获取公钥接口
  *
- * @program: ASFBBS
- * @description: 获取公钥接口
- * @packagename: com.asoulfan.asfbbs.auth.controller
- * @author: Cscar
- * @date: 2021-07-30 00:35
- **/
+
+ * : 获取公钥接口
+
+ * @author Cscar
+ * @since 2021-07-30 00:35
+ */
 @RestController
 public class KeyPairController {
 

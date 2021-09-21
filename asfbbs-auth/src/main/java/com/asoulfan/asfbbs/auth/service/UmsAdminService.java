@@ -6,12 +6,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 /**
- * @program: ASFBBS
- * @description: 管理服务
- * @packagename: com.asoulfan.asfbbs.service.impl
- * @author: Cscar
- * @date: 2021-07-29 14:44
- **/
+
+ * : 管理服务
+
+ * @author Cscar
+ * @since 2021-07-29 14:44
+ */
 @FeignClient("asfbbs-admin")
 public interface UmsAdminService {
     @GetMapping("/admin/loadByUsername")

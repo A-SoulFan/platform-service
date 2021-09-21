@@ -15,7 +15,7 @@ public interface RoleMapper extends BaseMapper<Role> {
     /**
      * @Author ZGQ
      * @Date
-     * @Description: 删除角色与用户关系
+     * : 删除角色与用户关系
      */
     @Delete("delete from asf_user_role where role_id = #{roleId}")
     void deleteRoleUserRelation(@Param("roleId") Long roleId);
@@ -23,7 +23,7 @@ public interface RoleMapper extends BaseMapper<Role> {
     /**
      * @Author ZGQ
      * @Date
-     * @Description: 删除角色与权限关系
+     * : 删除角色与权限关系
      */
     @Delete("delete from asf_role_permission where role_id = #{roleId}")
     void deleteRolePermissionRelation(@Param("roleId") Long roleId);

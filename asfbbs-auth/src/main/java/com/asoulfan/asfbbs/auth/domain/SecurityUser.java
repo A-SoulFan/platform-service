@@ -10,12 +10,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * @program: ASFBBS
- * @description: 登录用户信息
- * @packagename: com.asoulfan.asfbbs.domain
- * @author: Cscar
- * @date: 2021-07-28 19:21
- **/
+
+ * : 登录用户信息
+
+ * @author Cscar
+ * @since 2021-07-28 19:21
+ */
 @Data
 public class SecurityUser implements UserDetails {
 

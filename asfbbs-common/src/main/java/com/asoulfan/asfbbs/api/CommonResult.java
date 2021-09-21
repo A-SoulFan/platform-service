@@ -1,30 +1,31 @@
 package com.asoulfan.asfbbs.api;
 
+import lombok.Getter;
+
 /**
- * @program: asfbbs
- * @description: 通用返回对象
- * @packagename: com.asoulfan.asfbbs.api
- * @author: Cscar
- * @date: 2021-07-26 01:35
- **/
+ * 通用返回对象
+ *
+ * @author Cscar
+ * @since 2021-07-26 01:35
+ */
+@Getter
 public class CommonResult<T> {
     /**
      * 状态码
      */
-    private long code;
+    private final long code;
+
     /**
      * 提示信息
      */
-    private String message;
+    private final String message;
+
     /**
      * 数据封装
      */
-    private T data;
+    private final T data;
 
-    protected CommonResult() {
-    }
-
-    protected CommonResult(long code, String message, T data) {
+    public CommonResult(long code, String message, T data) {
         this.code = code;
         this.message = message;
         this.data = data;
@@ -42,8 +43,8 @@ public class CommonResult<T> {
     /**
      * 成功返回结果
      *
-     * @param data 获取的数据
-     * @param  message 提示信息
+     * @param data    获取的数据
+     * @param message 提示信息
      */
     public static <T> CommonResult<T> success(T data, String message) {
         return new CommonResult<T>(ResultCode.SUCCESS.getCode(), message, data);
@@ -51,6 +52,7 @@ public class CommonResult<T> {
 
     /**
      * 失败返回结果
+     *
      * @param errorCode 错误码
      */
     public static <T> CommonResult<T> failed(IErrorCode errorCode) {
@@ -59,15 +61,17 @@ public class CommonResult<T> {
 
     /**
      * 失败返回结果
+     *
      * @param errorCode 错误码
-     * @param message 错误信息
+     * @param message   错误信息
      */
-    public static <T> CommonResult<T> failed(IErrorCode errorCode,String message) {
+    public static <T> CommonResult<T> failed(IErrorCode errorCode, String message) {
         return new CommonResult<T>(errorCode.getCode(), message, null);
     }
 
     /**
      * 失败返回结果
+     *
      * @param message 提示信息
      */
     public static <T> CommonResult<T> failed(String message) {
@@ -90,6 +94,7 @@ public class CommonResult<T> {
 
     /**
      * 参数验证失败返回结果
+     *
      * @param message 提示信息
      */
     public static <T> CommonResult<T> validateFailed(String message) {
@@ -108,29 +113,5 @@ public class CommonResult<T> {
      */
     public static <T> CommonResult<T> forbidden(T data) {
         return new CommonResult<T>(ResultCode.FORBIDDEN.getCode(), ResultCode.FORBIDDEN.getMessage(), data);
-    }
-
-    public long getCode() {
-        return code;
-    }
-
-    public void setCode(long code) {
-        this.code = code;
-    }
-
-    public String getMessage() {
-        return message;
-    }
-
-    public void setMessage(String message) {
-        this.message = message;
-    }
-
-    public T getData() {
-        return data;
-    }
-
-    public void setData(T data) {
-        this.data = data;
     }
 }

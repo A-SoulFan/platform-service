@@ -9,12 +9,12 @@ import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
 /**
- * @program: ASFBBS
- * @description:
- * @packagename: com.asoulfan.asfbbs.service.impl
- * @author: Cscar
- * @date: 2021-07-26 10:29
- **/
+
+ * :
+
+ * @author Cscar
+ * @since 2021-07-26 10:29
+ */
 public class RedisServiceImpl implements RedisService {
 
     @Autowired

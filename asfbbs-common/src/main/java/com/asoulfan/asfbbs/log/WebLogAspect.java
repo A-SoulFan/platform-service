@@ -1,14 +1,21 @@
 package com.asoulfan.asfbbs.log;
 
-import cn.hutool.core.util.StrUtil;
-import cn.hutool.core.util.URLUtil;
-import cn.hutool.json.JSONUtil;
-import com.asoulfan.asfbbs.domain.WebLog;
-import net.logstash.logback.marker.Markers;
+import java.lang.reflect.Method;
+import java.lang.reflect.Parameter;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import javax.servlet.http.HttpServletRequest;
+
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.Signature;
-import org.aspectj.lang.annotation.*;
+import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,21 +27,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import javax.servlet.http.HttpServletRequest;
-import java.lang.reflect.Method;
-import java.lang.reflect.Parameter;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import com.asoulfan.asfbbs.domain.WebLog;
+
+import cn.hutool.core.util.StrUtil;
+import cn.hutool.core.util.URLUtil;
 
 /**
- * @program: ASFBBS
- * @description: 统一日志处理切面
- * @packagename: com.asoulfan.asfbbs.log
- * @author: Cscar
- * @date: 2021-07-26 10:23
- **/
+ * 统一日志处理切面
+ *
+ * fixme web请求的接口切面移到gateway模块，且需要捕获异常做统一处理
+ * @author Cscar
+ * @since 2021-07-26 10:23
+ */
 @Aspect
 @Component
 @Order(1)
@@ -42,7 +46,7 @@ public class WebLogAspect {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(WebLogAspect.class);
 
-    @Pointcut("execution(public * com.macro.mall.controller.*.*(..))||execution(public * com.macro.mall.*.controller.*.*(..))")
+    @Pointcut("execution(public * com.asoulfan.*.*Service(..)))")
     public void webLog() {
     }
 
@@ -85,7 +89,8 @@ public class WebLogAspect {
         logMap.put("parameter", webLog.getParameter());
         logMap.put("spendTime", webLog.getSpendTime());
         logMap.put("description", webLog.getDescription());
-        LOGGER.info(Markers.appendEntries(logMap), JSONUtil.parse(webLog).toString());
+        // FIXME 2021/8/28 日志重新设计打印
+        // LOGGER.info(Markers.appendEntries(logMap), JSONUtil.parse(webLog).toString());
         return result;
     }
 

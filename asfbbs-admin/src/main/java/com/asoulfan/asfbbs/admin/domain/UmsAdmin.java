@@ -5,12 +5,12 @@ import lombok.Data;
 import java.util.Date;
 
 /**
- * @program: ASFBBS
- * @description: 管理员用户
- * @packagename: com.asoulfan.asfbbs.admin.domain
- * @author: Cscar
- * @date: 2021-08-01 03:43
- **/
+
+ * : 管理员用户
+
+ * @author Cscar
+ * @since 2021-08-01 03:43
+ */
 @Data
 public class UmsAdmin {
 

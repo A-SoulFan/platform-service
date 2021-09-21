@@ -7,12 +7,12 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @program: ASFBBS
- * @description: 更新角色权限参数
- * @packagename: com.asoulfan.asfbbs.admin.dto
- * @author: liurd
- * @date: 2021-08-27 23:10
- **/
+
+ * : 更新角色权限参数
+
+ * @author liurd
+ * @since 2021-08-27 23:10
+ */
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class ResetRolePermissionParam {

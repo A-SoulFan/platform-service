@@ -18,12 +18,12 @@ import java.util.Map;
 /**
  * 认证中心登录认证
  *
- * @program: ASFBBS
- * @description: 认证中心登录认证
- * @packagename: com.asoulfan.asfbbs.auth.controller
- * @author: Cscar
- * @date: 2021-07-29 15:40
- **/
+
+ * : 认证中心登录认证
+
+ * @author Cscar
+ * @since 2021-07-29 15:40
+ */
 @RestController
 @RequestMapping("/oauth")
 public class AuthController {

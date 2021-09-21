@@ -25,12 +25,12 @@ import java.util.Map;
 
 
 /**
- * @program: ASFBBS
- * @description:
- * @packagename: com.asoulfan.asfbbs.admin.service.impl
- * @author: Cscar
- * @date: 2021-08-01 03:11
- **/
+
+ * :
+
+ * @author Cscar
+ * @since 2021-08-01 03:11
+ */
 @Service
 public class UmsAdminServiceImpl implements UmsAdminService {
 

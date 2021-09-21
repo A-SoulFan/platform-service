@@ -28,10 +28,10 @@ import com.asoulfan.asfbbs.api.CommonResult;
 /**
  * 角色管理
  *
- * @program: ASFBBS
- * @description: 角色管理
- * @packagename: com.asoulfan.asfbbs.admin
- **/
+
+ * : 角色管理
+
+ */
 @Controller
 @RequestMapping("/role")
 public class RoleController {
@@ -47,8 +47,8 @@ public class RoleController {
      *
      * @param:
      * @return:
-     * @author: liurd
-     * @date: 2021/8/25
+     * @author liurd
+     * @since 2021/8/25
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ResponseBody
@@ -61,8 +61,8 @@ public class RoleController {
      *
      * @param: userId roleIds
      * @return:
-     * @author: liurd
-     * @date: 2021/8/25
+     * @author liurd
+     * @since 2021/8/25
      */
     @RequestMapping(value = "/user/{userId}/reset_roles", method = RequestMethod.POST)
     @ResponseBody
@@ -76,8 +76,8 @@ public class RoleController {
      *
      * @param
      * @return:
-     * @author:ZGQ
-     * @date: 2021/8/27
+     * @authorZGQ
+     * @since 2021/8/27
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
@@ -91,8 +91,8 @@ public class RoleController {
      *
      * @param: roleId
      * @return:
-     * @author: ZGQ
-     * @date: 2021/8/27
+     * @author ZGQ
+     * @since 2021/8/27
      */
     @RequestMapping(value = "/{roleId}/delete", method = RequestMethod.DELETE)
     @ResponseBody
@@ -108,8 +108,8 @@ public class RoleController {
      *
      * @param:
      * @return:
-     * @author: ZGQ
-     * @date: 2021/8/27
+     * @author ZGQ
+     * @since 2021/8/27
      */
     @RequestMapping(value = "/{roleId}/update", method = RequestMethod.PUT)
     @ResponseBody
@@ -125,8 +125,8 @@ public class RoleController {
      *
      * @param id
      * @return
-     * @author: ZGQ
-     * @date: 2021/8/24
+     * @author ZGQ
+     * @since 2021/8/24
      */
     @RequestMapping(value = "/queryById", method = RequestMethod.GET)
     @ResponseBody
@@ -145,8 +145,8 @@ public class RoleController {
      * 功能描述: 重新设置角色权限
      * @param: 
      * @return: 
-     * @author: liurd
-     * @date: 2021/8/27 
+     * @author liurd
+     * @since 2021/8/27 
      */
     @RequestMapping(value = "/{roleId}/reset_permission", method = RequestMethod.POST)
     @ResponseBody

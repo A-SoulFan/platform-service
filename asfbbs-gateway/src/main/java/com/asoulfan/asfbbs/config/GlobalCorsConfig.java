@@ -9,12 +9,12 @@ import org.springframework.web.util.pattern.PathPatternParser;
 
 
 /**
- * @program: ASFBBS
- * @description: 全局跨域配置
- * @packagename: com.asoulfan.asfbbs.config
- * @author: Cscar
- * @date: 2021-07-26 11:15
- **/
+
+ * : 全局跨域配置
+
+ * @author Cscar
+ * @since 2021-07-26 11:15
+ */
 @Configuration
 public class GlobalCorsConfig {
 

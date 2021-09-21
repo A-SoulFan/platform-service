@@ -1,18 +1,18 @@
 package com.asoulfan.asfbbs.domain;
 
+import java.util.List;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
-import java.util.List;
-
 /**
- * @program: ASFBBS
- * @description: 用户登录对象
- * @packagename: com.asoulfan.asfbbs.domain
- * @author: Cscar
- * @date: 2021-07-27 11:28
- **/
+ * 用户登录对象
+ * fixme 用户领域对象迁到user模块内
+ *
+ * @author Cscar
+ * @since 2021-07-27 11:28
+ */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @NoArgsConstructor

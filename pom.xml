@@ -4,9 +4,16 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.3.0.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
     <groupId>com.asoulfan.asfbbs</groupId>
     <artifactId>asfbbs</artifactId>
-    <version>1.0</version>
+    <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -17,17 +24,11 @@
         <module>asfbbs-user</module>
     </modules>
 
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.3.0.RELEASE</version>
-        <relativePath/> <!-- lookup parent from repository -->
-    </parent>
-
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
+
         <spring-cloud.version>Hoxton.SR5</spring-cloud.version>
         <spring-cloud-alibaba.version>2.2.0.RELEASE</spring-cloud-alibaba.version>
         <mybatis-plus.version>3.4.1</mybatis-plus.version>
@@ -41,7 +42,7 @@
         <nimbus-jose-jwt.version>8.16</nimbus-jose-jwt.version>
         <jasypt.version>2.1.1</jasypt.version>
 
-        <asfbbs-common.version>1.0</asfbbs-common.version>
+        <asfbbs-common.version>1.0.0-SNAPSHOT</asfbbs-common.version>
     </properties>
 
     <dependencies>
@@ -75,7 +76,16 @@
 
     <dependencyManagement>
         <dependencies>
+            <!-- region 二方包 -->
+            <!--通用模块-->
+            <dependency>
+                <groupId>com.asoulfan.asfbbs</groupId>
+                <artifactId>asfbbs-common</artifactId>
+                <version>${asfbbs-common.version}</version>
+            </dependency>
+            <!-- endregion -->
 
+            <!-- region 三方包 spring cloud -->
             <!--Spring Cloud 相关依赖-->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
@@ -93,14 +103,9 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <!-- endregion -->
 
-            <!--通用模块-->
-            <dependency>
-                <groupId>com.asoulfan.asfbbs</groupId>
-                <artifactId>asfbbs-common</artifactId>
-                <version>${asfbbs-common.version}</version>
-            </dependency>
-
+            <!-- region 三方包 数据源相关 -->
             <!-- mybatis-plus -->
             <dependency>
                 <groupId>com.baomidou</groupId>
@@ -129,6 +134,8 @@
                 <version>${druid.version}</version>
             </dependency>
 
+            <!-- endregion -->
+            <!-- region 三方包 其他 -->
             <!--集成logstash-->
             <dependency>
                 <groupId>net.logstash.logback</groupId>
@@ -168,6 +175,7 @@
                 <artifactId>jasypt-spring-boot-starter</artifactId>
                 <version>${jasypt.version}</version>
             </dependency>
+            <!-- endregion -->
 
         </dependencies>
     </dependencyManagement>
@@ -197,4 +205,14 @@
         </plugins>
     </build>
 
+    <distributionManagement>
+        <repository>
+            <id>rdc-releases</id>
+            <url>https://packages.aliyun.com/maven/repository/2132914-release-q8oIIv/</url>
+        </repository>
+        <snapshotRepository>
+            <id>rdc-snapshots</id>
+            <url>https://packages.aliyun.com/maven/repository/2132914-snapshot-nQYiiB</url>
+        </snapshotRepository>
+    </distributionManagement>
 </project>

@@ -3,12 +3,12 @@ package com.asoulfan.asfbbs.exception;
 import com.asoulfan.asfbbs.api.IErrorCode;
 
 /**
- * @program: ASFBBS
- * @description: 自定义API异常
- * @packagename: com.asoulfan.asfbbs.exception
- * @author: Cscar
- * @date: 2021-07-26 10:20
- **/
+
+ * : 自定义API异常
+
+ * @author Cscar
+ * @since 2021-07-26 10:20
+ */
 public class ApiException extends RuntimeException {
     private IErrorCode errorCode;
 

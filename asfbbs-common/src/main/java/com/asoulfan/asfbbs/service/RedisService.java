@@ -5,12 +5,12 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * @program: ASFBBS
- * @description: Redis操作
- * @packagename: com.asoulfan.asfbbs.service
- * @author: Cscar
- * @date: 2021-07-26 10:28
- **/
+
+ * : Redis操作
+
+ * @author Cscar
+ * @since 2021-07-26 10:28
+ */
 public interface RedisService {
 
 

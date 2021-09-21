@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.Map;
 
 /**
- * @program: ASFBBS
- * @description: 认证服务远程调用
- * @packagename: com.asoulfan.asfbbs.admin.service
- * @author: Cscar
- * @date: 2021-08-03 11:47
- **/
+
+ * : 认证服务远程调用
+
+ * @author Cscar
+ * @since 2021-08-03 11:47
+ */
 @FeignClient("asfbbs-auth")
 public interface AuthService {
     @PostMapping(value = "/oauth/token")

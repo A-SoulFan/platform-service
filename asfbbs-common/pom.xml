@@ -4,19 +4,18 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.asoulfan.asfbbs</groupId>
+    <parent>
+        <groupId>com.asoulfan.asfbbs</groupId>
+        <artifactId>asfbbs</artifactId>
+        <version>1.0.0-SNAPSHOT</version>
+    </parent>
+
     <artifactId>asfbbs-common</artifactId>
-    <version>1.0</version>
+    <version>1.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>asfbbs-common</name>
     <description>asfbbs-common project for asfbbs</description>
-
-    <parent>
-        <groupId>com.asoulfan.asfbbs</groupId>
-        <artifactId>asfbbs</artifactId>
-        <version>1.0</version>
-    </parent>
 
     <dependencies>
         <dependency>
@@ -26,10 +25,6 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>net.logstash.logback</groupId>
-            <artifactId>logstash-logback-encoder</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

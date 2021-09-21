@@ -16,12 +16,12 @@ import reactor.core.publisher.Mono;
 import java.text.ParseException;
 
 /**
- * @program: ASFBBS
- * @description: 将登录用户的JWT转为用户信息的全局过滤器
- * @packagename: com.asoulfan.asfbbs.filter
- * @author: Cscar
- * @date: 2021-07-28 16:39
- **/
+
+ * : 将登录用户的JWT转为用户信息的全局过滤器
+
+ * @author Cscar
+ * @since 2021-07-28 16:39
+ */
 @Component
 public class AuthGlobalFilter implements GlobalFilter, Ordered {
 

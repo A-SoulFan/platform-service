@@ -20,12 +20,12 @@ import java.util.List;
 /**
  * 角色管理
  *
- * @program: ASFBBS
- * @description: 角色管理
- * @packagename: com.asoulfan.asfbbs.admin
+
+ * : 角色管理
+
  * @author ZGQ
  * @create 2021-08-24-13:15
- **/
+ */
 @Controller
 @RequestMapping("/permission")
 public class PermissionController {
@@ -66,8 +66,8 @@ public class PermissionController {
      * 功能描述:查询权限列表
      * @param: 
      * @return: 
-     * @author: liurd
-     * @date: 2021/8/25 
+     * @author liurd
+     * @since 2021/8/25 
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ResponseBody
@@ -79,8 +79,8 @@ public class PermissionController {
      * 功能描述: 添加新权限
      * @param: 
      * @return: 
-     * @author: liurd
-     * @date: 2021/8/25 
+     * @author liurd
+     * @since 2021/8/25 
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
@@ -93,8 +93,8 @@ public class PermissionController {
      * 功能描述: 删除已有权限
      * @param: permissionId
      * @return: 
-     * @author: liurd
-     * @date: 2021/8/25 
+     * @author liurd
+     * @since 2021/8/25 
      */
     @RequestMapping(value = "/{permissionId}/delete", method = RequestMethod.DELETE)
     @ResponseBody
@@ -108,8 +108,8 @@ public class PermissionController {
      * 功能描述: 更新权限信息
      * @param: 
      * @return: 
-     * @author: liurd
-     * @date: 2021/8/25 
+     * @author liurd
+     * @since 2021/8/25 
      */
     @RequestMapping(value = "/{permissionId}/update", method = RequestMethod.PUT)
     @ResponseBody
