@@ -12,6 +12,7 @@ import com.asoulfan.asfbbs.api.CommonResult;
 
 /**
  * 全局异常处理
+ * todo 异常处理应交由各模块自己处理，可提供注册能力简化使用
  *
  * @author Cscar
  * @since 2021-07-26 10:21

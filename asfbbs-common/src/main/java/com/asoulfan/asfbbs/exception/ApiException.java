@@ -3,9 +3,8 @@ package com.asoulfan.asfbbs.exception;
 import com.asoulfan.asfbbs.api.IErrorCode;
 
 /**
-
- * : 自定义API异常
-
+ * 自定义API异常
+ *
  * @author Cscar
  * @since 2021-07-26 10:20
  */

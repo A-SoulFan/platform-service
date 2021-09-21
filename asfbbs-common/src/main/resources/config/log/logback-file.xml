@@ -2,13 +2,13 @@
 
 <included>
     <appender name="asoul-fan-backend-error" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${log.home.dir}/asoul-fan-backend-error.log</file>
+        <file>${asoul-fan-bbs.log.home.dir}/asoul-fan-backend-error.log</file>
         <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
             <level>error</level>
         </filter>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <FileNamePattern>
-                ${log.home.dir}/asoul-fan-backend-error.log.%d{yyyy-MM-dd}
+                ${asoul-fan-bbs.log.home.dir}/asoul-fan-backend-error.log.%d{yyyy-MM-dd}
             </FileNamePattern>
             <maxHistory>7</maxHistory>
         </rollingPolicy>
@@ -22,10 +22,10 @@
     </appender>
 
     <appender name="asoul-fan-backend-default" class="ch.qos.logback.core.rolling.RollingFileAppender">
-        <file>${log.home.dir}/asoul-fan-backend-default.log</file>
+        <file>${asoul-fan-bbs.log.home.dir}/asoul-fan-backend-default.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
             <FileNamePattern>
-                ${log.home.dir}/asoul-fan-backend-default.log.%d{yyyy-MM-dd}
+                ${asoul-fan-bbs.log.home.dir}/asoul-fan-backend-default.log.%d{yyyy-MM-dd}
             </FileNamePattern>
             <maxHistory>7</maxHistory>
         </rollingPolicy>

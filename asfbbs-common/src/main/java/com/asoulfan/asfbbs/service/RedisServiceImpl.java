@@ -1,17 +1,16 @@
 package com.asoulfan.asfbbs.service;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
-
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.TimeUnit;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+
 /**
-
- * :
-
+ * Redis操作实现类
+ *
  * @author Cscar
  * @since 2021-07-26 10:29
  */

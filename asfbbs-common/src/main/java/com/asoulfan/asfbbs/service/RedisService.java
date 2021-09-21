@@ -5,14 +5,12 @@ import java.util.Map;
 import java.util.Set;
 
 /**
-
- * : Redis操作
-
+ * Redis操作
+ *
  * @author Cscar
  * @since 2021-07-26 10:28
  */
 public interface RedisService {
-
 
     /**
      * 保存属性

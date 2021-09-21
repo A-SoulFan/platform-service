@@ -38,7 +38,7 @@
         <logstash-logback.version>5.3</logstash-logback.version>
         <lombok.version>1.18.16</lombok.version>
         <hutool.version>5.7.5</hutool.version>
-        <jjwt.version>0.9.0</jjwt.version>
+        <jjwt.version>0.9.1</jjwt.version>
         <nimbus-jose-jwt.version>8.16</nimbus-jose-jwt.version>
         <jasypt.version>2.1.1</jasypt.version>
 
@@ -135,6 +135,7 @@
             </dependency>
 
             <!-- endregion -->
+
             <!-- region 三方包 其他 -->
             <!--集成logstash-->
             <dependency>
@@ -161,8 +162,9 @@
             <dependency>
                 <groupId>io.jsonwebtoken</groupId>
                 <artifactId>jjwt</artifactId>
-                <version>${jjwt.version}</version>
+                <version>0.9.1</version>
             </dependency>
+
             <!--JWT(Json Web Token)登录支持-->
             <dependency>
                 <groupId>com.nimbusds</groupId>
@@ -180,11 +182,19 @@
         </dependencies>
     </dependencyManagement>
 
-    <!-- smart-doc文档生成插件 -->
     <build>
-        <finalName>alpha-asfbbs-admin</finalName>
-
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <parameters>true</parameters>
+                </configuration>
+            </plugin>
+
             <plugin>
                 <groupId>com.github.shalousun</groupId>
                 <artifactId>smart-doc-maven-plugin</artifactId>
