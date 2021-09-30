@@ -45,8 +45,8 @@ public class QuestionServiceImpl implements IQuestionService {
     private QuestionMapper questionMapper;
 
     @Override
-    public List<QuestionsVo> getList(String username) {
-        Object o = redisTemplate.opsForValue().get(UserConstant.REGISTER_REDIS_KEY + username);
+    public List<QuestionsVo> getList(String id) {
+        Object o = redisTemplate.opsForValue().get(UserConstant.REGISTER_REDIS_KEY + id);
         if (o == null || !"1".equals(o.toString())) {
             Asserts.fail("已超过答题时限，本次注册失败");
         }
@@ -66,11 +66,10 @@ public class QuestionServiceImpl implements IQuestionService {
 
     @Override
     public boolean score(ScoreVo vo) {
-        Object o = redisTemplate.opsForValue().get(UserConstant.REGISTER_REDIS_KEY + vo.getUsername());
+        Object o = redisTemplate.opsForValue().get(UserConstant.REGISTER_REDIS_KEY + vo.getId());
         if (o == null || !"1".equals(o.toString())) {
             Asserts.fail("已超过答题时限，本次注册失败");
         }
-        //TODO: 1.判断是否是同一套题
         List<QuestionDto> questions = questionMapper.selectList(
                 new QueryWrapper<QuestionDto>()
                         .in("id", vo.getAnswers().stream().map(Answer::getId).collect(Collectors.toList())));
@@ -83,7 +82,7 @@ public class QuestionServiceImpl implements IQuestionService {
         });
         //答对80%则认为成功
         if (NumberUtil.div(num.get(), vo.getAnswers().size()) >= 0.8) {
-            redisTemplate.opsForValue().set(UserConstant.EMAIL_VALID_REDIS_KEY + vo.getUsername(), "1", 5, TimeUnit.MINUTES);
+            redisTemplate.opsForValue().set(UserConstant.EMAIL_VALID_REDIS_KEY + vo.getId(), "1", 5, TimeUnit.MINUTES);
             return true;
         }
         return false;

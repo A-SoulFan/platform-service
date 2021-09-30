@@ -1,6 +1,5 @@
 package com.asoulfan.asfbbs.user.service.impl;
 
-import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import javax.servlet.http.HttpServletResponse;
 
@@ -10,12 +9,12 @@ import org.springframework.stereotype.Service;
 
 import com.asoulfan.asfbbs.constant.UserConstant;
 import com.asoulfan.asfbbs.exception.Asserts;
+import com.asoulfan.asfbbs.user.dto.CaptVo;
 import com.asoulfan.asfbbs.user.service.ICaptService;
 
 import cn.hutool.captcha.CaptchaUtil;
 import cn.hutool.captcha.LineCaptcha;
 import cn.hutool.core.util.IdUtil;
-import cn.hutool.core.util.StrUtil;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -33,37 +32,22 @@ public class CaptServiceImpl implements ICaptService {
     private RedisTemplate<String, Object> redisTemplate;
 
     @Override
-    public String getCapt(HttpServletResponse response) {
-        String code = initCapt(response);
-        if (StrUtil.isNotBlank(code)) {
-            String simpleId = IdUtil.simpleUUID();
-            redisTemplate.opsForValue().set(UserConstant.CAPT_REDIS_KEY + simpleId, code, 1, TimeUnit.MINUTES);
-            return simpleId;
-        }
-        Asserts.fail("生成验证码失败");
-        return null;
-    }
-
-    private String initCapt(HttpServletResponse response) {
+    public CaptVo getCapt() {
+        CaptVo vo = new CaptVo();
         LineCaptcha lineCaptcha = CaptchaUtil.createLineCaptcha(200, 100);
-        try {
-            // FIXME 2021/9/5 验证码图片转base64给前端，直接写入rsp流会导致返回值不是json
-            lineCaptcha.write(response.getOutputStream());
-        } catch (IOException ioException) {
-            log.error("读取response io 失败，ex:" + ioException.getMessage());
-            return null;
-        }
-        return lineCaptcha.getCode();
+        vo.setImgByte(lineCaptcha.getImageBase64Data().replace("data:image/png;base64,", ""));
+        String simpleId = IdUtil.simpleUUID();
+        redisTemplate.opsForValue().set(UserConstant.CAPT_REDIS_KEY + simpleId, lineCaptcha.getCode(), 1, TimeUnit.MINUTES);
+        vo.setCaptId(simpleId);
+        return vo;
     }
 
     @Override
-    public void verify(String id, String code) {
+    public boolean verify(String id, String code) {
         Object o = redisTemplate.opsForValue().get(UserConstant.CAPT_REDIS_KEY + id);
         if (o == null) {
             Asserts.fail("验证码过期，请重新获取验证码");
         }
-        if (!o.toString().equals(code)) {
-            Asserts.fail("验证码不正确");
-        }
+        return o.toString().equals(code);
     }
 }

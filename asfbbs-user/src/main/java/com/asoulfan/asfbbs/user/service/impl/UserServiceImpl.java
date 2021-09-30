@@ -1,17 +1,19 @@
 package com.asoulfan.asfbbs.user.service.impl;
 
+import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import javax.annotation.Resource;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.RandomStringUtils;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -30,6 +32,7 @@ import com.asoulfan.asfbbs.user.service.IUserService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 
 import cn.hutool.core.lang.Tuple;
+import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.extra.mail.MailUtil;
 import cn.hutool.http.HttpUtil;
@@ -66,10 +69,11 @@ public class UserServiceImpl implements IUserService {
 
     /**
      * 登录接口
+     *
+     * @return
      */
     @Override
-    public void login(String username, String password, HttpServletResponse response) {
-
+    public Oauth2TokenDto login(String username, String password, HttpServletResponse response) {
         //1.生成token
         Map<String, String> params = new HashMap<>();
         params.put("client_id", AuthConstant.ADMIN_CLIENT_ID);
@@ -78,16 +82,10 @@ public class UserServiceImpl implements IUserService {
         params.put("username", username);
         params.put("password", password);
         CommonResult<Oauth2TokenDto> restResult = authService.getAccessToken(params);
-        System.out.println(JSONUtil.toJsonStr(restResult));
-        // FIXME 2021/9/5 请求从网关来，不能直接setcookie，和anti老师沟通下setcookie的返回值约定，看是不是在common包里建一个setcookie的rsp类
         if (ResultCode.SUCCESS.getCode() == restResult.getCode() && restResult.getData() != null) {
-            //TODO：线上需要setDomain
-            Cookie token = new Cookie("token", restResult.getData().getToken());
-            token.setPath("/");
-            token.setHttpOnly(true);
-            response.addCookie(token);
+            return restResult.getData();
         } else {
-            Asserts.fail("获取token失败");
+            return null;
         }
     }
 
@@ -98,56 +96,48 @@ public class UserServiceImpl implements IUserService {
      * @return
      */
     @Override
-    public Boolean register(RegisterVo vo) {
-        //TODO:重复注册问题
-        UserDto userDto = userMapper.selectOne(new QueryWrapper<UserDto>()
-                .eq("username", vo.getUsername())
-                .eq("status", 1));
-        if (userDto != null) {
-            Asserts.fail("用户名已被注册");
-        }
+    public String verifyUserInfo(RegisterVo vo) {
         vo.setPassword(encoder.encode(vo.getPassword()));
         UserDto newUser = new UserDto();
         BeanUtils.copyProperties(vo, newUser);
+        String id = IdUtil.simpleUUID();
         //插入10min过期的tokenA，这段时间内用户可以重复答题
-        redisTemplate.opsForValue().set(UserConstant.REGISTER_REDIS_KEY + vo.getUsername(), "1", 10, TimeUnit.MINUTES);
+        redisTemplate.opsForValue().set(UserConstant.REGISTER_REDIS_KEY + id, "1", 10, TimeUnit.MINUTES);
         //插入30min过期的用户信息
-        // FIXME 2021/9/5 用户信息在这里存到redis会导致30分钟内用同一用户名注册的人密码头像等信息被覆盖
-        redisTemplate.opsForValue().set(UserConstant.USERINFO_REDIS_KEY + vo.getUsername(), JSONUtil.toJsonStr(newUser), 30, TimeUnit.MINUTES);
-        return true;
-
+        redisTemplate.opsForValue().set(UserConstant.USERINFO_REDIS_KEY + id, JSONUtil.toJsonStr(newUser), 30, TimeUnit.MINUTES);
+        return id;
     }
 
     /**
      * 发送email接口
      *
      * @param email
-     * @param username
+     * @param id
      * @return
      */
     @Override
-    public Boolean email(String email, String username) {
-        Object o = redisTemplate.opsForValue().get(UserConstant.EMAIL_VALID_REDIS_KEY + username);
+    public Boolean email(String email, String id) {
+        Object o = redisTemplate.opsForValue().get(UserConstant.EMAIL_VALID_REDIS_KEY + id);
         if (o == null || !"1".equals(o.toString())) {
             Asserts.fail("已超过邮箱发送时限，本次注册失败");
-        }   
+        }
         String random = RandomStringUtils.random(4, "0123456789");
         Tuple tuple = new Tuple(email, random);
-        redisTemplate.opsForValue().set(UserConstant.EMAIL_REDIS_KEY + username, JSONUtil.parse(tuple), 5, TimeUnit.MINUTES);
-        String send = MailUtil.send(email, "验证码-ASOULFUN", username + "您好，您正在ASOULFUN绑定邮箱注册账号，本次操作的验证码为：" + random + "，请在5分钟内完成验证。：", false);
+        redisTemplate.opsForValue().set(UserConstant.EMAIL_REDIS_KEY + id, JSONUtil.parse(tuple), 5, TimeUnit.MINUTES);
+        String send = MailUtil.send(email, "验证码-ASOULFUN", id + "您好，您正在ASOULFUN绑定邮箱注册账号，本次操作的验证码为：" + random + "，请在5分钟内完成验证。：", false);
         return StrUtil.isNotBlank(send);
     }
 
     /**
      * 验证email接口
      *
-     * @param username
+     * @param id
      * @param code
      * @return
      */
     @Override
-    public Boolean verify(String username, String code) {
-        Object o = redisTemplate.opsForValue().get(UserConstant.EMAIL_REDIS_KEY + username);
+    public Boolean verify(String id, String code) {
+        Object o = redisTemplate.opsForValue().get(UserConstant.EMAIL_REDIS_KEY + id);
         if (o == null) {
             Asserts.fail("验证码过期");
         }
@@ -155,7 +145,7 @@ public class UserServiceImpl implements IUserService {
         if (!code.equals(result.get(1))) {
             Asserts.fail("验证码不正确");
         }
-        Object userInfo = redisTemplate.opsForValue().get(UserConstant.USERINFO_REDIS_KEY + username);
+        Object userInfo = redisTemplate.opsForValue().get(UserConstant.USERINFO_REDIS_KEY + id);
         if (userInfo == null) {
             Asserts.fail("注册时间过长，请重新注册");
         }
@@ -172,7 +162,7 @@ public class UserServiceImpl implements IUserService {
      */
     @Override
     public String getBiliToken(String username) {
-        UserDto userDto = userMapper.selectOne(new QueryWrapper<UserDto>().eq("username", username).eq("status", 1));
+        UserDto userDto = getUserInfo(username);
         if (userDto == null) {
             Asserts.fail("用户信息有误");
         }
@@ -221,4 +211,20 @@ public class UserServiceImpl implements IUserService {
         return null;
     }
 
+    @Override
+    public UserDto getUserInfo(String username) {
+        return userMapper.selectOne(new QueryWrapper<UserDto>()
+                .eq("username", username)
+                .eq("status", 1));
+    }
+
+    @Override
+    public boolean isUserExist(String id) {
+        Object o = redisTemplate.opsForValue().get(UserConstant.USERINFO_REDIS_KEY + id);
+        if (o == null) {
+            return false;
+        }
+        UserDto userDto = JSONUtil.toBean(o.toString(), UserDto.class);
+        return getUserInfo(userDto.getUsername()) != null;
+    }
 }

@@ -2,7 +2,9 @@ package com.asoulfan.asfbbs.user.service;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.asoulfan.asfbbs.user.domain.Oauth2TokenDto;
 import com.asoulfan.asfbbs.user.dto.RegisterVo;
+import com.asoulfan.asfbbs.user.dto.UserDto;
 
 /**
  * @program: ASFBBS
@@ -12,15 +14,19 @@ import com.asoulfan.asfbbs.user.dto.RegisterVo;
  * @date: 2021-08-27
  **/
 public interface IUserService {
-    void login(String username, String password, HttpServletResponse response);
+    Oauth2TokenDto login(String username, String password, HttpServletResponse response);
 
-    Boolean register(RegisterVo vo);
+    String verifyUserInfo(RegisterVo vo);
 
-    Boolean email(String email, String username);
+    Boolean email(String email, String id);
 
-    Boolean verify(String username, String code);
+    Boolean verify(String id, String code);
 
     String getBiliToken(String username);
 
     Boolean confirm(String username);
+
+    UserDto getUserInfo(String username);
+
+    boolean isUserExist(String id);
 }

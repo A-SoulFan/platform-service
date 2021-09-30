@@ -5,6 +5,8 @@ import java.util.List;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
+import org.hibernate.validator.constraints.Length;
+
 import com.asoulfan.asfbbs.user.domain.Answer;
 
 import lombok.Data;
@@ -20,10 +22,11 @@ import lombok.Data;
 public class ScoreVo {
 
     /**
-     * 账号
+     *
      */
     @NotBlank
-    private String username;
+    @Length
+    private String id;
 
     /**
      * 回答

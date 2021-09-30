@@ -2,6 +2,8 @@ package com.asoulfan.asfbbs.user.service;
 
 import javax.servlet.http.HttpServletResponse;
 
+import com.asoulfan.asfbbs.user.dto.CaptVo;
+
 /**
  * @program: ASFBBS
  * @description:
@@ -11,7 +13,7 @@ import javax.servlet.http.HttpServletResponse;
  **/
 public interface ICaptService {
 
-    String getCapt(HttpServletResponse response);
+    CaptVo getCapt();
 
-    void verify(String id, String code);
+    boolean verify(String id, String code);
 }

@@ -12,7 +12,7 @@ import org.springframework.web.multipart.MultipartFile;
  * @date: 2021-09-05
  **/
 public interface IIconService {
-    String upload(MultipartFile file);
+    String upload(String imgByte);
 
-    void get(String id, HttpServletResponse response);
+    String get(String id);
 }
