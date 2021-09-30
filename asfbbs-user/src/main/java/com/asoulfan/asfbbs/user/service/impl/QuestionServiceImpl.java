@@ -1,18 +1,7 @@
 package com.asoulfan.asfbbs.user.service.impl;
 
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
-
-import org.springframework.beans.BeanUtils;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.stereotype.Service;
-
+import cn.hutool.core.util.NumberUtil;
+import cn.hutool.json.JSONUtil;
 import com.asoulfan.asfbbs.constant.UserConstant;
 import com.asoulfan.asfbbs.exception.Asserts;
 import com.asoulfan.asfbbs.user.domain.Answer;
@@ -23,10 +12,17 @@ import com.asoulfan.asfbbs.user.dto.ScoreVo;
 import com.asoulfan.asfbbs.user.mapper.QuestionMapper;
 import com.asoulfan.asfbbs.user.service.IQuestionService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Service;
 
-import cn.hutool.core.util.NumberUtil;
-import cn.hutool.json.JSONObject;
-import cn.hutool.json.JSONUtil;
+import javax.annotation.Resource;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 /**
  * @program: ASFBBS
@@ -41,7 +37,7 @@ public class QuestionServiceImpl implements IQuestionService {
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
 
-    @Autowired
+    @Resource
     private QuestionMapper questionMapper;
 
     @Override
@@ -57,7 +53,7 @@ public class QuestionServiceImpl implements IQuestionService {
             List<Options> options = JSONUtil.toList(a.getOptions(), Options.class);
             QuestionsVo vo = new QuestionsVo();
             vo.setQuestion(a.getQuestion());
-            vo.setId(a.getId());
+            vo.setQuestionId(a.getId());
             vo.setOptions(options);
             vos.add(vo);
         });
@@ -72,10 +68,10 @@ public class QuestionServiceImpl implements IQuestionService {
         }
         List<QuestionDto> questions = questionMapper.selectList(
                 new QueryWrapper<QuestionDto>()
-                        .in("id", vo.getAnswers().stream().map(Answer::getId).collect(Collectors.toList())));
+                        .in("id", vo.getAnswers().stream().map(Answer::getQuestionId).collect(Collectors.toList())));
         AtomicInteger num = new AtomicInteger();
         questions.forEach(a -> {
-            Optional<Answer> any = vo.getAnswers().stream().filter(b -> a.getId().equals(b.getId())).findAny();
+            Optional<Answer> any = vo.getAnswers().stream().filter(b -> a.getId().equals(b.getQuestionId())).findAny();
             if (any.isPresent() && any.get().getAnswer().equals(a.getAnswer())) {
                 num.getAndIncrement();
             }

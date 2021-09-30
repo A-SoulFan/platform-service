@@ -3,6 +3,9 @@ package com.asoulfan.asfbbs.user.controller;
 import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -40,6 +43,7 @@ import com.asoulfan.asfbbs.user.service.IUserService;
 
 @RestController
 @RequestMapping("/user")
+@Validated
 public class UserController {
 
     @Autowired
@@ -62,7 +66,7 @@ public class UserController {
      * @return
      */
     @PostMapping("/login")
-    public CommonResult<Oauth2TokenDto> login(@RequestBody @Validated LoginVo vo, HttpServletResponse response) {
+    public CommonResult<Oauth2TokenDto> login(@RequestBody LoginVo vo, HttpServletResponse response) {
         if (!captService.verify(vo.getCaptId(), vo.getCaptCode())) {
             Asserts.fail("验证码错误");
         }
@@ -84,7 +88,7 @@ public class UserController {
     }
 
     /**
-     * 用户注册时验证用户信息接口，校验通过后返回id作为后续注册流程的入参，由此来避免同时注册导致的用户信息被覆盖
+     * 用户注册时验证用户信息接口
      *
      * @param vo
      * @return
@@ -101,11 +105,11 @@ public class UserController {
     /**
      * 获取答题
      *
-     * @param id verifyUserInfo接口返回的id
+     * @param id verifyUserInfo接口返回的用户唯一id
      * @return
      */
     @GetMapping("/question/list")
-    public CommonResult<List<QuestionsVo>> getQuestions(@RequestParam("id") String id) {
+    public CommonResult<List<QuestionsVo>> getQuestions(@RequestParam("id") @NotBlank(message = "用户注册id不能为空") String id) {
         if (userService.isUserExist(id)) {
             Asserts.fail("该用户已被注册");
         }
@@ -130,11 +134,13 @@ public class UserController {
      * 发送邮件
      *
      * @param email 邮箱地址
-     * @param id    用户名称
+     * @param id    verifyUserInfo接口返回的id
      * @return
      */
     @GetMapping("/email")
-    public CommonResult<Boolean> email(@RequestParam("email") @Email String email, @RequestParam("id") String id) {
+    public CommonResult<Boolean> email(
+            @RequestParam("email") @Email(message = "非法邮件格式") String email,
+            @RequestParam("id") @NotBlank(message = "用户注册id不能为空") String id) {
         if (userService.isUserExist(id)) {
             Asserts.fail("该用户已被注册");
         }
@@ -144,12 +150,13 @@ public class UserController {
     /**
      * 验证邮箱验证码
      *
-     * @param id   用户账号
-     * @param code 邮箱验证号
+     * @param id   verifyUserInfo接口返回的id
+     * @param code 邮箱验证码
      * @return
      */
     @GetMapping("/verify")
-    public CommonResult<Boolean> verify(@RequestParam("id") String id, @RequestParam("code") String code) {
+    public CommonResult<Boolean> verify(@RequestParam("id") @NotBlank(message = "用户注册id不能为空") String id,
+                                        @RequestParam("code") @NotBlank(message = "邮箱验证码不能为空") String code) {
         if (userService.isUserExist(id)) {
             Asserts.fail("该用户已被注册");
         }
@@ -159,7 +166,7 @@ public class UserController {
     /**
      * 绑定b站账号
      *
-     * @param username 用户账号，后期优化后应该不需要传参数，直接从token中获取
+     * @param username 用户账号
      * @return
      */
     @GetMapping("/blbl/token")
@@ -170,7 +177,7 @@ public class UserController {
     /**
      * 确认绑定
      *
-     * @param username 用户账号，后期优化后应该不需要传参数，直接从token中获取
+     * @param username 用户账号
      * @return
      */
     @GetMapping("/blbl/confirm")

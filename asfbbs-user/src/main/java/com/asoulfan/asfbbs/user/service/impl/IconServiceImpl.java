@@ -1,29 +1,18 @@
 package com.asoulfan.asfbbs.user.service.impl;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-
-import javax.servlet.http.HttpServletResponse;
-
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-import org.springframework.web.multipart.MultipartFile;
-
-import com.asoulfan.asfbbs.exception.Asserts;
-import com.asoulfan.asfbbs.user.service.IIconService;
-
 import cn.hutool.core.codec.Base64;
-import cn.hutool.core.img.ImgUtil;
 import cn.hutool.core.io.FileTypeUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.IdUtil;
-import cn.hutool.core.util.StrUtil;
+import com.asoulfan.asfbbs.exception.Asserts;
+import com.asoulfan.asfbbs.user.service.IIconService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.InputStream;
 
 /**
  * @program: ASFBBS

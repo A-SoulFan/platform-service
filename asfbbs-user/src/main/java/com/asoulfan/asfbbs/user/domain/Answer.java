@@ -14,7 +14,7 @@ public class Answer {
     /**
      * 问题id
      */
-    private String id;
+    private String questionId;
 
     /**
      * 答案

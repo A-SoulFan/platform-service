@@ -22,15 +22,14 @@ import lombok.Data;
 public class ScoreVo {
 
     /**
-     *
+     * 注册用户唯一id
      */
-    @NotBlank
-    @Length
+    @NotBlank(message = "用户id不能为空")
     private String id;
 
     /**
      * 回答
      */
-    @NotNull
+    @NotNull(message = "答案不能为空")
     private List<Answer> answers;
 }

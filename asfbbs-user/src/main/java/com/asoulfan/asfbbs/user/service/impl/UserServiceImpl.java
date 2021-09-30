@@ -103,6 +103,8 @@ public class UserServiceImpl implements IUserService {
         String id = IdUtil.simpleUUID();
         //插入10min过期的tokenA，这段时间内用户可以重复答题
         redisTemplate.opsForValue().set(UserConstant.REGISTER_REDIS_KEY + id, "1", 10, TimeUnit.MINUTES);
+        //插入id和username映射关系
+        redisTemplate.opsForValue().set(UserConstant.USERNAME_ID_REDIS_KEY + id, vo.getUsername(), 30, TimeUnit.MINUTES);
         //插入30min过期的用户信息
         redisTemplate.opsForValue().set(UserConstant.USERINFO_REDIS_KEY + id, JSONUtil.toJsonStr(newUser), 30, TimeUnit.MINUTES);
         return id;
@@ -121,10 +123,14 @@ public class UserServiceImpl implements IUserService {
         if (o == null || !"1".equals(o.toString())) {
             Asserts.fail("已超过邮箱发送时限，本次注册失败");
         }
+        Object userNameObject = redisTemplate.opsForValue().get(UserConstant.USERNAME_ID_REDIS_KEY + id);
+        if (userNameObject == null) {
+            Asserts.fail("注册时间过长，请重新注册");
+        }
         String random = RandomStringUtils.random(4, "0123456789");
         Tuple tuple = new Tuple(email, random);
         redisTemplate.opsForValue().set(UserConstant.EMAIL_REDIS_KEY + id, JSONUtil.parse(tuple), 5, TimeUnit.MINUTES);
-        String send = MailUtil.send(email, "验证码-ASOULFUN", id + "您好，您正在ASOULFUN绑定邮箱注册账号，本次操作的验证码为：" + random + "，请在5分钟内完成验证。：", false);
+        String send = MailUtil.send(email, "验证码-ASOULFUN", userNameObject.toString() + "您好，您正在ASOULFUN绑定邮箱注册账号，本次操作的验证码为：" + random + "，请在5分钟内完成验证。", false);
         return StrUtil.isNotBlank(send);
     }
 
@@ -220,11 +226,10 @@ public class UserServiceImpl implements IUserService {
 
     @Override
     public boolean isUserExist(String id) {
-        Object o = redisTemplate.opsForValue().get(UserConstant.USERINFO_REDIS_KEY + id);
-        if (o == null) {
-            return false;
+        Object userNameObject = redisTemplate.opsForValue().get(UserConstant.USERNAME_ID_REDIS_KEY + id);
+        if (userNameObject == null) {
+            Asserts.fail("注册时间过长，请重新注册");
         }
-        UserDto userDto = JSONUtil.toBean(o.toString(), UserDto.class);
-        return getUserInfo(userDto.getUsername()) != null;
+        return getUserInfo(userNameObject.toString()) != null;
     }
 }

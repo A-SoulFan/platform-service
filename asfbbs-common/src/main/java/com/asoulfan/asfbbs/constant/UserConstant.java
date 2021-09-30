@@ -31,5 +31,10 @@ public interface UserConstant {
     /**
      * redis 存储未完全注册用户信息
      */
-    String USERINFO_REDIS_KEY="user_info_";
+    String USERINFO_REDIS_KEY = "user_info_";
+
+    /**
+     存储注册时生成的id和username映射关系
+     */
+    String USERNAME_ID_REDIS_KEY = "username_id_";
 }
