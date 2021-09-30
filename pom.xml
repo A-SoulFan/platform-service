@@ -4,9 +4,16 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>2.3.0.RELEASE</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+
     <groupId>com.asoulfan.asfbbs</groupId>
     <artifactId>asfbbs</artifactId>
-    <version>1.0</version>
+    <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>
@@ -17,17 +24,11 @@
         <module>asfbbs-user</module>
     </modules>
 
-    <parent>
-        <groupId>org.springframework.boot</groupId>
-        <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.3.0.RELEASE</version>
-        <relativePath/> <!-- lookup parent from repository -->
-    </parent>
-
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <java.version>1.8</java.version>
+
         <spring-cloud.version>Hoxton.SR5</spring-cloud.version>
         <spring-cloud-alibaba.version>2.2.0.RELEASE</spring-cloud-alibaba.version>
         <mybatis-plus.version>3.4.1</mybatis-plus.version>
@@ -37,11 +38,11 @@
         <logstash-logback.version>5.3</logstash-logback.version>
         <lombok.version>1.18.16</lombok.version>
         <hutool.version>5.7.5</hutool.version>
-        <jjwt.version>0.9.0</jjwt.version>
+        <jjwt.version>0.9.1</jjwt.version>
         <nimbus-jose-jwt.version>8.16</nimbus-jose-jwt.version>
         <jasypt.version>2.1.1</jasypt.version>
 
-        <asfbbs-common.version>1.0</asfbbs-common.version>
+        <asfbbs-common.version>1.0.0-SNAPSHOT</asfbbs-common.version>
     </properties>
 
     <dependencies>
@@ -75,7 +76,16 @@
 
     <dependencyManagement>
         <dependencies>
+            <!-- region 二方包 -->
+            <!--通用模块-->
+            <dependency>
+                <groupId>com.asoulfan.asfbbs</groupId>
+                <artifactId>asfbbs-common</artifactId>
+                <version>${asfbbs-common.version}</version>
+            </dependency>
+            <!-- endregion -->
 
+            <!-- region 三方包 spring cloud -->
             <!--Spring Cloud 相关依赖-->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
@@ -93,14 +103,9 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <!-- endregion -->
 
-            <!--通用模块-->
-            <dependency>
-                <groupId>com.asoulfan.asfbbs</groupId>
-                <artifactId>asfbbs-common</artifactId>
-                <version>${asfbbs-common.version}</version>
-            </dependency>
-
+            <!-- region 三方包 数据源相关 -->
             <!-- mybatis-plus -->
             <dependency>
                 <groupId>com.baomidou</groupId>
@@ -129,6 +134,9 @@
                 <version>${druid.version}</version>
             </dependency>
 
+            <!-- endregion -->
+
+            <!-- region 三方包 其他 -->
             <!--集成logstash-->
             <dependency>
                 <groupId>net.logstash.logback</groupId>
@@ -154,8 +162,9 @@
             <dependency>
                 <groupId>io.jsonwebtoken</groupId>
                 <artifactId>jjwt</artifactId>
-                <version>${jjwt.version}</version>
+                <version>0.9.1</version>
             </dependency>
+
             <!--JWT(Json Web Token)登录支持-->
             <dependency>
                 <groupId>com.nimbusds</groupId>
@@ -168,18 +177,28 @@
                 <artifactId>jasypt-spring-boot-starter</artifactId>
                 <version>${jasypt.version}</version>
             </dependency>
+            <!-- endregion -->
 
         </dependencies>
     </dependencyManagement>
 
-    <!-- smart-doc文档生成插件 -->
     <build>
-        <finalName>alpha-asfbbs-admin</finalName>
-
         <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                    <parameters>true</parameters>
+                </configuration>
+            </plugin>
+
             <plugin>
                 <groupId>com.github.shalousun</groupId>
                 <artifactId>smart-doc-maven-plugin</artifactId>
+                <version>2.2.4</version>
                 <configuration>
                     <configFile>smart-doc.json</configFile>
                     <projectName>projectName</projectName>
@@ -196,4 +215,14 @@
         </plugins>
     </build>
 
+    <distributionManagement>
+        <repository>
+            <id>rdc-releases</id>
+            <url>https://packages.aliyun.com/maven/repository/2132914-release-q8oIIv/</url>
+        </repository>
+        <snapshotRepository>
+            <id>rdc-snapshots</id>
+            <url>https://packages.aliyun.com/maven/repository/2132914-snapshot-nQYiiB</url>
+        </snapshotRepository>
+    </distributionManagement>
 </project>

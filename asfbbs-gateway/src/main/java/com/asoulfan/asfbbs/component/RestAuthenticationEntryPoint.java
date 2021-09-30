@@ -16,12 +16,12 @@ import reactor.core.publisher.Mono;
 import java.nio.charset.Charset;
 
 /**
- * @program: ASFBBS
- * @description: 自定义返回结果, 没有登录或者token过期
- * @packagename: com.asoulfan.asfbbs.component
- * @author: Cscar
- * @date: 2021-07-28 16:27
- **/
+
+ * : 自定义返回结果, 没有登录或者token过期
+
+ * @author Cscar
+ * @since 2021-07-28 16:27
+ */
 @Component
 public class RestAuthenticationEntryPoint implements ServerAuthenticationEntryPoint {
 

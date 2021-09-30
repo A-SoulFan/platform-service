@@ -16,12 +16,12 @@ import reactor.core.publisher.Mono;
 import java.nio.charset.Charset;
 
 /**
- * @program: ASFBBS
- * @description: 自定义返回结果, 没有权限访问时
- * @packagename: com.asoulfan.asfbbs.component
- * @author: Cscar
- * @date: 2021-07-28 16:31
- **/
+
+ * : 自定义返回结果, 没有权限访问时
+
+ * @author Cscar
+ * @since 2021-07-28 16:31
+ */
 @Component
 public class RestfulAccessDeniedHandler implements ServerAccessDeniedHandler {
     @Override

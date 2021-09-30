@@ -1,6 +1,5 @@
 package com.asoulfan.asfbbs.exception;
 
-import com.asoulfan.asfbbs.api.CommonResult;
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
@@ -9,13 +8,15 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.asoulfan.asfbbs.api.CommonResult;
+
 /**
- * @program: ASFBBS
- * @description: 全局异常处理
- * @packagename: com.asoulfan.asfbbs.exception
- * @author: Cscar
- * @date: 2021-07-26 10:21
- **/
+ * 全局异常处理
+ * todo 异常处理应交由各模块自己处理，可提供注册能力简化使用
+ *
+ * @author Cscar
+ * @since 2021-07-26 10:21
+ */
 @ControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -36,7 +37,7 @@ public class GlobalExceptionHandler {
         if (bindingResult.hasErrors()) {
             FieldError fieldError = bindingResult.getFieldError();
             if (fieldError != null) {
-                message = fieldError.getField()+fieldError.getDefaultMessage();
+                message = fieldError.getField() + fieldError.getDefaultMessage();
             }
         }
         return CommonResult.validateFailed(message);
@@ -50,7 +51,7 @@ public class GlobalExceptionHandler {
         if (bindingResult.hasErrors()) {
             FieldError fieldError = bindingResult.getFieldError();
             if (fieldError != null) {
-                message = fieldError.getField()+fieldError.getDefaultMessage();
+                message = fieldError.getField() + fieldError.getDefaultMessage();
             }
         }
         return CommonResult.validateFailed(message);

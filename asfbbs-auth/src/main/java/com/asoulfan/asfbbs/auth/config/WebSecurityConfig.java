@@ -11,12 +11,12 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 /**
- * @program: ASFBBS
- * @description: SpringSecurity配置
- * @packagename: com.asoulfan.auth.config
- * @author: Cscar
- * @date: 2021-07-29 15:08
- **/
+
+ * : SpringSecurity配置
+
+ * @author Cscar
+ * @since 2021-07-29 15:08
+ */
 @Configuration
 @EnableWebSecurity
 public class WebSecurityConfig extends WebSecurityConfigurerAdapter {

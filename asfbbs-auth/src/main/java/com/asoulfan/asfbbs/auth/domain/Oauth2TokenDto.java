@@ -5,12 +5,12 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @program: ASFBBS
- * @description: Oauth获取token返回信息
- * @packagename: com.asoulfan.asfbbs.auth.domain
- * @author: Cscar
- * @date: 2021-07-29 16:04
- **/
+
+ * : Oauth获取token返回信息
+
+ * @author Cscar
+ * @since 2021-07-29 16:04
+ */
 @Data
 @EqualsAndHashCode(callSuper = false)
 @Builder

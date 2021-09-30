@@ -1,12 +1,11 @@
 package com.asoulfan.asfbbs.constant;
 
 /**
- * @program: ASFBBS
- * @description: 权限相关常量定义
- * @packagename: com.asoulfan.asfbbs.domain
- * @author: Cscar
- * @date: 2021-07-26 10:42
- **/
+ * 权限相关常量定义
+ *
+ * @author Cscar
+ * @since 2021-07-26 10:42
+ */
 public interface AuthConstant {
 
     /**

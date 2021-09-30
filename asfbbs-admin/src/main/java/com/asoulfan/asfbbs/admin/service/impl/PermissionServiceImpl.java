@@ -1,4 +1,5 @@
 package com.asoulfan.asfbbs.admin.service.impl;
+import java.util.Date;
 
 import com.asoulfan.asfbbs.admin.domain.Permission;
 import com.asoulfan.asfbbs.admin.domain.Role;
@@ -17,6 +18,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +36,7 @@ import cn.hutool.core.collection.CollUtil;
  */
 @Service
 public class PermissionServiceImpl implements PermissionService {
-    
+
     @Autowired
     private RedisTemplate<String, Object> redisTemplate;
 
@@ -42,14 +45,23 @@ public class PermissionServiceImpl implements PermissionService {
 
     @Resource
     private RolePermissionMapper rolePermissionMapper;
-    
+
     @Resource
     private RoleService roleService;
-    
-    
+
     @Override
-    public List<Permission> getByUserId(String userId) {
-        return permissionMapper.getByUserId(userId);
+    public List<Permission> getByUserId(Long userId) {
+        // return permissionMapper.getByUserId(userId);
+
+        Set<Long> roleIds = roleService.findRoleIdByUserId(userId);
+        if (CollUtil.isEmpty(roleIds)) {
+            return new ArrayList<>();
+        }
+        QueryWrapper<RolePermission> wrapper = new QueryWrapper<>();
+        wrapper.in("role_id", roleIds);
+        List<RolePermission> rolePermissions = rolePermissionMapper.selectList(wrapper);
+        Set<Long> permissionIds = rolePermissions.stream().map(RolePermission::getPermissionId).collect(Collectors.toSet());
+        return permissionMapper.selectBatchIds(permissionIds);
     }
 
     @Override
@@ -59,15 +71,28 @@ public class PermissionServiceImpl implements PermissionService {
         //然后存入redis
         //auth:resourceRolesMap
         List<Role> roles = roleService.findRoles();
-        Map<String, String> rolesMap = new HashMap<>();
+        Map<String, List<String>> rolesMap = new HashMap<>();
         for (Role role : roles) {
             List<Permission> permissions = this.findPermissionsByRole(role.getId());
-            permissions.stream().filter(i -> i.getUrl() != null)
-                    .forEach(i -> rolesMap.put(i.getUrl(), role.getCode()));
+            permissions.stream()
+                    .filter(i -> i.getUrl() != null)
+                    .forEach(i -> {
+                        String key = i.getUrl();
+                        if (rolesMap.containsKey(key)) {
+                            List<String> auths = rolesMap.get(key);
+                            auths.add(role.getCode());
+                        } else {
+                            List<String> auths = new ArrayList<>();
+                            auths.add(role.getCode());
+                            rolesMap.put(key, auths);
+                        }
+                    });
         }
 
-        redisTemplate.opsForHash().putAll(AuthConstant.RESOURCE_ROLES_MAP_KEY,  rolesMap);
-
+        if (redisTemplate.hasKey(AuthConstant.RESOURCE_ROLES_MAP_KEY)) {
+            redisTemplate.delete(AuthConstant.RESOURCE_ROLES_MAP_KEY);
+        }
+        redisTemplate.opsForHash().putAll(AuthConstant.RESOURCE_ROLES_MAP_KEY, rolesMap);
         return true;
     }
 
@@ -94,7 +119,7 @@ public class PermissionServiceImpl implements PermissionService {
         if (permission.getUrl() != null) {
             dbVal = this.getPermissionByUrl(permission.getUrl());
 
-        }else if (permission.getComponent() != null) {
+        } else if (permission.getComponent() != null) {
             dbVal = this.getPermissionByComponent(permission.getComponent());
         }
         if (dbVal != null) {
@@ -121,6 +146,8 @@ public class PermissionServiceImpl implements PermissionService {
         permissionMapper.deleteById(permissionId);
 
         this.deleteRolePermissionByPermissionId(permissionId);
+
+        this.pubPermissionInRedis();
     }
 
     private void deleteRolePermissionByPermissionId(Long permissionId) {
@@ -132,5 +159,24 @@ public class PermissionServiceImpl implements PermissionService {
     @Override
     public void updatePermission(Permission permission) {
         permissionMapper.updateById(permission);
+        this.pubPermissionInRedis();
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void resetRolePermissions(Long roleId, Set<Long> permissionIds) {
+        QueryWrapper<RolePermission> wrapper = new QueryWrapper<>();
+        wrapper.eq("role_id", roleId);
+        rolePermissionMapper.delete(wrapper);
+
+        for (Long permissionId : permissionIds) {
+            RolePermission rolePermission = new RolePermission();
+            rolePermission.setRoleId(roleId);
+            rolePermission.setPermissionId(permissionId);
+            rolePermissionMapper.insert(rolePermission);
+        }
+        
+        this.pubPermissionInRedis();
+
     }
 }

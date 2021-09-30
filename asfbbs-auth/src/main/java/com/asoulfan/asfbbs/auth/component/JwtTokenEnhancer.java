@@ -11,12 +11,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * @program: ASFBBS
- * @description: JWT内容增强器
- * @packagename: com.asoulfan.asfbbs.component
- * @author: Cscar
- * @date: 2021-07-28 19:19
- **/
+
+ * : JWT内容增强器
+
+ * @author Cscar
+ * @since 2021-07-28 19:19
+ */
 @Component
 public class JwtTokenEnhancer implements TokenEnhancer {
     @Override

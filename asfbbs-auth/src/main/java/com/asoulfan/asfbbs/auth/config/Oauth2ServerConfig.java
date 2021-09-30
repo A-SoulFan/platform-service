@@ -23,12 +23,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @program: ASFBBS
- * @description: 认证服务器配置
- * @packagename: com.asoulfan.asfbbs.config
- * @author: Cscar
- * @date: 2021-07-29 11:50
- **/
+
+ * : 认证服务器配置
+
+ * @author Cscar
+ * @since 2021-07-29 11:50
+ */
 @AllArgsConstructor
 @Configuration
 @EnableAuthorizationServer

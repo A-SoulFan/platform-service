@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<included>
+    <appender name="asoul-fan-backend-error" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${asoul-fan-bbs.log.home.dir}/asoul-fan-backend-error.log</file>
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>error</level>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>
+                ${asoul-fan-bbs.log.home.dir}/asoul-fan-backend-error.log.%d{yyyy-MM-dd}
+            </FileNamePattern>
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="ch.qos.logback.classic.PatternLayout">
+                <pattern>
+                    <![CDATA[%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%t] %C{0}.%M\(%L\) | %m%n]]></pattern>
+            </layout>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <appender name="asoul-fan-backend-default" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${asoul-fan-bbs.log.home.dir}/asoul-fan-backend-default.log</file>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <FileNamePattern>
+                ${asoul-fan-bbs.log.home.dir}/asoul-fan-backend-default.log.%d{yyyy-MM-dd}
+            </FileNamePattern>
+            <maxHistory>7</maxHistory>
+        </rollingPolicy>
+        <encoder class="ch.qos.logback.core.encoder.LayoutWrappingEncoder">
+            <layout class="ch.qos.logback.classic.PatternLayout">
+                <pattern>
+                    <![CDATA[%d{yyyy-MM-dd HH:mm:ss.SSS} %-5level [%t] %C{0}.%M\(%L\) | %m%n]]></pattern>
+            </layout>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <logger name="org.asoul.fan" level="${logging.level.root}" additivity="false">
+        <appender-ref ref="asoul-fan-backend-default"/>
+        <appender-ref ref="asoul-fan-backend-error"/>
+    </logger>
+
+    <root level="${logging.level.root}">
+        <appender-ref ref="asoul-fan-backend-default"/>
+        <appender-ref ref="asoul-fan-backend-error"/>
+    </root>
+</included>

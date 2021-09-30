@@ -6,12 +6,12 @@ import lombok.EqualsAndHashCode;
 import javax.validation.constraints.NotEmpty;
 
 /**
- * @program: ASFBBS
- * @description: 用户登录参数
- * @packagename: com.asoulfan.asfbbs.admin.dto
- * @author: Cscar
- * @date: 2021-08-03 11:44
- **/
+
+ * : 用户登录参数
+
+ * @author Cscar
+ * @since 2021-08-03 11:44
+ */
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class UmsAdminLoginParam {

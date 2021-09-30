@@ -4,12 +4,11 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
- * @program: ASFBBS
- * @description: Controller层的日志封装类
- * @packagename: com.asoulfan.asfbbs.domain
- * @author: Cscar
- * @date: 2021-07-26 01:50
- **/
+ * Controller层的日志封装类
+ *
+ * @author Cscar
+ * @date 2021-07-26 01:50
+ */
 @Data
 @EqualsAndHashCode(callSuper = false)
 public class WebLog {

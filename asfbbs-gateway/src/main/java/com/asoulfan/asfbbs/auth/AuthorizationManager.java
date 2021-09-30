@@ -1,17 +1,16 @@
 package com.asoulfan.asfbbs.auth;
 
-import cn.hutool.core.convert.Convert;
-import cn.hutool.core.util.StrUtil;
-import cn.hutool.json.JSONUtil;
-import com.asoulfan.asfbbs.domain.UserDto;
-import com.asoulfan.asfbbs.config.IgnoreUrlsConfig;
-import com.asoulfan.asfbbs.constant.AuthConstant;
-import com.nimbusds.jose.JWSObject;
+import java.net.URI;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.server.reactive.ServerHttpRequest;
-import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.security.authorization.AuthorizationDecision;
 import org.springframework.security.authorization.ReactiveAuthorizationManager;
 import org.springframework.security.core.Authentication;
@@ -20,20 +19,24 @@ import org.springframework.security.web.server.authorization.AuthorizationContex
 import org.springframework.stereotype.Component;
 import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
+
+import com.asoulfan.asfbbs.config.IgnoreUrlsConfig;
+import com.asoulfan.asfbbs.constant.AuthConstant;
+import com.asoulfan.asfbbs.domain.UserDto;
+import com.nimbusds.jose.JWSObject;
+
+import cn.hutool.core.convert.Convert;
+import cn.hutool.core.util.StrUtil;
+import cn.hutool.json.JSONUtil;
 import reactor.core.publisher.Mono;
 
-import java.net.URI;
-import java.text.ParseException;
-import java.util.*;
-import java.util.stream.Collectors;
-
 /**
- * @program: ASFBBS
- * @description: 授权管理
- * @packagename: com.asoulfan.asfbbs.auth
- * @author: Cscar
- * @date: 2021-07-26 18:02
- **/
+
+ * : 授权管理
+
+ * @author Cscar
+ * @since 2021-07-26 18:02
+ */
 @Component
 public class AuthorizationManager implements ReactiveAuthorizationManager<AuthorizationContext> {
 
@@ -98,6 +101,7 @@ public class AuthorizationManager implements ReactiveAuthorizationManager<Author
 
         
         // 认证通过且角色匹配的用户可访问当前路径
+        // todo 需要判断角色是否匹配
         if (authorities.size() > 0) {
             return Mono.just(new AuthorizationDecision(true));
         }

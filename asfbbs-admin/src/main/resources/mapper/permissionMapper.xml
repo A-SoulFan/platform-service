@@ -11,7 +11,7 @@
 						join asf_role b on a.role_id = b.id
 						join asf_user_role c on c.role_id = b.id
 						join asf_user d on d.id = c.user_id
-						where p.id = a.permission_id AND d.name = #{userId}
+						where p.id = a.permission_id AND d.id = #{userId}
 					)
 					)
 			   and p.del_flag = 0) h

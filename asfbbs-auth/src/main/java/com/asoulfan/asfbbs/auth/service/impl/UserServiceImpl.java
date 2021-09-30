@@ -20,12 +20,12 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * @program: ASFBBS
- * @description: 用户管理
- * @packagename: com.asoulfan.asfbbs.service.impl
- * @author: Cscar
- * @date: 2021-07-29 14:49
- **/
+
+ * : 用户管理
+
+ * @author Cscar
+ * @since 2021-07-29 14:49
+ */
 @Service
 public class UserServiceImpl implements UserDetailsService {
 

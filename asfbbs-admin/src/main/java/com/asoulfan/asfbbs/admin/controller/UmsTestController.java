@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 /**
- * @program: ASFBBS
- * @description: 测试
- * @packagename: com.asoulfan.asfbbs.admin.controller
- * @author: Cscar
- * @date: 2021-08-03 12:01
- **/
+
+ * : 测试
+
+ * @author Cscar
+ * @since 2021-08-03 12:01
+ */
 @Controller
 @RequestMapping("/test")
 public class UmsTestController {
