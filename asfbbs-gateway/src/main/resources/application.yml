@@ -20,6 +20,12 @@ spring:
             - Path=/asfbbs-admin/**
           filters:
             - StripPrefix=1
+        - id: asfbbs-user
+          uri: lb://asfbbs-user
+          predicates:
+            - Path=/asfbbs-user/**
+          filters:
+            - StripPrefix=1
   redis:
     database: 0
     port: 6379
@@ -39,3 +45,12 @@ secure:
       - "/asfbbs-auth/oauth/authorize"
       - "/asfbbs-auth/rsa/publicKey"
       - "/asfbbs-admin/admin/login"
+      - "/asfbbs-user/user/login"
+      - "/asfbbs-user/user/getCapt"
+      - "/asfbbs-user/user/register"
+      - "/asfbbs-user/user/question/list"
+      - "/asfbbs-user/user/question/score"
+      - "/asfbbs-user/user/email"
+      - "/asfbbs-user/user/verify"
+      - "/asfbbs-admin/admin/loadByUsername"
+      - "/asfbbs-user/user/icon"

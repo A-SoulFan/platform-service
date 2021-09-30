@@ -1,7 +1,5 @@
 server:
-  port: 8081
-  servlet:
-    context-path: /admin
+  port: 8083
 spring:
   application:
     name: @project.artifactId@
@@ -43,16 +41,25 @@ spring:
   cache:
     type: redis
     redis:
-      key-prefix: admin-
+      key-prefix: user-
       time-to-live: 1800 # 过期时间（毫秒）
 
 feign:
   okhttp:
     enabled: true
+
 ribbon:
   ConnectTimeout: 3000 #服务请求连接超时时间（毫秒）
   ReadTimeout: 3000 #服务请求处理超时时间（毫秒）
+
 jasypt:
   encryptor:
     password: xiangwan123jiaran
 
+#调用b站绑定服务url
+b-bot:
+  token: http://localhost:5000/initiate/
+  confirm: http://localhost:5000/confirm/
+
+imgFile:
+  storage: D:/img

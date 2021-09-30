@@ -1,7 +1,9 @@
 package com.asoulfan.asfbbs.auth.config;
 
 import com.asoulfan.asfbbs.auth.component.JwtTokenEnhancer;
+
 import lombok.AllArgsConstructor;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
@@ -42,7 +44,6 @@ public class Oauth2ServerConfig extends AuthorizationServerConfigurerAdapter {
 
     private final UserDetailsService userDetailsService;
 
-
     /**
      * 客户端详细信息服务配置
      *
@@ -65,7 +66,6 @@ public class Oauth2ServerConfig extends AuthorizationServerConfigurerAdapter {
                 .authorizedGrantTypes("password", "authorization_code", "refresh_token")
                 .accessTokenValiditySeconds(3600 * 24)
                 .refreshTokenValiditySeconds(3600 * 24 * 3);
-
     }
 
     /**

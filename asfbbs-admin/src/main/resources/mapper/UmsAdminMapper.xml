@@ -9,14 +9,12 @@
     <result column="password" property="password" />
     <result column="icon" property="icon" />
     <result column="email" property="email" />
-    <result column="note" property="note" />
     <result column="create_time" property="createTime" />
-    <result column="login_time" property="loginTime" />
     <result column="status" property="status" />
   </resultMap>
   <sql id="Base_Column_List">
     <!--@mbg.generated-->
-    id, username, `password`, icon, email, note, create_time, login_time, `status`
+    id, username, `password`, icon, email, create_time, `status`
   </sql>
 
   <select id="selectByUsername" parameterType="java.lang.String" resultMap="BaseResultMap">
