@@ -2,9 +2,9 @@ package com.asoulfan.asfbbs.auth.service.impl;
 
 import com.asoulfan.asfbbs.auth.service.UmsAdminService;
 import com.asoulfan.asfbbs.auth.service.UmsMemberService;
-import com.asoulfan.asfbbs.constant.AuthConstant;
+import com.asoulfan.common.constant.AuthConstant;
 import com.asoulfan.asfbbs.auth.constant.MessageConstant;
-import com.asoulfan.asfbbs.domain.UserDto;
+import com.asoulfan.common.domain.UserDto;
 import com.asoulfan.asfbbs.auth.domain.SecurityUser;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AccountExpiredException;

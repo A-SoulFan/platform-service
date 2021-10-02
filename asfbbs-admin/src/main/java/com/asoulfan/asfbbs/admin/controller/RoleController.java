@@ -1,13 +1,7 @@
 package com.asoulfan.asfbbs.admin.controller;
 
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 import javax.annotation.Resource;
-
-import com.asoulfan.asfbbs.admin.domain.Permission;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;
@@ -23,7 +17,7 @@ import com.asoulfan.asfbbs.admin.dto.ResetRoleParam;
 import com.asoulfan.asfbbs.admin.dto.ResetRolePermissionParam;
 import com.asoulfan.asfbbs.admin.service.PermissionService;
 import com.asoulfan.asfbbs.admin.service.RoleService;
-import com.asoulfan.asfbbs.api.CommonResult;
+import com.asoulfan.common.api.CommonResult;
 
 /**
  * 角色管理

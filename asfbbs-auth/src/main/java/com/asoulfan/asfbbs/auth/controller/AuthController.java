@@ -1,8 +1,8 @@
 package com.asoulfan.asfbbs.auth.controller;
 
-import com.asoulfan.asfbbs.api.CommonResult;
+import com.asoulfan.common.api.CommonResult;
 import com.asoulfan.asfbbs.auth.domain.Oauth2TokenDto;
-import com.asoulfan.asfbbs.constant.AuthConstant;
+import com.asoulfan.common.constant.AuthConstant;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.endpoint.TokenEndpoint;

@@ -4,8 +4,6 @@ import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
@@ -16,10 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.multipart.MultipartFile;
 
-import com.asoulfan.asfbbs.api.CommonResult;
-import com.asoulfan.asfbbs.exception.Asserts;
 import com.asoulfan.asfbbs.user.domain.Oauth2TokenDto;
 import com.asoulfan.asfbbs.user.dto.CaptVo;
 import com.asoulfan.asfbbs.user.dto.FileVo;
@@ -32,6 +27,9 @@ import com.asoulfan.asfbbs.user.service.ICaptService;
 import com.asoulfan.asfbbs.user.service.IIconService;
 import com.asoulfan.asfbbs.user.service.IQuestionService;
 import com.asoulfan.asfbbs.user.service.IUserService;
+import com.asoulfan.common.api.CommonResult;
+import com.asoulfan.common.api.SuccessWithExtraInfoResult;
+import com.asoulfan.common.exception.Asserts;
 
 /**
  * @program: ASFBBS
@@ -66,7 +64,7 @@ public class UserController {
      * @return
      */
     @PostMapping("/login")
-    public CommonResult<Oauth2TokenDto> login(@RequestBody LoginVo vo, HttpServletResponse response) {
+    public SuccessWithExtraInfoResult<Oauth2TokenDto> login(@RequestBody LoginVo vo, HttpServletResponse response) {
         if (!captService.verify(vo.getCaptId(), vo.getCaptCode())) {
             Asserts.fail("验证码错误");
         }
@@ -74,7 +72,11 @@ public class UserController {
         if (dto == null) {
             Asserts.fail("获取token失败");
         }
-        return CommonResult.success(dto);
+
+        return new SuccessWithExtraInfoResult<>(dto)
+                .addExtraInfo("token", dto.getToken(), dto.getExpiresIn())
+                .addExtraInfo("refreshToken", dto.getToken(), dto.getExpiresIn())
+                .addExtraInfo("tokenHead", dto.getToken(), dto.getExpiresIn());
     }
 
     /**
@@ -156,7 +158,7 @@ public class UserController {
      */
     @GetMapping("/verify")
     public CommonResult<Boolean> verify(@RequestParam("id") @NotBlank(message = "用户注册id不能为空") String id,
-                                        @RequestParam("code") @NotBlank(message = "邮箱验证码不能为空") String code) {
+            @RequestParam("code") @NotBlank(message = "邮箱验证码不能为空") String code) {
         if (userService.isUserExist(id)) {
             Asserts.fail("该用户已被注册");
         }

@@ -1,7 +1,7 @@
 package com.asoulfan.asfbbs.component;
 
 import cn.hutool.json.JSONUtil;
-import com.asoulfan.asfbbs.api.CommonResult;
+import com.asoulfan.common.api.CommonResult;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;

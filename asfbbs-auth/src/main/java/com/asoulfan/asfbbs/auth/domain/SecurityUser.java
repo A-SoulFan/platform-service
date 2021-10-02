@@ -1,6 +1,6 @@
 package com.asoulfan.asfbbs.auth.domain;
 
-import com.asoulfan.asfbbs.domain.UserDto;
+import com.asoulfan.common.domain.UserDto;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;

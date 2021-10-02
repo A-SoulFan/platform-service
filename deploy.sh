@@ -12,4 +12,4 @@ select opt in "${options[@]}"; do
   break
 done
 
-cd "asfbbs-$opt" && mvn clean package && docker build -t "asoulfan/asoulfan-$opt" . && docker push "asoulfan/asoulfan-$opt"
+cd "asfbbs-$opt" && mvn clean package -s ../settings.xml && docker build -t "asoulfan/asoulfan-$opt" -f "../Dockerfile" . && docker push "asoulfan/asoulfan-$opt"

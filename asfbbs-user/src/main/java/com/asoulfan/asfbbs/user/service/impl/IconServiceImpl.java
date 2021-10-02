@@ -4,7 +4,7 @@ import cn.hutool.core.codec.Base64;
 import cn.hutool.core.io.FileTypeUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.IdUtil;
-import com.asoulfan.asfbbs.exception.Asserts;
+import com.asoulfan.common.exception.Asserts;
 import com.asoulfan.asfbbs.user.service.IIconService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;

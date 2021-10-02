@@ -21,8 +21,8 @@ import org.springframework.util.AntPathMatcher;
 import org.springframework.util.PathMatcher;
 
 import com.asoulfan.asfbbs.config.IgnoreUrlsConfig;
-import com.asoulfan.asfbbs.constant.AuthConstant;
-import com.asoulfan.asfbbs.domain.UserDto;
+import com.asoulfan.common.constant.AuthConstant;
+import com.asoulfan.common.domain.UserDto;
 import com.nimbusds.jose.JWSObject;
 
 import cn.hutool.core.convert.Convert;

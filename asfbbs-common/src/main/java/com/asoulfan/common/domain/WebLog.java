@@ -1,4 +1,4 @@
-package com.asoulfan.asfbbs.domain;
+package com.asoulfan.common.domain;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;

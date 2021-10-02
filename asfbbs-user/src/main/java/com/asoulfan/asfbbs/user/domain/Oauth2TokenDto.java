@@ -1,5 +1,6 @@
 package com.asoulfan.asfbbs.user.domain;
 
+import lombok.Builder;
 import lombok.Data;
 
 /**
@@ -10,6 +11,7 @@ import lombok.Data;
  * @date: 2021-08-28
  **/
 @Data
+@Builder
 public class Oauth2TokenDto {
 
     /**

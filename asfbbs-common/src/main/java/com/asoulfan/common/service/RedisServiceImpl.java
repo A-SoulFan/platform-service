@@ -1,4 +1,4 @@
-package com.asoulfan.asfbbs.service;
+package com.asoulfan.common.service;
 
 import java.util.List;
 import java.util.Map;

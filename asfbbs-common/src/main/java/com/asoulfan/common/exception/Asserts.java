@@ -1,6 +1,6 @@
-package com.asoulfan.asfbbs.exception;
+package com.asoulfan.common.exception;
 
-import com.asoulfan.asfbbs.api.IErrorCode;
+import com.asoulfan.common.api.IErrorCode;
 
 /**
  * 断言处理类, 用来抛出各种API异常

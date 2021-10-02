@@ -1,4 +1,4 @@
-package com.asoulfan.asfbbs.config;
+package com.asoulfan.common.config;
 
 import java.time.Duration;
 
@@ -15,8 +15,8 @@ import org.springframework.data.redis.serializer.RedisSerializationContext;
 import org.springframework.data.redis.serializer.RedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
 
-import com.asoulfan.asfbbs.service.RedisService;
-import com.asoulfan.asfbbs.service.RedisServiceImpl;
+import com.asoulfan.common.service.RedisService;
+import com.asoulfan.common.service.RedisServiceImpl;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;

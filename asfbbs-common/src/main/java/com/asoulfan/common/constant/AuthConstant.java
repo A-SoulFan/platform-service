@@ -1,4 +1,4 @@
-package com.asoulfan.asfbbs.constant;
+package com.asoulfan.common.constant;
 
 /**
  * 权限相关常量定义

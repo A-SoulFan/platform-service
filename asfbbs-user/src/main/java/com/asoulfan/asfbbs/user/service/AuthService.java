@@ -6,7 +6,7 @@ import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.asoulfan.asfbbs.api.CommonResult;
+import com.asoulfan.common.api.CommonResult;
 import com.asoulfan.asfbbs.user.domain.Oauth2TokenDto;
 
 /**

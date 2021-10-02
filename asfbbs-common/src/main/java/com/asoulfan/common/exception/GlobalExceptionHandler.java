@@ -1,4 +1,4 @@
-package com.asoulfan.asfbbs.exception;
+package com.asoulfan.common.exception;
 
 import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.asoulfan.asfbbs.api.CommonResult;
+import com.asoulfan.common.api.CommonResult;
 
 /**
  * 全局异常处理

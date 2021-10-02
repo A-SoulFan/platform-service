@@ -5,3 +5,4 @@ asoul-fan:
 logging:
   level:
     root: info
+  config: classpath:config/log/logback-spring.xml

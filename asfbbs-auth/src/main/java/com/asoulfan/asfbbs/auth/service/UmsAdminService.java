@@ -1,6 +1,6 @@
 package com.asoulfan.asfbbs.auth.service;
 
-import com.asoulfan.asfbbs.domain.UserDto;
+import com.asoulfan.common.domain.UserDto;
 import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;

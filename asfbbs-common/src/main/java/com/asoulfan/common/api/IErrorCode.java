@@ -1,4 +1,4 @@
-package com.asoulfan.asfbbs.api;
+package com.asoulfan.common.api;
 
 /**
  * 封装API的错误码接口

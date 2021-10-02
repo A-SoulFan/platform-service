@@ -3,7 +3,7 @@ package com.asoulfan.asfbbs.config;
 import cn.hutool.core.util.ArrayUtil;
 import com.asoulfan.asfbbs.auth.AuthorizationManager;
 import com.asoulfan.asfbbs.component.RestAuthenticationEntryPoint;
-import com.asoulfan.asfbbs.constant.AuthConstant;
+import com.asoulfan.common.constant.AuthConstant;
 import com.asoulfan.asfbbs.component.RestfulAccessDeniedHandler;
 import com.asoulfan.asfbbs.filter.IgnoreUrlsRemoveJwtFilter;
 import lombok.AllArgsConstructor;

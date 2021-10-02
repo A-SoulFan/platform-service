@@ -1,9 +1,14 @@
+asoul-fan:
+  log:
+    dir: /home/admin/${spring.application.name}/logs
+    output-type: console
+logging:
+  level:
+    root: info
+  config: classpath:config/log/logback-spring.xml
 server:
   port: 8083
 spring:
-  application:
-    name: @project.artifactId@
-    version: @project.version@
   #配置数据源
   datasource:
     druid:

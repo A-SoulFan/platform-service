@@ -1,7 +1,8 @@
 package com.asoulfan.asfbbs.filter;
 
-import com.asoulfan.asfbbs.constant.AuthConstant;
-import com.asoulfan.asfbbs.config.IgnoreUrlsConfig;
+import java.net.URI;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
@@ -10,15 +11,15 @@ import org.springframework.util.PathMatcher;
 import org.springframework.web.server.ServerWebExchange;
 import org.springframework.web.server.WebFilter;
 import org.springframework.web.server.WebFilterChain;
+
+import com.asoulfan.asfbbs.config.IgnoreUrlsConfig;
+import com.asoulfan.common.constant.AuthConstant;
+
 import reactor.core.publisher.Mono;
 
-import java.net.URI;
-import java.util.List;
-
 /**
-
- * : 白名单路径访问移除请求头
-
+ * 白名单路径访问移除请求头
+ *
  * @author Cscar
  * @since 2021-07-28 16:36
  */
@@ -26,6 +27,7 @@ import java.util.List;
 public class IgnoreUrlsRemoveJwtFilter implements WebFilter {
     @Autowired
     private IgnoreUrlsConfig ignoreUrlsConfig;
+
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();

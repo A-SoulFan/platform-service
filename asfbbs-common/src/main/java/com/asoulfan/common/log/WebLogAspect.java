@@ -1,4 +1,4 @@
-package com.asoulfan.asfbbs.log;
+package com.asoulfan.common.log;
 
 import java.lang.reflect.Method;
 import java.lang.reflect.Parameter;
@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import com.asoulfan.asfbbs.domain.WebLog;
+import com.asoulfan.common.domain.WebLog;
 
 import cn.hutool.core.util.StrUtil;
 import cn.hutool.core.util.URLUtil;

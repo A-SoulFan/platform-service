@@ -4,7 +4,6 @@ import java.util.List;
 import java.util.Set;
 
 import com.asoulfan.asfbbs.admin.domain.Role;
-import com.asoulfan.asfbbs.api.CommonResult;
 
 public interface RoleService {
 

@@ -1,8 +1,7 @@
 package com.asoulfan.asfbbs.filter;
 
-import cn.hutool.core.util.StrUtil;
-import com.asoulfan.asfbbs.constant.AuthConstant;
-import com.nimbusds.jose.JWSObject;
+import java.text.ParseException;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
@@ -11,14 +10,16 @@ import org.springframework.core.Ordered;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
+
+import com.asoulfan.common.constant.AuthConstant;
+import com.nimbusds.jose.JWSObject;
+
+import cn.hutool.core.util.StrUtil;
 import reactor.core.publisher.Mono;
 
-import java.text.ParseException;
-
 /**
-
- * : 将登录用户的JWT转为用户信息的全局过滤器
-
+ * 将登录用户的JWT转为用户信息的全局过滤器
+ *
  * @author Cscar
  * @since 2021-07-28 16:39
  */
@@ -38,7 +39,7 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
             String realToken = token.replace(AuthConstant.JWT_TOKEN_PREFIX, "");
             JWSObject jwsObject = JWSObject.parse(realToken);
             String userStr = jwsObject.getPayload().toString();
-            LOGGER.info("AuthGlobalFilter.filter() user:{}",userStr);
+            LOGGER.info("AuthGlobalFilter.filter() user:{}", userStr);
             ServerHttpRequest request = exchange.getRequest().mutate().header(AuthConstant.USER_TOKEN_HEADER, userStr).build();
             exchange = exchange.mutate().request(request).build();
         } catch (ParseException e) {

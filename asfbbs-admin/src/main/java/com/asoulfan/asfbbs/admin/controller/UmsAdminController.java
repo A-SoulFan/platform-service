@@ -2,8 +2,8 @@ package com.asoulfan.asfbbs.admin.controller;
 
 import com.asoulfan.asfbbs.admin.dto.UmsAdminLoginParam;
 import com.asoulfan.asfbbs.admin.service.UmsAdminService;
-import com.asoulfan.asfbbs.api.CommonResult;
-import com.asoulfan.asfbbs.domain.UserDto;
+import com.asoulfan.common.api.CommonResult;
+import com.asoulfan.common.domain.UserDto;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.annotation.Validated;

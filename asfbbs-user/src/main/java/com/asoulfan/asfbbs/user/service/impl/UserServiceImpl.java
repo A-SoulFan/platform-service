@@ -1,6 +1,5 @@
 package com.asoulfan.asfbbs.user.service.impl;
 
-import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -8,20 +7,18 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.RandomStringUtils;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.http.ResponseCookie;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.asoulfan.asfbbs.api.CommonResult;
-import com.asoulfan.asfbbs.api.ResultCode;
-import com.asoulfan.asfbbs.constant.AuthConstant;
-import com.asoulfan.asfbbs.constant.UserConstant;
-import com.asoulfan.asfbbs.exception.Asserts;
+import com.asoulfan.common.api.CommonResult;
+import com.asoulfan.common.api.ResultCode;
+import com.asoulfan.common.constant.AuthConstant;
+import com.asoulfan.common.constant.UserConstant;
+import com.asoulfan.common.exception.Asserts;
 import com.asoulfan.asfbbs.user.component.MyBCryptPasswordEncoder;
 import com.asoulfan.asfbbs.user.domain.Oauth2TokenDto;
 import com.asoulfan.asfbbs.user.dto.RegisterVo;

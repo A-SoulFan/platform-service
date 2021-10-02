@@ -1,7 +1,7 @@
 package com.asoulfan.asfbbs.admin.service;
 
-import com.asoulfan.asfbbs.api.CommonResult;
-import com.asoulfan.asfbbs.domain.UserDto;
+import com.asoulfan.common.api.CommonResult;
+import com.asoulfan.common.domain.UserDto;
 
 /**
 

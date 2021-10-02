@@ -2,8 +2,8 @@ package com.asoulfan.asfbbs.user.service.impl;
 
 import cn.hutool.core.util.NumberUtil;
 import cn.hutool.json.JSONUtil;
-import com.asoulfan.asfbbs.constant.UserConstant;
-import com.asoulfan.asfbbs.exception.Asserts;
+import com.asoulfan.common.constant.UserConstant;
+import com.asoulfan.common.exception.Asserts;
 import com.asoulfan.asfbbs.user.domain.Answer;
 import com.asoulfan.asfbbs.user.domain.Options;
 import com.asoulfan.asfbbs.user.dto.QuestionDto;

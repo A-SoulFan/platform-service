@@ -1,4 +1,4 @@
-package com.asoulfan.asfbbs.api;
+package com.asoulfan.common.api;
 
 import lombok.Getter;
 

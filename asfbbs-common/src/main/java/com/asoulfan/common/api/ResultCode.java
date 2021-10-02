@@ -1,4 +1,4 @@
-package com.asoulfan.asfbbs.api;
+package com.asoulfan.common.api;
 
 import lombok.Getter;
 
@@ -10,23 +10,27 @@ import lombok.Getter;
  */
 public enum ResultCode implements IErrorCode {
     /**
-     * Success result code.
+     * 操作成功
      */
     SUCCESS(200, "操作成功"),
     /**
-     * Failed result code.
+     * 操作成功并需要存储信息
+     */
+    SUCCESS_THEN_STORE_INFO(201, "操作成功并需要存储信息"),
+    /**
+     * 操作失败
      */
     FAILED(500, "操作失败"),
     /**
-     * Validate failed result code.
+     * 参数检验失败
      */
     VALIDATE_FAILED(404, "参数检验失败"),
     /**
-     * Unauthorized result code.
+     * 暂未登录或token已经过期
      */
     UNAUTHORIZED(401, "暂未登录或token已经过期"),
     /**
-     * Forbidden result code.
+     * 没有相关权限
      */
     FORBIDDEN(403, "没有相关权限");
 

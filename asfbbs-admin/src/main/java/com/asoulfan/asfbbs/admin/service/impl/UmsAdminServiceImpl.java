@@ -1,23 +1,20 @@
 package com.asoulfan.asfbbs.admin.service.impl;
 
-import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.asoulfan.asfbbs.admin.domain.UmsAdmin;
 import com.asoulfan.asfbbs.admin.mapper.UmsAdminMapper;
 import com.asoulfan.asfbbs.admin.service.AuthService;
 import com.asoulfan.asfbbs.admin.service.UmsAdminService;
-import com.asoulfan.asfbbs.api.CommonResult;
-import com.asoulfan.asfbbs.api.ResultCode;
-import com.asoulfan.asfbbs.constant.AuthConstant;
-import com.asoulfan.asfbbs.domain.UserDto;
-import com.asoulfan.asfbbs.exception.Asserts;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import org.jasypt.util.text.BasicTextEncryptor;
+import com.asoulfan.common.api.CommonResult;
+import com.asoulfan.common.api.ResultCode;
+import com.asoulfan.common.constant.AuthConstant;
+import com.asoulfan.common.domain.UserDto;
+import com.asoulfan.common.exception.Asserts;
+
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.management.relation.RoleList;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;

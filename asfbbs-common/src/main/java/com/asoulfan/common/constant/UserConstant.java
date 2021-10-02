@@ -1,4 +1,4 @@
-package com.asoulfan.asfbbs.constant;
+package com.asoulfan.common.constant;
 
 /**
  * @program: ASFBBS
