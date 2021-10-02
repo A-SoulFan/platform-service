@@ -1,0 +1,29 @@
+{
+  "properties": [
+    {
+      "name": "asoul-fan.log.dir",
+      "type": "java.lang.String",
+      "description": "日志目录."
+    },
+    {
+      "name": "asoul-fan.log.output-type",
+      "type": "java.lang.String",
+      "description": "日志输出类型."
+    }
+  ],
+  "hints": [
+    {
+      "name": "asoul-fan.log.output-type",
+      "values": [
+        {
+          "value": "console",
+          "description": "控制台输出."
+        },
+        {
+          "value": "file",
+          "description": "文件输出."
+        }
+      ]
+    }
+  ]
+}

@@ -1,56 +1,7 @@
-spring:
-  cloud:
-    gateway:
-      #配置路由路径
-      routes:
-        - id: asfbbs-auth
-          uri: lb://asfbbs-auth
-          predicates:
-            - Path=/asfbbs-auth/**
-          filters:
-            - StripPrefix=1
-            - name: RequestRateLimiter
-              args:
-                keyResolver: '#{@ipAddressKeyResolver}'
-                redis-rate-limiter.replenishRate: 1  # 令牌桶放入的速度
-                redis-rate-limiter.burstCapacity: 1  # 令牌桶的容积
-        - id: asfbbs-admin
-          uri: lb://asfbbs-admin
-          predicates:
-            - Path=/asfbbs-admin/**
-          filters:
-            - StripPrefix=1
-        - id: asfbbs-user
-          uri: lb://asfbbs-user
-          predicates:
-            - Path=/asfbbs-user/**
-          filters:
-            - StripPrefix=1
-  redis:
-    database: 0
-    port: 6379
-    host: localhost
-    password:
-  security:
-    oauth2:
-      resourceserver:
-        jwt:
-          jwk-set-uri: 'http://localhost:8201/asfbbs-auth/rsa/publicKey' #配置RSA的公钥访问地址
-#白名单路径配置
-secure:
-  ignore:
-    urls:
-      - "/doc/debug-all.html"
-      - "/asfbbs-auth/oauth/token"
-      - "/asfbbs-auth/oauth/authorize"
-      - "/asfbbs-auth/rsa/publicKey"
-      - "/asfbbs-admin/admin/login"
-      - "/asfbbs-user/user/login"
-      - "/asfbbs-user/user/getCapt"
-      - "/asfbbs-user/user/register"
-      - "/asfbbs-user/user/question/list"
-      - "/asfbbs-user/user/question/score"
-      - "/asfbbs-user/user/email"
-      - "/asfbbs-user/user/verify"
-      - "/asfbbs-admin/admin/loadByUsername"
-      - "/asfbbs-user/user/icon"
+asoul-fan:
+  log:
+    dir: /home/admin/${spring.application.name}/logs
+    output-type: console
+logging:
+  level:
+    root: info

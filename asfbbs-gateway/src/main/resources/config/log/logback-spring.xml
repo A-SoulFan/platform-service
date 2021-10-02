@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  ~ 小芸 Inc.
+  ~ Copyright (c) 2020-2021 All Rights Reserved.
+  -->
+
+<configuration debug="false" scan="false">
+    <contextName>asoul-fan-gateway</contextName>
+
+    <include resource="config/log/asoul-fan-logback-base.xml"/>
+
+</configuration>

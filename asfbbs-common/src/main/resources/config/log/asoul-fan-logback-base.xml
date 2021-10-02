@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<included>
+    <springProperty scope="context" name="asoul-fan.log.output-type" source="asoul-fan.log.output-type" defaultValue="file"/>
+    <springProperty scope="context" name="asoul-fan.log.dir" source="asoul-fan.log.dir"/>
+
+    <include resource="config/log/asoul-fan-logback-${asoul-fan.log.output-type}.xml"/>
+</included>

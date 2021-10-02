@@ -8,5 +8,12 @@ spring:
       discovery:
         locator:
           enabled: false
+    nacos:
+      discovery:
+        server-addr: http://localhost:8848
+        group: ASF_BBS
+      config:
+        server-addr: http://localhost:8848
+        file-extension: yaml
 server:
   port: 8201
