@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.asoulfan.asfbbs.user.domain.Oauth2TokenDto;
 import com.asoulfan.asfbbs.user.dto.RegisterVo;
 import com.asoulfan.asfbbs.user.dto.UserDto;
+import com.asoulfan.asfbbs.user.dto.UserInfoDto;
 
 /**
  * @program: ASFBBS
@@ -26,7 +27,9 @@ public interface IUserService {
 
     Boolean confirm(String username);
 
-    UserDto getUserInfo(String username);
+    UserDto getUserDto(String username);
 
     boolean isUserExist(String id);
+
+    UserInfoDto getUserInfo(String username);
 }

@@ -29,9 +29,19 @@ public interface AuthConstant {
     String PORTAL_CLIENT_ID = "portal-app";
 
     /**
+     * 用户模块client_id
+     */
+    String USER_CLIENT_ID = "user-app";
+
+    /**
      * 后台管理接口路径匹配
      */
     String ADMIN_URL_PATTERN = "/asfbbs-admin/**";
+
+    /**
+     * 用户模块接口路径匹配
+     */
+    String User_URL_PATTERN = "/asfbbs-user/**";
 
     /**
      * Redis缓存权限规则key

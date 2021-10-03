@@ -7,6 +7,8 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.http.HttpMethod;
@@ -23,6 +25,7 @@ import org.springframework.util.PathMatcher;
 import com.asoulfan.asfbbs.config.IgnoreUrlsConfig;
 import com.asoulfan.common.constant.AuthConstant;
 import com.asoulfan.common.domain.UserDto;
+import com.asoulfan.common.domain.UserJwtDto;
 import com.nimbusds.jose.JWSObject;
 
 import cn.hutool.core.convert.Convert;
@@ -31,17 +34,17 @@ import cn.hutool.json.JSONUtil;
 import reactor.core.publisher.Mono;
 
 /**
-
  * : 授权管理
-
+ *
  * @author Cscar
  * @since 2021-07-26 18:02
  */
 @Component
 public class AuthorizationManager implements ReactiveAuthorizationManager<AuthorizationContext> {
 
-    @Autowired
+    @Resource
     private RedisTemplate<String, Object> redisTemplate;
+
     @Autowired
     private IgnoreUrlsConfig ignoreUrlsConfig;
 
@@ -71,8 +74,13 @@ public class AuthorizationManager implements ReactiveAuthorizationManager<Author
             String realToken = token.replace(AuthConstant.JWT_TOKEN_PREFIX, "");
             JWSObject jwsObject = JWSObject.parse(realToken);
             String userStr = jwsObject.getPayload().toString();
-            UserDto userDto = JSONUtil.toBean(userStr, UserDto.class);
-            if (AuthConstant.ADMIN_CLIENT_ID.equals(userDto.getClientId()) && !pathMatcher.match(AuthConstant.ADMIN_URL_PATTERN, uri.getPath())) {
+            UserJwtDto userDto = JSONUtil.toBean(userStr, UserJwtDto.class);
+            //FIXME：
+            // fengling：
+            // auth模块里初始化oauth2时指定了clientId为admin-app,导致user模块请求token只能设置cilentId=admin-app
+            // 此处先设置clientId=admin-app可以通过访问/asfbbs-admin 和/asfbbs-user 模块下的接口，后续建议优化
+            if (AuthConstant.ADMIN_CLIENT_ID.equals(userDto.getClientId())
+                    && (!pathMatcher.match(AuthConstant.ADMIN_URL_PATTERN, uri.getPath())) && !pathMatcher.match(AuthConstant.User_URL_PATTERN, uri.getPath())) {
                 return Mono.just(new AuthorizationDecision(false));
             }
             if (AuthConstant.PORTAL_CLIENT_ID.equals(userDto.getClientId()) && pathMatcher.match(AuthConstant.ADMIN_URL_PATTERN, uri.getPath())) {
@@ -99,7 +107,6 @@ public class AuthorizationManager implements ReactiveAuthorizationManager<Author
         }
         // authorities = authorities.stream().map(i -> i = AuthConstant.AUTHORITY_PREFIX + i).collect(Collectors.toList());
 
-        
         // 认证通过且角色匹配的用户可访问当前路径
         // todo 需要判断角色是否匹配
         if (authorities.size() > 0) {

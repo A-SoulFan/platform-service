@@ -34,7 +34,7 @@ import cn.hutool.core.collection.CollUtil;
 @Service
 public class PermissionServiceImpl implements PermissionService {
 
-    @Autowired
+    @Resource
     private RedisTemplate<String, Object> redisTemplate;
 
     @Resource

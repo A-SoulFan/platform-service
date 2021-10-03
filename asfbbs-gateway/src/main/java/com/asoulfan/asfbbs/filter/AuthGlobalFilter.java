@@ -15,6 +15,7 @@ import com.asoulfan.common.constant.AuthConstant;
 import com.nimbusds.jose.JWSObject;
 
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.core.util.URLUtil;
 import reactor.core.publisher.Mono;
 
 /**
@@ -38,7 +39,8 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
             //从token中解析用户信息并设置到Header中去
             String realToken = token.replace(AuthConstant.JWT_TOKEN_PREFIX, "");
             JWSObject jwsObject = JWSObject.parse(realToken);
-            String userStr = jwsObject.getPayload().toString();
+            //解决中文乱码问题
+            String userStr = URLUtil.encode(jwsObject.getPayload().toString());
             LOGGER.info("AuthGlobalFilter.filter() user:{}", userStr);
             ServerHttpRequest request = exchange.getRequest().mutate().header(AuthConstant.USER_TOKEN_HEADER, userStr).build();
             exchange = exchange.mutate().request(request).build();

@@ -34,7 +34,7 @@ import java.util.stream.Collectors;
 @Service
 public class QuestionServiceImpl implements IQuestionService {
 
-    @Autowired
+    @Resource
     private RedisTemplate<String, Object> redisTemplate;
 
     @Resource

@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -23,13 +24,19 @@ import com.asoulfan.asfbbs.user.dto.QuestionsVo;
 import com.asoulfan.asfbbs.user.dto.RegisterVo;
 import com.asoulfan.asfbbs.user.dto.ScoreVo;
 import com.asoulfan.asfbbs.user.dto.UserDto;
+import com.asoulfan.asfbbs.user.dto.UserInfoDto;
 import com.asoulfan.asfbbs.user.service.ICaptService;
 import com.asoulfan.asfbbs.user.service.IIconService;
 import com.asoulfan.asfbbs.user.service.IQuestionService;
 import com.asoulfan.asfbbs.user.service.IUserService;
 import com.asoulfan.common.api.CommonResult;
 import com.asoulfan.common.api.SuccessWithExtraInfoResult;
+import com.asoulfan.common.constant.AuthConstant;
+import com.asoulfan.common.domain.UserJwtDto;
 import com.asoulfan.common.exception.Asserts;
+
+import cn.hutool.core.util.URLUtil;
+import cn.hutool.json.JSONUtil;
 
 /**
  * @program: ASFBBS
@@ -97,7 +104,7 @@ public class UserController {
      */
     @PostMapping("/verifyUserInfo")
     public CommonResult<String> verifyUserInfo(@RequestBody RegisterVo vo) {
-        UserDto userInfo = userService.getUserInfo(vo.getUsername());
+        UserDto userInfo = userService.getUserDto(vo.getUsername());
         if (userInfo != null) {
             Asserts.fail("该用户已被注册");
         }
@@ -168,23 +175,23 @@ public class UserController {
     /**
      * 绑定b站账号
      *
-     * @param username 用户账号
      * @return
      */
     @GetMapping("/blbl/token")
-    public CommonResult<String> getBiliToken(String username) {
-        return CommonResult.success(userService.getBiliToken(username));
+    public CommonResult<String> getBiliToken(@RequestHeader(value = AuthConstant.USER_TOKEN_HEADER) String userStr) {
+        UserJwtDto dto = JSONUtil.toBean(userStr, UserJwtDto.class);
+        return CommonResult.success(userService.getBiliToken(dto.getUserName()));
     }
 
     /**
      * 确认绑定
      *
-     * @param username 用户账号
      * @return
      */
     @GetMapping("/blbl/confirm")
-    public CommonResult<Boolean> confirm(String username) {
-        return CommonResult.success(userService.confirm(username));
+    public CommonResult<Boolean> confirm(@RequestHeader(value = AuthConstant.USER_TOKEN_HEADER) String userStr) {
+        UserJwtDto dto = JSONUtil.toBean(userStr, UserJwtDto.class);
+        return CommonResult.success(userService.confirm(dto.getUserName()));
     }
 
     /**
@@ -206,5 +213,21 @@ public class UserController {
     @GetMapping("/icon/{id}")
     public CommonResult<String> get(@PathVariable String id) {
         return CommonResult.success(iconService.get(id));
+    }
+
+    /**
+     * 获取用户信息
+     *
+     * @return 用户信息
+     */
+    @GetMapping("/getUserInfo")
+    public CommonResult<UserInfoDto> getUserInfo(@RequestHeader(value = AuthConstant.USER_TOKEN_HEADER) String userStr) {
+        UserJwtDto dto = JSONUtil.toBean(URLUtil.decode(userStr), UserJwtDto.class);
+        UserInfoDto userInfo = userService.getUserInfo(dto.getUserName());
+        if (userInfo == null) {
+            Asserts.fail("用户信息查询有误");
+        }
+        userInfo.setAuthorities(dto.getAuthorities());
+        return CommonResult.success(userInfo);
     }
 }

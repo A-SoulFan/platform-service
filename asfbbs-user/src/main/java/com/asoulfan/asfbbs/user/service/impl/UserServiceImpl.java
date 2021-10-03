@@ -1,12 +1,14 @@
 package com.asoulfan.asfbbs.user.service.impl;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.RandomStringUtils;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -14,6 +16,9 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.asoulfan.asfbbs.user.domain.Permission;
+import com.asoulfan.asfbbs.user.dto.UserInfoDto;
+import com.asoulfan.asfbbs.user.service.AdminService;
 import com.asoulfan.common.api.CommonResult;
 import com.asoulfan.common.api.ResultCode;
 import com.asoulfan.common.constant.AuthConstant;
@@ -59,9 +64,12 @@ public class UserServiceImpl implements IUserService {
     @Autowired
     private AuthService authService;
 
+    @Autowired
+    private AdminService adminService;
+
     private BCryptPasswordEncoder encoder = new MyBCryptPasswordEncoder();
 
-    @Autowired
+    @Resource
     private RedisTemplate<String, Object> redisTemplate;
 
     /**
@@ -165,7 +173,7 @@ public class UserServiceImpl implements IUserService {
      */
     @Override
     public String getBiliToken(String username) {
-        UserDto userDto = getUserInfo(username);
+        UserDto userDto = getUserDto(username);
         if (userDto == null) {
             Asserts.fail("用户信息有误");
         }
@@ -215,7 +223,7 @@ public class UserServiceImpl implements IUserService {
     }
 
     @Override
-    public UserDto getUserInfo(String username) {
+    public UserDto getUserDto(String username) {
         return userMapper.selectOne(new QueryWrapper<UserDto>()
                 .eq("username", username)
                 .eq("status", 1));
@@ -227,6 +235,22 @@ public class UserServiceImpl implements IUserService {
         if (userNameObject == null) {
             Asserts.fail("注册时间过长，请重新注册");
         }
-        return getUserInfo(userNameObject.toString()) != null;
+        return getUserDto(userNameObject.toString()) != null;
+    }
+
+    @Override
+    public UserInfoDto getUserInfo(String username) {
+        UserDto userDto = getUserDto(username);
+        if (userDto == null) {
+            Asserts.fail("用户信息有误");
+        }
+        CommonResult<List<Permission>> userPermissionById = adminService.getUserPermissionById(userDto.getId());
+        if (ResultCode.SUCCESS.getCode() == userPermissionById.getCode() && userPermissionById.getData() != null) {
+            UserInfoDto result = new UserInfoDto();
+            BeanUtils.copyProperties(userDto, result);
+            result.setPermissionList(userPermissionById.getData());
+            return result;
+        }
+        return null;
     }
 }
