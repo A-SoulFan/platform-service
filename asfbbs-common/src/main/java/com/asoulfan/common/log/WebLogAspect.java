@@ -40,7 +40,7 @@ import cn.hutool.core.util.URLUtil;
  * @since 2021-07-26 10:23
  */
 @Aspect
-@Component
+// @Component
 @Order(1)
 public class WebLogAspect {
 

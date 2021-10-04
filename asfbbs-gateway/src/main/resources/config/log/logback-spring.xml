@@ -4,5 +4,4 @@
     <contextName>asoul-fan-gateway</contextName>
 
     <include resource="config/log/asoul-fan-logback-base.xml"/>
-
 </configuration>

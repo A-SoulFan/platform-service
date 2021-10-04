@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <included>
+    <springProperty scope="context" name="spring.application.name" source="spring.application.name" defaultValue="default"/>
     <springProperty scope="context" name="asoul-fan.log.output-type" source="asoul-fan.log.output-type" defaultValue="file"/>
-    <springProperty scope="context" name="asoul-fan.log.dir" source="asoul-fan.log.dir"/>
+    <springProperty scope="context" name="asoul-fan.log.dir" source="asoul-fan.log.dir" defaultValue="/home/admin/${spring.application.name}/logs"/>
 
     <include resource="config/log/asoul-fan-logback-${asoul-fan.log.output-type}.xml"/>
 </included>

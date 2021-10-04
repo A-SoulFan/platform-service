@@ -3,10 +3,15 @@ spring:
     nacos:
       discovery:
         server-addr: http://localhost:8848
-        group: ASF_BBS
+        group: ASOUL-FAN-GROUP
       config:
         server-addr: http://localhost:8848
         file-extension: yaml
+  security:
+    oauth2:
+      resourceserver:
+        jwt:
+          jwk-set-uri: 'http://localhost:8201/asfbbs-auth/rsa/publicKey' #配置RSA的公钥访问地址
 #开启网关路由查询 http://127.0.0.1:8201/actuator/gateway/routes
 management:
   endpoints:

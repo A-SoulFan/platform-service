@@ -1,12 +1,5 @@
 package com.asoulfan.asfbbs.config;
 
-import cn.hutool.core.util.ArrayUtil;
-import com.asoulfan.asfbbs.auth.AuthorizationManager;
-import com.asoulfan.asfbbs.component.RestAuthenticationEntryPoint;
-import com.asoulfan.common.constant.AuthConstant;
-import com.asoulfan.asfbbs.component.RestfulAccessDeniedHandler;
-import com.asoulfan.asfbbs.filter.IgnoreUrlsRemoveJwtFilter;
-import lombok.AllArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
@@ -19,6 +12,14 @@ import org.springframework.security.oauth2.server.resource.authentication.JwtAut
 import org.springframework.security.oauth2.server.resource.authentication.JwtGrantedAuthoritiesConverter;
 import org.springframework.security.oauth2.server.resource.authentication.ReactiveJwtAuthenticationConverterAdapter;
 import org.springframework.security.web.server.SecurityWebFilterChain;
+
+import com.asoulfan.asfbbs.auth.AuthorizationManager;
+import com.asoulfan.asfbbs.component.RestAuthenticationEntryPoint;
+import com.asoulfan.asfbbs.component.RestfulAccessDeniedHandler;
+import com.asoulfan.asfbbs.filter.IgnoreUrlsRemoveJwtFilter;
+import com.asoulfan.common.constant.AuthConstant;
+
+import lombok.AllArgsConstructor;
 import reactor.core.publisher.Mono;
 
 /**
@@ -33,7 +34,6 @@ import reactor.core.publisher.Mono;
 @EnableWebFluxSecurity
 public class ResourceServerConfig {
     private final AuthorizationManager authorizationManager;
-    private final IgnoreUrlsConfig ignoreUrlsConfig;
     private final RestfulAccessDeniedHandler restfulAccessDeniedHandler;
     private final RestAuthenticationEntryPoint restAuthenticationEntryPoint;
     private final IgnoreUrlsRemoveJwtFilter ignoreUrlsRemoveJwtFilter;
@@ -47,7 +47,6 @@ public class ResourceServerConfig {
         //对白名单路径，直接移除JWT请求头
         http.addFilterBefore(ignoreUrlsRemoveJwtFilter, SecurityWebFiltersOrder.AUTHENTICATION);
         http.authorizeExchange()
-                .pathMatchers(ArrayUtil.toArray(ignoreUrlsConfig.getUrls(), String.class)).permitAll()//白名单配置
                 .anyExchange().access(authorizationManager)//鉴权管理器配置
                 .and().exceptionHandling()
                 .accessDeniedHandler(restfulAccessDeniedHandler)//处理未授权

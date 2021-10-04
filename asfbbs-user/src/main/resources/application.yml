@@ -1,6 +1,5 @@
 asoul-fan:
   log:
-    dir: /home/admin/${spring.application.name}/logs
     output-type: console
 logging:
   level:
