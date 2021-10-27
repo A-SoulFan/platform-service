@@ -35,10 +35,10 @@ public class RegisterVo {
     @Length(min = 6, max = 50, message = "密码长度限制在6-50字符之间")
     private String password;
 
-    /**
-     * 头像
-     */
-    @NotBlank(message = "用户头像不能为空")
-    private String icon;
+    // /**
+    //  * 头像
+    //  */
+    // @NotBlank(message = "用户头像不能为空")
+    // private String icon;
 
 }

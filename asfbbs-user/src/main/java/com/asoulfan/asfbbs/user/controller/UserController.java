@@ -72,9 +72,9 @@ public class UserController {
      */
     @PostMapping("/login")
     public SuccessWithExtraInfoResult<Oauth2TokenDto> login(@RequestBody LoginVo vo, HttpServletResponse response) {
-        if (!captService.verify(vo.getCaptId(), vo.getCaptCode())) {
-            Asserts.fail("验证码错误");
-        }
+        // if (!captService.verify(vo.getCaptId(), vo.getCaptCode())) {
+        //     Asserts.fail("验证码错误");
+        // }
         Oauth2TokenDto dto = userService.login(vo.getUsername(), vo.getPassword(), response);
         if (dto == null) {
             Asserts.fail("获取token失败");
@@ -86,15 +86,15 @@ public class UserController {
                 .addExtraInfo("tokenHead", dto.getToken(), dto.getExpiresIn());
     }
 
-    /**
-     * 获取验证码
-     *
-     * @return
-     */
-    @GetMapping("/getCapt")
-    public CommonResult<CaptVo> getCapt() {
-        return CommonResult.success(captService.getCapt());
-    }
+    // /**
+    //  * 获取验证码
+    //  *
+    //  * @return
+    //  */
+    // @GetMapping("/getCapt")
+    // public CommonResult<CaptVo> getCapt() {
+    //     return CommonResult.success(captService.getCapt());
+    // }
 
     /**
      * 用户注册时验证用户信息接口
@@ -111,33 +111,33 @@ public class UserController {
         return CommonResult.success(userService.verifyUserInfo(vo));
     }
 
-    /**
-     * 获取答题
-     *
-     * @param id verifyUserInfo接口返回的用户唯一id
-     * @return
-     */
-    @GetMapping("/question/list")
-    public CommonResult<List<QuestionsVo>> getQuestions(@RequestParam("id") @NotBlank(message = "用户注册id不能为空") String id) {
-        if (userService.isUserExist(id)) {
-            Asserts.fail("该用户已被注册");
-        }
-        return CommonResult.success(questionService.getList(id));
-    }
-
-    /**
-     * 校验答题得分
-     *
-     * @param vo
-     * @return
-     */
-    @PostMapping("/question/score")
-    public CommonResult<Boolean> score(@RequestBody ScoreVo vo) {
-        if (userService.isUserExist(vo.getId())) {
-            Asserts.fail("该用户已被注册");
-        }
-        return CommonResult.success(questionService.score(vo));
-    }
+    // /**
+    //  * 获取答题
+    //  *
+    //  * @param id verifyUserInfo接口返回的用户唯一id
+    //  * @return
+    //  */
+    // @GetMapping("/question/list")
+    // public CommonResult<List<QuestionsVo>> getQuestions(@RequestParam("id") @NotBlank(message = "用户注册id不能为空") String id) {
+    //     if (userService.isUserExist(id)) {
+    //         Asserts.fail("该用户已被注册");
+    //     }
+    //     return CommonResult.success(questionService.getList(id));
+    // }
+    //
+    // /**
+    //  * 校验答题得分
+    //  *
+    //  * @param vo
+    //  * @return
+    //  */
+    // @PostMapping("/question/score")
+    // public CommonResult<Boolean> score(@RequestBody ScoreVo vo) {
+    //     if (userService.isUserExist(vo.getId())) {
+    //         Asserts.fail("该用户已被注册");
+    //     }
+    //     return CommonResult.success(questionService.score(vo));
+    // }
 
     /**
      * 发送邮件

@@ -24,6 +24,7 @@ import com.ulisesbocchio.jasyptspringboot.annotation.EnableEncryptableProperties
 @SpringBootApplication(scanBasePackages = "com.asoulfan.asfbbs")
 public class AsfbbsUserApplication {
     public static void main(String[] args) {
+        System.setProperty("nacos.logging.default.config.enabled", "false");
         SpringApplication.run(AsfbbsUserApplication.class, args);
     }
 }

@@ -106,8 +106,9 @@ public class UserServiceImpl implements IUserService {
         UserDto newUser = new UserDto();
         BeanUtils.copyProperties(vo, newUser);
         String id = IdUtil.simpleUUID();
-        //插入10min过期的tokenA，这段时间内用户可以重复答题
-        redisTemplate.opsForValue().set(UserConstant.REGISTER_REDIS_KEY + id, "1", 10, TimeUnit.MINUTES);
+        // //插入10min过期的tokenA，这段时间内用户可以重复答题
+        // redisTemplate.opsForValue().set(UserConstant.REGISTER_REDIS_KEY + id, "1", 10, TimeUnit.MINUTES);
+        redisTemplate.opsForValue().set(UserConstant.EMAIL_VALID_REDIS_KEY + id, "1", 5, TimeUnit.MINUTES);
         //插入id和username映射关系
         redisTemplate.opsForValue().set(UserConstant.USERNAME_ID_REDIS_KEY + id, vo.getUsername(), 30, TimeUnit.MINUTES);
         //插入30min过期的用户信息
