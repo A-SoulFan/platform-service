@@ -1,19 +1,12 @@
 package com.asoulfan.asfbbs.user.domain;
 
 import java.io.Serializable;
-import java.util.Date;
-
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
 
 import lombok.Data;
 
 /**
- * @program: ASFBBS
- * @description: 权限列表
- * @packagename: com.asoulfan.asfbbs.user
- * @author: fengling
- * @date: 2021-10-03
+ * @author fengling
+ * @since 2021-10-03
  **/
 @Data
 public class Permission implements Serializable {

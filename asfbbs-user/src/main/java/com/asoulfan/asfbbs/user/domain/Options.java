@@ -3,11 +3,8 @@ package com.asoulfan.asfbbs.user.domain;
 import lombok.Data;
 
 /**
- * @program: ASFBBS
- * @description: 例子
- * @packagename: com.asoulfan.asfbbs.user
- * @author: fengling
- * @date: 2021-09-05
+ * @author fengling
+ * @since 2021-09-05
  **/
 @Data
 public class Options {

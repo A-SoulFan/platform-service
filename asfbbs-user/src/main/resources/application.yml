@@ -8,6 +8,9 @@ logging:
 server:
   port: 8083
 spring:
+  application:
+    name: asoul-fan-user
+
   #配置数据源
   datasource:
     druid:

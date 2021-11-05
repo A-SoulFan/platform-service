@@ -42,7 +42,7 @@ public class SuccessWithExtraInfoResult<T> extends CommonResult<T> {
     }
 
     @Data
-    private static class ExtraInfo {
+    public static class ExtraInfo {
         @NonNull
         private String key;
 

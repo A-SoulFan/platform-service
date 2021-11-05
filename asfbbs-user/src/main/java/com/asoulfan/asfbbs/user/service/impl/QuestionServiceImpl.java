@@ -1,9 +1,16 @@
 package com.asoulfan.asfbbs.user.service.impl;
 
-import cn.hutool.core.util.NumberUtil;
-import cn.hutool.json.JSONUtil;
-import com.asoulfan.common.constant.UserConstant;
-import com.asoulfan.common.exception.Asserts;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
+import javax.annotation.Resource;
+
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Service;
+
 import com.asoulfan.asfbbs.user.domain.Answer;
 import com.asoulfan.asfbbs.user.domain.Options;
 import com.asoulfan.asfbbs.user.dto.QuestionDto;
@@ -11,25 +18,16 @@ import com.asoulfan.asfbbs.user.dto.QuestionsVo;
 import com.asoulfan.asfbbs.user.dto.ScoreVo;
 import com.asoulfan.asfbbs.user.mapper.QuestionMapper;
 import com.asoulfan.asfbbs.user.service.IQuestionService;
+import com.asoulfan.common.constant.UserConstant;
+import com.asoulfan.common.exception.Asserts;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.stream.Collectors;
+import cn.hutool.core.util.NumberUtil;
+import cn.hutool.json.JSONUtil;
 
 /**
- * @program: ASFBBS
- * @description:
- * @packagename: com.asoulfan.asfbbs.user
- * @author: fengling
- * @date: 2021-08-28
+ * @author fengling
+ * @since 2021-08-28
  **/
 @Service
 public class QuestionServiceImpl implements IQuestionService {

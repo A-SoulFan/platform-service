@@ -1,18 +1,19 @@
 package com.asoulfan.asfbbs.auth.domain;
 
-import com.asoulfan.common.domain.UserDto;
-import lombok.Data;
+import java.util.ArrayList;
+import java.util.Collection;
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.ArrayList;
-import java.util.Collection;
+import com.asoulfan.common.domain.UserDto;
+
+import lombok.Data;
 
 /**
-
- * : 登录用户信息
-
+ * 登录用户信息
+ *
  * @author Cscar
  * @since 2021-07-28 19:21
  */
@@ -23,22 +24,27 @@ public class SecurityUser implements UserDetails {
      * ID
      */
     private Long id;
+
     /**
      * 用户名
      */
     private String username;
+
     /**
      * 用户密码
      */
     private String password;
+
     /**
      * 用户状态
      */
     private Boolean enabled;
+
     /**
      * 登录客户端ID
      */
     private String clientId;
+
     /**
      * 权限数据
      */

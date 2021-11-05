@@ -23,9 +23,8 @@ import lombok.AllArgsConstructor;
 import reactor.core.publisher.Mono;
 
 /**
-
- * : 资源服务器配置
-
+ * 资源服务器配置
+ *
  * @author Cscar
  * @since 2021-07-28 16:34
  */
@@ -34,8 +33,11 @@ import reactor.core.publisher.Mono;
 @EnableWebFluxSecurity
 public class ResourceServerConfig {
     private final AuthorizationManager authorizationManager;
+
     private final RestfulAccessDeniedHandler restfulAccessDeniedHandler;
+
     private final RestAuthenticationEntryPoint restAuthenticationEntryPoint;
+
     private final IgnoreUrlsRemoveJwtFilter ignoreUrlsRemoveJwtFilter;
 
     @Bean
@@ -47,10 +49,13 @@ public class ResourceServerConfig {
         //对白名单路径，直接移除JWT请求头
         http.addFilterBefore(ignoreUrlsRemoveJwtFilter, SecurityWebFiltersOrder.AUTHENTICATION);
         http.authorizeExchange()
-                .anyExchange().access(authorizationManager)//鉴权管理器配置
+                //鉴权管理器配置
+                .anyExchange().access(authorizationManager)
                 .and().exceptionHandling()
-                .accessDeniedHandler(restfulAccessDeniedHandler)//处理未授权
-                .authenticationEntryPoint(restAuthenticationEntryPoint)//处理未认证
+                //处理未授权
+                .accessDeniedHandler(restfulAccessDeniedHandler)
+                //处理未认证
+                .authenticationEntryPoint(restAuthenticationEntryPoint)
                 .and().csrf().disable();
         return http.build();
     }

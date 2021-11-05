@@ -1,11 +1,10 @@
 package com.asoulfan.common.constant;
 
 /**
- * @program: ASFBBS
- * @description:
- * @packagename: com.asoulfan.asfbbs.user
- * @author: fengling
- * @date: 2021-08-28
+ * 用户常量
+ *
+ * @author fengling
+ * @since 2021-08-28
  **/
 public interface UserConstant {
     /**

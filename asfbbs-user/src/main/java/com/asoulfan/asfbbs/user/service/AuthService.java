@@ -10,13 +10,10 @@ import com.asoulfan.common.api.CommonResult;
 import com.asoulfan.asfbbs.user.domain.Oauth2TokenDto;
 
 /**
- * @program: ASFBBS
- * @description:
- * @packagename: com.asoulfan.asfbbs.user
- * @author: fengling
- * @date: 2021-08-28
+ * @author fengling
+ * @since 2021-08-28
  **/
-@FeignClient("asfbbs-auth")
+@FeignClient("asoul-fan-auth")
 public interface AuthService {
     @PostMapping(value = "/oauth/token")
     CommonResult<Oauth2TokenDto> getAccessToken(@RequestParam Map<String, String> parameters);

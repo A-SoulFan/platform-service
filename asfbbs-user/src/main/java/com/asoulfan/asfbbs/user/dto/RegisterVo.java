@@ -1,16 +1,16 @@
 package com.asoulfan.asfbbs.user.dto;
 
-import lombok.Data;
-import org.hibernate.validator.constraints.Length;
-
 import javax.validation.constraints.NotBlank;
 
+import org.hibernate.validator.constraints.Length;
+
+import lombok.Data;
+
 /**
- * @program: ASFBBS
- * @description: 用户验证信息入参
- * @packagename: com.asoulfan.asfbbs.user
- * @author: fengling
- * @date: 2021-08-28
+ * 用户验证信息入参
+ *
+ * @author fengling
+ * @since 2021-08-28
  **/
 @Data
 public class RegisterVo {

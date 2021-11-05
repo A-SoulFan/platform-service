@@ -5,14 +5,10 @@ import javax.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.Length;
 
 import lombok.Data;
-import lombok.NonNull;
 
 /**
- * @program: ASFBBS
- * @description:
- * @packagename: com.asoulfan.asfbbs.user
- * @author: fengling
- * @date: 2021-08-27
+ * @author fengling
+ * @since 2021-08-27
  **/
 @Data
 public class LoginVo {
@@ -43,4 +39,5 @@ public class LoginVo {
     // @NotBlank(message = "验证码不能为空")
     // @Length(min = 5, max = 5, message = "非法验证码")
     //     private String captCode;
+
 }

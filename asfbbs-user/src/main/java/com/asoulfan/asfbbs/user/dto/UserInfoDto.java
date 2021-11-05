@@ -7,11 +7,10 @@ import com.asoulfan.asfbbs.user.domain.Permission;
 import lombok.Data;
 
 /**
- * @program: ASFBBS
- * @description: 用户信息dto
- * @packagename: com.asoulfan.asfbbs.user
- * @author: fengling
- * @date: 2021-10-03
+ * 用户信息dto
+ *
+ * @author fengling
+ * @since 2021-10-03
  **/
 @Data
 public class UserInfoDto {

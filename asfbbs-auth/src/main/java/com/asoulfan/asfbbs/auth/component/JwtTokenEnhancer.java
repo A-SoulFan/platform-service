@@ -1,19 +1,19 @@
 package com.asoulfan.asfbbs.auth.component;
 
-import com.asoulfan.asfbbs.auth.domain.SecurityUser;
+import java.util.HashMap;
+import java.util.Map;
+
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
 import org.springframework.security.oauth2.provider.token.TokenEnhancer;
 import org.springframework.stereotype.Component;
 
-import java.util.HashMap;
-import java.util.Map;
+import com.asoulfan.asfbbs.auth.domain.SecurityUser;
 
 /**
-
- * : JWT内容增强器
-
+ * JWT内容增强器
+ *
  * @author Cscar
  * @since 2021-07-28 19:19
  */

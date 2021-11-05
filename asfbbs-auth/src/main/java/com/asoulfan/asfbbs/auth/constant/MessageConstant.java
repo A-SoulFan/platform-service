@@ -1,9 +1,8 @@
 package com.asoulfan.asfbbs.auth.constant;
 
 /**
-
- * : 自定义返回消息
-
+ * 自定义返回消息
+ *
  * @author Cscar
  * @since 2021-07-29 14:55
  */

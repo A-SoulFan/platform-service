@@ -39,11 +39,10 @@ import cn.hutool.core.util.URLUtil;
 import cn.hutool.json.JSONUtil;
 
 /**
- * @program: ASFBBS
- * @description: user 控制层
- * @packagename: com.asoulfan.asfbbs.user.controller
- * @author: fengling
- * @date: 2021-08-27
+ * user 控制层
+ *
+ * @author fengling
+ * @since 2021-08-27
  **/
 
 @RestController

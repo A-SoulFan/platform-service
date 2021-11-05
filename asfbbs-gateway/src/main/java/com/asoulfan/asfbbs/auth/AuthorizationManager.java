@@ -6,7 +6,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-
 import javax.annotation.Resource;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +23,6 @@ import org.springframework.util.PathMatcher;
 
 import com.asoulfan.asfbbs.config.IgnoreUrlsConfig;
 import com.asoulfan.common.constant.AuthConstant;
-import com.asoulfan.common.domain.UserDto;
 import com.asoulfan.common.domain.UserJwtDto;
 import com.nimbusds.jose.JWSObject;
 
@@ -34,7 +32,7 @@ import cn.hutool.json.JSONUtil;
 import reactor.core.publisher.Mono;
 
 /**
- * : 授权管理
+ * 授权管理
  *
  * @author Cscar
  * @since 2021-07-26 18:02

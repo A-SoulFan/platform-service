@@ -1,7 +1,7 @@
 package com.asoulfan.asfbbs.component;
 
-import cn.hutool.json.JSONUtil;
-import com.asoulfan.common.api.CommonResult;
+import java.nio.charset.StandardCharsets;
+
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -11,14 +11,15 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.server.ServerAuthenticationEntryPoint;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
+
+import com.asoulfan.common.api.CommonResult;
+
+import cn.hutool.json.JSONUtil;
 import reactor.core.publisher.Mono;
 
-import java.nio.charset.Charset;
-
 /**
-
- * : 自定义返回结果, 没有登录或者token过期
-
+ * 自定义返回结果, 没有登录或者token过期
+ *
  * @author Cscar
  * @since 2021-07-28 16:27
  */
@@ -33,7 +34,7 @@ public class RestAuthenticationEntryPoint implements ServerAuthenticationEntryPo
         response.getHeaders().set("Access-Control-Allow-Origin", "*");
         response.getHeaders().set("Cache-Control", "no-cache");
         String body = JSONUtil.toJsonStr(CommonResult.unauthorized(e.getMessage()));
-        DataBuffer buffer = response.bufferFactory().wrap(body.getBytes(Charset.forName("UTF-8")));
+        DataBuffer buffer = response.bufferFactory().wrap(body.getBytes(StandardCharsets.UTF_8));
         return response.writeWith(Mono.just(buffer));
     }
 }

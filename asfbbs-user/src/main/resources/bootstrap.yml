@@ -2,4 +2,4 @@ spring:
   profiles:
     active: dev
   application:
-    name: asfbbs-user
+    name: asoul-fan-user

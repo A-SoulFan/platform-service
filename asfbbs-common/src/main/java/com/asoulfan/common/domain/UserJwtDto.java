@@ -7,11 +7,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 
 /**
- * @program: ASFBBS
- * @description:
- * @packagename: com.asoulfan.asfbbs.user
- * @author: fengling
- * @date: 2021-10-03
+ * @author fengling
+ * @since 2021-10-03
  **/
 @Data
 public class UserJwtDto {

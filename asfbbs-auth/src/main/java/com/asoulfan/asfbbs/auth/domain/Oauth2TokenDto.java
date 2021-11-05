@@ -5,9 +5,8 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 /**
-
- * : Oauth获取token返回信息
-
+ * Oauth获取token返回信息
+ *
  * @author Cscar
  * @since 2021-07-29 16:04
  */

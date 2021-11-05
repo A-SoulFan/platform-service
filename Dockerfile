@@ -1,6 +1,9 @@
 FROM openjdk:8-jdk-alpine
 
+ENV TZ=Asia/Shanghai
+
 ARG PROJECT_NAME=default
+RUN apk add --update ttf-dejavu fontconfig
 
 RUN addgroup -S spring && adduser -S spring -G spring
 

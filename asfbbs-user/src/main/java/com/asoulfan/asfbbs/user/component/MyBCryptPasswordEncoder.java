@@ -5,11 +5,8 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 /**
- * @program: ASFBBS
- * @description: security 加密
- * @packagename: com.asoulfan.asfbbs.user
- * @author: fengling
- * @date: 2021-08-29
+ * @author fengling
+ * @since 2021-08-29
  **/
 @Component
 public class MyBCryptPasswordEncoder extends BCryptPasswordEncoder {

@@ -1,29 +1,24 @@
 package com.asoulfan.asfbbs.user.service.impl;
 
-import cn.hutool.captcha.CaptchaUtil;
-import cn.hutool.captcha.LineCaptcha;
-import cn.hutool.core.util.IdUtil;
-
-import com.asoulfan.common.constant.UserConstant;
-import com.asoulfan.common.exception.Asserts;
-import com.asoulfan.asfbbs.user.dto.CaptVo;
-import com.asoulfan.asfbbs.user.service.ICaptService;
-
-import lombok.extern.slf4j.Slf4j;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.stereotype.Service;
-
 import java.util.concurrent.TimeUnit;
 import javax.annotation.Resource;
 
+import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Service;
+
+import com.asoulfan.asfbbs.user.dto.CaptVo;
+import com.asoulfan.asfbbs.user.service.ICaptService;
+import com.asoulfan.common.constant.UserConstant;
+import com.asoulfan.common.exception.Asserts;
+
+import cn.hutool.captcha.CaptchaUtil;
+import cn.hutool.captcha.LineCaptcha;
+import cn.hutool.core.util.IdUtil;
+import lombok.extern.slf4j.Slf4j;
+
 /**
- * @program: ASFBBS
- * @description:
- * @packagename: com.asoulfan.asfbbs.user
- * @author: fengling
- * @date: 2021-08-28
+ * @author fengling
+ * @since 2021-08-28
  **/
 @Service
 @Slf4j

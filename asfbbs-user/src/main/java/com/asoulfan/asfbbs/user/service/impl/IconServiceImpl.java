@@ -1,25 +1,27 @@
 package com.asoulfan.asfbbs.user.service.impl;
 
+import java.io.ByteArrayInputStream;
+import java.io.File;
+import java.io.InputStream;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
+import com.asoulfan.asfbbs.user.service.IIconService;
+import com.asoulfan.common.exception.Asserts;
+
 import cn.hutool.core.codec.Base64;
 import cn.hutool.core.io.FileTypeUtil;
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.IdUtil;
-import com.asoulfan.common.exception.Asserts;
-import com.asoulfan.asfbbs.user.service.IIconService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
-
-import java.io.ByteArrayInputStream;
-import java.io.File;
-import java.io.InputStream;
 
 /**
  * @program: ASFBBS
  * @description: 头像相关
  * @packagename: com.asoulfan.asfbbs.user
- * @author: fengling
- * @date: 2021-09-05
+ * @author fengling
+ * @since 2021-09-05
  **/
 @Service
 @Slf4j

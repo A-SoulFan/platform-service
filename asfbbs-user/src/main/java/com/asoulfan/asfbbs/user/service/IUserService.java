@@ -8,11 +8,10 @@ import com.asoulfan.asfbbs.user.dto.UserDto;
 import com.asoulfan.asfbbs.user.dto.UserInfoDto;
 
 /**
- * @program: ASFBBS
- * @description: user接口
- * @packagename: com.asoulfan.asfbbs.user.service
- * @author: fengling
- * @date: 2021-08-27
+ * user接口
+ *
+ * @author fengling
+ * @since 2021-08-27
  **/
 public interface IUserService {
     Oauth2TokenDto login(String username, String password, HttpServletResponse response);

@@ -10,11 +10,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 /**
- * @program: ASFBBS
- * @description:
- * @packagename: com.asoulfan.asfbbs.user
- * @author: fengling
- * @date: 2021-08-27
+ * @author fengling
+ * @since 2021-08-27
  **/
 @Data
 @TableName("asf_user")

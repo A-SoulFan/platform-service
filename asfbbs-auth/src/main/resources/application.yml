@@ -11,3 +11,6 @@ feign:
 ribbon:
   ConnectTimeout: 3000 #服务请求连接超时时间（毫秒）
   ReadTimeout: 3000 #服务请求处理超时时间（毫秒）
+spring:
+  application:
+    name: asoul-fan-auth

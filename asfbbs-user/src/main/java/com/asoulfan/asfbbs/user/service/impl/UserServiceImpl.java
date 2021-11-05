@@ -8,7 +8,6 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.lang.RandomStringUtils;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -16,21 +15,21 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.asoulfan.asfbbs.user.component.MyBCryptPasswordEncoder;
+import com.asoulfan.asfbbs.user.domain.Oauth2TokenDto;
 import com.asoulfan.asfbbs.user.domain.Permission;
+import com.asoulfan.asfbbs.user.dto.RegisterVo;
+import com.asoulfan.asfbbs.user.dto.UserDto;
 import com.asoulfan.asfbbs.user.dto.UserInfoDto;
+import com.asoulfan.asfbbs.user.mapper.UserMapper;
 import com.asoulfan.asfbbs.user.service.AdminService;
+import com.asoulfan.asfbbs.user.service.AuthService;
+import com.asoulfan.asfbbs.user.service.IUserService;
 import com.asoulfan.common.api.CommonResult;
 import com.asoulfan.common.api.ResultCode;
 import com.asoulfan.common.constant.AuthConstant;
 import com.asoulfan.common.constant.UserConstant;
 import com.asoulfan.common.exception.Asserts;
-import com.asoulfan.asfbbs.user.component.MyBCryptPasswordEncoder;
-import com.asoulfan.asfbbs.user.domain.Oauth2TokenDto;
-import com.asoulfan.asfbbs.user.dto.RegisterVo;
-import com.asoulfan.asfbbs.user.dto.UserDto;
-import com.asoulfan.asfbbs.user.mapper.UserMapper;
-import com.asoulfan.asfbbs.user.service.AuthService;
-import com.asoulfan.asfbbs.user.service.IUserService;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 
 import cn.hutool.core.lang.Tuple;
@@ -43,11 +42,10 @@ import cn.hutool.json.JSONObject;
 import cn.hutool.json.JSONUtil;
 
 /**
- * @program: ASFBBS
- * @description: userService实现类
- * @packagename: com.asoulfan.asfbbs.user.service.impl
- * @author: fengling
- * @date: 2021-08-27
+ * userService实现类
+ *
+ * @author fengling
+ * @since 2021-08-27
  **/
 @Service
 public class UserServiceImpl implements IUserService {

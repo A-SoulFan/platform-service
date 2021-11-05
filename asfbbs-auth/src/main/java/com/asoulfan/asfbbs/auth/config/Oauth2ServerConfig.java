@@ -1,8 +1,8 @@
 package com.asoulfan.asfbbs.auth.config;
 
-import com.asoulfan.asfbbs.auth.component.JwtTokenEnhancer;
-
-import lombok.AllArgsConstructor;
+import java.security.KeyPair;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -20,14 +20,13 @@ import org.springframework.security.oauth2.provider.token.TokenEnhancerChain;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 import org.springframework.security.rsa.crypto.KeyStoreKeyFactory;
 
-import java.security.KeyPair;
-import java.util.ArrayList;
-import java.util.List;
+import com.asoulfan.asfbbs.auth.component.JwtTokenEnhancer;
+
+import lombok.AllArgsConstructor;
 
 /**
-
- * : 认证服务器配置
-
+ * 认证服务器配置
+ *
  * @author Cscar
  * @since 2021-07-29 11:50
  */

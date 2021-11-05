@@ -1,11 +1,7 @@
 package com.asoulfan.asfbbs.auth.service.impl;
 
-import com.asoulfan.asfbbs.auth.service.UmsAdminService;
-import com.asoulfan.asfbbs.auth.service.UmsMemberService;
-import com.asoulfan.common.constant.AuthConstant;
-import com.asoulfan.asfbbs.auth.constant.MessageConstant;
-import com.asoulfan.common.domain.UserDto;
-import com.asoulfan.asfbbs.auth.domain.SecurityUser;
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AccountExpiredException;
 import org.springframework.security.authentication.CredentialsExpiredException;
@@ -17,12 +13,16 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import javax.servlet.http.HttpServletRequest;
+import com.asoulfan.asfbbs.auth.constant.MessageConstant;
+import com.asoulfan.asfbbs.auth.domain.SecurityUser;
+import com.asoulfan.asfbbs.auth.service.UmsAdminService;
+import com.asoulfan.asfbbs.auth.service.UmsMemberService;
+import com.asoulfan.common.constant.AuthConstant;
+import com.asoulfan.common.domain.UserDto;
 
 /**
-
- * : 用户管理
-
+ * 用户管理
+ *
  * @author Cscar
  * @since 2021-07-29 14:49
  */
@@ -42,12 +42,12 @@ public class UserServiceImpl implements UserDetailsService {
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         String clientId = request.getParameter("client_id");
         UserDto userDto;
-        if(AuthConstant.ADMIN_CLIENT_ID.equals(clientId)){
+        if (AuthConstant.ADMIN_CLIENT_ID.equals(clientId)) {
             userDto = adminService.loadUserByUsername(username);
-        }else{
+        } else {
             userDto = memberService.loadUserByUsername(username);
         }
-        if (userDto==null) {
+        if (userDto == null) {
             throw new UsernameNotFoundException(MessageConstant.USERNAME_PASSWORD_ERROR);
         }
 

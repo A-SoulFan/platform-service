@@ -1,8 +1,8 @@
 package com.asoulfan.asfbbs.auth.controller;
 
-import com.asoulfan.common.api.CommonResult;
-import com.asoulfan.asfbbs.auth.domain.Oauth2TokenDto;
-import com.asoulfan.common.constant.AuthConstant;
+import java.security.Principal;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.provider.endpoint.TokenEndpoint;
@@ -12,15 +12,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.security.Principal;
-import java.util.Map;
+import com.asoulfan.asfbbs.auth.domain.Oauth2TokenDto;
+import com.asoulfan.common.api.CommonResult;
+import com.asoulfan.common.constant.AuthConstant;
 
 /**
  * 认证中心登录认证
  *
-
- * : 认证中心登录认证
-
  * @author Cscar
  * @since 2021-07-29 15:40
  */

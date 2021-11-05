@@ -1,6 +1,5 @@
 package com.asoulfan.asfbbs.user.dto;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 import com.baomidou.mybatisplus.annotation.IdType;
@@ -11,11 +10,8 @@ import com.baomidou.mybatisplus.annotation.TableName;
 import lombok.Data;
 
 /**
- * @program: ASFBBS
- * @description:
- * @packagename: com.asoulfan.asfbbs.user
- * @author: fengling
- * @date: 2021-08-28
+ * @author fengling
+ * @since 2021-08-28
  **/
 @Data
 @TableName("asf_question")

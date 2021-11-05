@@ -1,7 +1,7 @@
 package com.asoulfan.asfbbs.component;
 
-import cn.hutool.json.JSONUtil;
-import com.asoulfan.common.api.CommonResult;
+import java.nio.charset.StandardCharsets;
+
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -11,14 +11,15 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.server.authorization.ServerAccessDeniedHandler;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
+
+import com.asoulfan.common.api.CommonResult;
+
+import cn.hutool.json.JSONUtil;
 import reactor.core.publisher.Mono;
 
-import java.nio.charset.Charset;
-
 /**
-
- * : 自定义返回结果, 没有权限访问时
-
+ * 自定义返回结果, 没有权限访问时
+ *
  * @author Cscar
  * @since 2021-07-28 16:31
  */
@@ -32,7 +33,7 @@ public class RestfulAccessDeniedHandler implements ServerAccessDeniedHandler {
         response.getHeaders().set("Access-Control-Allow-Origin", "*");
         response.getHeaders().set("Cache-Control", "no-cache");
         String body = JSONUtil.toJsonStr(CommonResult.forbidden(denied.getMessage()));
-        DataBuffer buffer = response.bufferFactory().wrap(body.getBytes(Charset.forName("UTF-8")));
+        DataBuffer buffer = response.bufferFactory().wrap(body.getBytes(StandardCharsets.UTF_8));
         return response.writeWith(Mono.just(buffer));
     }
 }
