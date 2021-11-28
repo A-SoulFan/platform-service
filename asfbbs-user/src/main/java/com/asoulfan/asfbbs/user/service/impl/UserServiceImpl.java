@@ -15,12 +15,12 @@ import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.asoulfan.asfbbs.user.component.MyBCryptPasswordEncoder;
-import com.asoulfan.asfbbs.user.domain.Oauth2TokenDto;
+import com.asoulfan.asfbbs.user.domain.LoginToken;
 import com.asoulfan.asfbbs.user.domain.Permission;
 import com.asoulfan.asfbbs.user.dto.RegisterVo;
 import com.asoulfan.asfbbs.user.dto.UserDto;
 import com.asoulfan.asfbbs.user.dto.UserInfoDto;
+import com.asoulfan.asfbbs.user.helper.MailHelper;
 import com.asoulfan.asfbbs.user.mapper.UserMapper;
 import com.asoulfan.asfbbs.user.service.AdminService;
 import com.asoulfan.asfbbs.user.service.AuthService;
@@ -35,7 +35,6 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import cn.hutool.core.lang.Tuple;
 import cn.hutool.core.util.IdUtil;
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.extra.mail.MailUtil;
 import cn.hutool.http.HttpUtil;
 import cn.hutool.json.JSONArray;
 import cn.hutool.json.JSONObject;
@@ -65,10 +64,14 @@ public class UserServiceImpl implements IUserService {
     @Autowired
     private AdminService adminService;
 
-    private BCryptPasswordEncoder encoder = new MyBCryptPasswordEncoder();
+    @Autowired
+    private BCryptPasswordEncoder encoder;
 
     @Resource
     private RedisTemplate<String, Object> redisTemplate;
+
+    @Autowired
+    private MailHelper mailHelper;
 
     /**
      * 登录接口
@@ -76,7 +79,7 @@ public class UserServiceImpl implements IUserService {
      * @return
      */
     @Override
-    public Oauth2TokenDto login(String username, String password, HttpServletResponse response) {
+    public LoginToken login(String username, String password, HttpServletResponse response) {
         //1.生成token
         Map<String, String> params = new HashMap<>();
         params.put("client_id", AuthConstant.ADMIN_CLIENT_ID);
@@ -84,12 +87,18 @@ public class UserServiceImpl implements IUserService {
         params.put("grant_type", "password");
         params.put("username", username);
         params.put("password", password);
-        CommonResult<Oauth2TokenDto> restResult = authService.getAccessToken(params);
+        CommonResult<LoginToken> restResult = authService.getAccessToken(params);
         if (ResultCode.SUCCESS.getCode() == restResult.getCode() && restResult.getData() != null) {
             return restResult.getData();
         } else {
             return null;
         }
+    }
+
+    @Override
+    public UserDto queryUser(String username) {
+        return userMapper.selectOne(new QueryWrapper<UserDto>()
+                .eq("username", username));
     }
 
     /**
@@ -119,7 +128,6 @@ public class UserServiceImpl implements IUserService {
      *
      * @param email
      * @param id
-     * @return
      */
     @Override
     public Boolean email(String email, String id) {
@@ -134,7 +142,7 @@ public class UserServiceImpl implements IUserService {
         String random = RandomStringUtils.random(4, "0123456789");
         Tuple tuple = new Tuple(email, random);
         redisTemplate.opsForValue().set(UserConstant.EMAIL_REDIS_KEY + id, JSONUtil.parse(tuple), 5, TimeUnit.MINUTES);
-        String send = MailUtil.send(email, "验证码-ASOULFUN", userNameObject.toString() + "您好，您正在ASOULFUN绑定邮箱注册账号，本次操作的验证码为：" + random + "，请在5分钟内完成验证。", false);
+        String send = mailHelper.send(email, "验证码-ASOULFUN", userNameObject + "您好，您正在ASOULFUN绑定邮箱注册账号，本次操作的验证码为：" + random + "，请在5分钟内完成验证。", false);
         return StrUtil.isNotBlank(send);
     }
 

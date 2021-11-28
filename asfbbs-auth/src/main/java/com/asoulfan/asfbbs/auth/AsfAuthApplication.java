@@ -8,9 +8,10 @@ import org.springframework.cloud.openfeign.EnableFeignClients;
 @EnableFeignClients
 @EnableDiscoveryClient
 @SpringBootApplication
-public class AsfbbsAuthApplication {
+public class AsfAuthApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(AsfbbsAuthApplication.class, args);
+        System.setProperty("nacos.logging.default.config.enabled","false");
+        SpringApplication.run(AsfAuthApplication.class, args);
     }
 }

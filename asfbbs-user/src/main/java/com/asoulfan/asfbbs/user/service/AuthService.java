@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.asoulfan.common.api.CommonResult;
-import com.asoulfan.asfbbs.user.domain.Oauth2TokenDto;
+import com.asoulfan.asfbbs.user.domain.LoginToken;
 
 /**
  * @author fengling
@@ -16,5 +16,5 @@ import com.asoulfan.asfbbs.user.domain.Oauth2TokenDto;
 @FeignClient("asoul-fan-auth")
 public interface AuthService {
     @PostMapping(value = "/oauth/token")
-    CommonResult<Oauth2TokenDto> getAccessToken(@RequestParam Map<String, String> parameters);
+    CommonResult<LoginToken> getAccessToken(@RequestParam Map<String, String> parameters);
 }

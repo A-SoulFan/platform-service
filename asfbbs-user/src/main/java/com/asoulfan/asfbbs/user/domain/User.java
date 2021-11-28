@@ -7,7 +7,6 @@ import lombok.Data;
  * @author fengling
  * @since 2021-08-27
  **/
-
 @Data
 public class User {
 

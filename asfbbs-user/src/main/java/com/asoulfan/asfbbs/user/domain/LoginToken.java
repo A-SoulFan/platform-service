@@ -9,7 +9,7 @@ import lombok.Data;
  **/
 @Data
 @Builder
-public class Oauth2TokenDto {
+public class LoginToken {
 
     /**
      * 访问令牌
@@ -30,4 +30,19 @@ public class Oauth2TokenDto {
      * 有效时间（秒）
      */
     private int expiresIn;
+
+    /**
+     * 用户id
+     */
+    private Long userId;
+
+    /**
+     * 用户昵称
+     */
+    private String nickname;
+
+    /**
+     * 用户头像
+     */
+    private String avatar;
 }

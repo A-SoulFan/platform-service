@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.core.Ordered;
+import org.springframework.http.HttpCookie;
 import org.springframework.http.server.reactive.ServerHttpRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
@@ -14,7 +15,6 @@ import org.springframework.web.server.ServerWebExchange;
 import com.asoulfan.common.constant.AuthConstant;
 import com.nimbusds.jose.JWSObject;
 
-import cn.hutool.core.util.StrUtil;
 import cn.hutool.core.util.URLUtil;
 import reactor.core.publisher.Mono;
 
@@ -31,10 +31,20 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
-        String token = exchange.getRequest().getHeaders().getFirst(AuthConstant.JWT_TOKEN_HEADER);
-        if (StrUtil.isEmpty(token)) {
+        //优先取cookie里的token，允许被替换
+        String token = null;
+        HttpCookie cookie = exchange.getRequest().getCookies().getFirst(AuthConstant.USER_TOKEN_COOKIE_KEY);
+        if (cookie != null) {
+            token = cookie.getValue();
+        }
+        if (token == null) {
+            token = exchange.getRequest().getHeaders().getFirst(AuthConstant.JWT_TOKEN_HEADER);
+        }
+
+        if (token == null) {
             return chain.filter(exchange);
         }
+
         try {
             //从token中解析用户信息并设置到Header中去
             String realToken = token.replace(AuthConstant.JWT_TOKEN_PREFIX, "");

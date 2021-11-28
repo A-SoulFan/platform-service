@@ -1,6 +1,6 @@
 package com.asoulfan.asfbbs.user.dto;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableField;
@@ -42,9 +42,9 @@ public class UserDto {
     private Integer status;
 
     @TableField("create_time")
-    private LocalDate createTime;
+    private LocalDateTime createTime;
 
     @TableField("update_time")
-    private LocalDate updateTime;
+    private LocalDateTime updateTime;
 
 }

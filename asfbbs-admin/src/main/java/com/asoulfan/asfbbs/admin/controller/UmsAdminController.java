@@ -1,20 +1,22 @@
 package com.asoulfan.asfbbs.admin.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import com.asoulfan.asfbbs.admin.dto.UmsAdminLoginParam;
 import com.asoulfan.asfbbs.admin.service.UmsAdminService;
 import com.asoulfan.common.api.CommonResult;
 import com.asoulfan.common.domain.UserDto;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
 
 /**
  * 后台用户管理
  *
-
- * : 后台用户管理
-
  * @author Cscar
  * @since 2021-08-01 03:05
  */
@@ -25,7 +27,6 @@ public class UmsAdminController {
     @Autowired
     private UmsAdminService umsAdminService;
 
-
     /**
      * 登录接口
      *
@@ -35,7 +36,7 @@ public class UmsAdminController {
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     @ResponseBody
     public CommonResult login(@Validated @RequestBody UmsAdminLoginParam umsAdminLoginParam) {
-        return umsAdminService.login(umsAdminLoginParam.getUsername(),umsAdminLoginParam.getPassword());
+        return umsAdminService.login(umsAdminLoginParam.getUsername(), umsAdminLoginParam.getPassword());
     }
 
     /**

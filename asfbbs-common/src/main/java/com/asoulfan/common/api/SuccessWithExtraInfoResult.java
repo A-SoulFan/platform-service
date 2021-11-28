@@ -8,6 +8,7 @@ import java.util.Map;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NonNull;
+import lombok.Setter;
 
 /**
  * @author asuka
@@ -15,7 +16,8 @@ import lombok.NonNull;
  */
 public class SuccessWithExtraInfoResult<T> extends CommonResult<T> {
     @Getter
-    private final List<ExtraInfo> extraInfo = new ArrayList<>();
+    @Setter
+    private List<ExtraInfo> extraInfo = new ArrayList<>();
 
     public SuccessWithExtraInfoResult(T data) {
         super(ResultCode.SUCCESS_THEN_STORE_INFO.getCode(), ResultCode.SUCCESS_THEN_STORE_INFO.getMessage(), data);
@@ -59,5 +61,4 @@ public class SuccessWithExtraInfoResult<T> extends CommonResult<T> {
          */
         private Map<String, String> properties = new HashMap<>();
     }
-
 }

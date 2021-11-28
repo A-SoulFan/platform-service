@@ -10,7 +10,6 @@ import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.asoulfan.asfbbs.auth.constant.MessageConstant;
@@ -65,9 +64,4 @@ public class UserServiceImpl implements UserDetailsService {
         return securityUser;
     }
 
-    public static void main(String[] args) {
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        String encodePassword = encoder.encode("admin");
-        System.out.println(encodePassword);
-    }
 }

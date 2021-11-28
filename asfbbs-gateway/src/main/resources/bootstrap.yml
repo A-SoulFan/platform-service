@@ -16,4 +16,4 @@ spring:
         server-addr: http://localhost:8848
         file-extension: yaml
 server:
-  port: 8201
+  port: 80

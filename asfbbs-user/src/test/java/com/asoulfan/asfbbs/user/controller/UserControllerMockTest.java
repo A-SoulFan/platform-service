@@ -11,13 +11,16 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.powermock.modules.junit4.PowerMockRunner;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.asoulfan.asfbbs.user.BaseMockTest;
-import com.asoulfan.asfbbs.user.domain.Oauth2TokenDto;
+import com.asoulfan.asfbbs.user.common.JwtComponent;
+import com.asoulfan.asfbbs.user.domain.LoginToken;
 import com.asoulfan.asfbbs.user.dto.LoginVo;
+import com.asoulfan.asfbbs.user.dto.UserDto;
 import com.asoulfan.asfbbs.user.service.ICaptService;
 import com.asoulfan.asfbbs.user.service.IUserService;
-import com.asoulfan.common.api.SuccessWithExtraInfoResult;
+import com.asoulfan.common.api.CommonResult;
 
 /**
  * @author asuka
@@ -34,15 +37,22 @@ public class UserControllerMockTest extends BaseMockTest {
     @Mock
     private IUserService userService;
 
+    @Mock
+    private JwtComponent jwtComponent;
+
+    @Mock
+    private BCryptPasswordEncoder encoder;
+
     @Test
     public void test_login_return_success_with_extra_info_result() {
         Mockito.when(captService.verify(anyString(), anyString())).thenReturn(true);
-        Oauth2TokenDto tokenDto = random.nextObject(Oauth2TokenDto.class);
-        Mockito.when(userService.login(anyString(), anyString(), any())).thenReturn(tokenDto);
+        UserDto userDto = random.nextObject(UserDto.class);
+        Mockito.when(userService.queryUser(anyString())).thenReturn(userDto);
+        Mockito.when(jwtComponent.generateJwt(any())).thenReturn(random.nextObject(String.class));
+        Mockito.when(encoder.matches(any(), any())).thenReturn(true);
 
-        SuccessWithExtraInfoResult<Oauth2TokenDto> result = userController.login(random.nextObject(LoginVo.class), null);
+        CommonResult<LoginToken> result = userController.login(random.nextObject(LoginVo.class), null);
 
         assertThat(result).isNotNull();
-        assertThat(result.getExtraInfo()).isNotEmpty();
     }
 }

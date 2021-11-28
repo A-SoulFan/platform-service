@@ -15,15 +15,11 @@ import com.asoulfan.asfbbs.admin.domain.Permission;
 import com.asoulfan.asfbbs.admin.service.PermissionService;
 import com.asoulfan.common.api.CommonResult;
 
-
 /**
  * 角色管理
  *
-
- * : 角色管理
-
  * @author ZGQ
- * @create 2021-08-24-13:15
+ * @since 2021-08-24-13:15
  */
 @Controller
 @RequestMapping("/permission")
@@ -40,33 +36,34 @@ public class PermissionController {
     @RequestMapping(value = "/getUserPermissionById", method = RequestMethod.GET)
     @ResponseBody
     public CommonResult<List<Permission>> getUserPermissionByToken(@RequestParam("userId") Long userId) {
-            List<Permission> permissionList = permissionService.getByUserId(userId);
-            return CommonResult.success(permissionList);
+        List<Permission> permissionList = permissionService.getByUserId(userId);
+        return CommonResult.success(permissionList);
     }
 
     /**
      * 将角色存权限存入redis
      * key :Role_User Role_Admin ...
      * value :permissionList
-     * */
-    @RequestMapping(value = "/putPermissionInRedis",method = RequestMethod.PUT)
+     */
+    @RequestMapping(value = "/putPermissionInRedis", method = RequestMethod.PUT)
     @ResponseBody
-    public CommonResult<?> putPermissionInRedis(){
-         Boolean ok=permissionService.pubPermissionInRedis();
-         if(ok){
-             return CommonResult.success("权限缓存redis成功");
-         }else {
-             return CommonResult.failed("权限缓存redis失败");
-         }
+    public CommonResult<?> putPermissionInRedis() {
+        Boolean ok = permissionService.pubPermissionInRedis();
+        if (ok) {
+            return CommonResult.success("权限缓存redis成功");
+        } else {
+            return CommonResult.failed("权限缓存redis失败");
+        }
 
     }
 
     /**
      * 功能描述:查询权限列表
-     * @param: 
-     * @return: 
+     *
+     * @param:
+     * @return:
      * @author liurd
-     * @since 2021/8/25 
+     * @since 2021/8/25
      */
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     @ResponseBody
@@ -76,10 +73,11 @@ public class PermissionController {
 
     /**
      * 功能描述: 添加新权限
-     * @param: 
-     * @return: 
+     *
+     * @param:
+     * @return:
      * @author liurd
-     * @since 2021/8/25 
+     * @since 2021/8/25
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ResponseBody
@@ -90,10 +88,11 @@ public class PermissionController {
 
     /**
      * 功能描述: 删除已有权限
+     *
      * @param: permissionId
-     * @return: 
+     * @return:
      * @author liurd
-     * @since 2021/8/25 
+     * @since 2021/8/25
      */
     @RequestMapping(value = "/{permissionId}/delete", method = RequestMethod.DELETE)
     @ResponseBody
@@ -105,10 +104,11 @@ public class PermissionController {
 
     /**
      * 功能描述: 更新权限信息
-     * @param: 
-     * @return: 
+     *
+     * @param:
+     * @return:
      * @author liurd
-     * @since 2021/8/25 
+     * @since 2021/8/25
      */
     @RequestMapping(value = "/{permissionId}/update", method = RequestMethod.PUT)
     @ResponseBody

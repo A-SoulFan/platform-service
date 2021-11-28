@@ -1,12 +1,15 @@
 package com.asoulfan.asfbbs.user.controller;
 
-import java.util.List;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CookieValue;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -16,26 +19,22 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.asoulfan.asfbbs.user.domain.Oauth2TokenDto;
-import com.asoulfan.asfbbs.user.dto.CaptVo;
+import com.asoulfan.asfbbs.user.common.JwtComponent;
+import com.asoulfan.asfbbs.user.domain.LoginToken;
 import com.asoulfan.asfbbs.user.dto.FileVo;
 import com.asoulfan.asfbbs.user.dto.LoginVo;
-import com.asoulfan.asfbbs.user.dto.QuestionsVo;
 import com.asoulfan.asfbbs.user.dto.RegisterVo;
-import com.asoulfan.asfbbs.user.dto.ScoreVo;
 import com.asoulfan.asfbbs.user.dto.UserDto;
-import com.asoulfan.asfbbs.user.dto.UserInfoDto;
 import com.asoulfan.asfbbs.user.service.ICaptService;
 import com.asoulfan.asfbbs.user.service.IIconService;
 import com.asoulfan.asfbbs.user.service.IQuestionService;
 import com.asoulfan.asfbbs.user.service.IUserService;
 import com.asoulfan.common.api.CommonResult;
-import com.asoulfan.common.api.SuccessWithExtraInfoResult;
 import com.asoulfan.common.constant.AuthConstant;
 import com.asoulfan.common.domain.UserJwtDto;
 import com.asoulfan.common.exception.Asserts;
+import com.google.gson.Gson;
 
-import cn.hutool.core.util.URLUtil;
 import cn.hutool.json.JSONUtil;
 
 /**
@@ -44,11 +43,11 @@ import cn.hutool.json.JSONUtil;
  * @author fengling
  * @since 2021-08-27
  **/
-
 @RestController
 @RequestMapping("/user")
 @Validated
 public class UserController {
+    private static final Logger log = LoggerFactory.getLogger(UserController.class);
 
     @Autowired
     private IUserService userService;
@@ -62,6 +61,12 @@ public class UserController {
     @Autowired
     private IIconService iconService;
 
+    @Autowired
+    private JwtComponent jwtComponent;
+
+    @Autowired
+    private BCryptPasswordEncoder encoder;
+
     /**
      * 用户登录
      *
@@ -70,19 +75,33 @@ public class UserController {
      * @return
      */
     @PostMapping("/login")
-    public SuccessWithExtraInfoResult<Oauth2TokenDto> login(@RequestBody LoginVo vo, HttpServletResponse response) {
+    public CommonResult<LoginToken> login(@RequestBody LoginVo vo, HttpServletResponse response) {
         // if (!captService.verify(vo.getCaptId(), vo.getCaptCode())) {
         //     Asserts.fail("验证码错误");
         // }
-        Oauth2TokenDto dto = userService.login(vo.getUsername(), vo.getPassword(), response);
-        if (dto == null) {
-            Asserts.fail("获取token失败");
+
+        UserDto user = userService.queryUser(vo.getUsername());
+        if (user == null) {
+            log.error("用户不存在，登录信息: {}", new Gson().toJson(vo));
+            Asserts.fail("用户名或密码错误");
         }
 
-        return new SuccessWithExtraInfoResult<>(dto)
-                .addExtraInfo("token", dto.getToken(), dto.getExpiresIn())
-                .addExtraInfo("refreshToken", dto.getToken(), dto.getExpiresIn())
-                .addExtraInfo("tokenHead", dto.getToken(), dto.getExpiresIn());
+        if (!encoder.matches(vo.getPassword(), user.getPassword())) {
+            log.error("密码错误，请重试尝试登录失败，登录信息: {}", new Gson().toJson(vo));
+            Asserts.fail("用户名或密码错误");
+        }
+
+        String jwt = jwtComponent.generateJwt(user);
+
+        LoginToken token = LoginToken.builder()
+                .expiresIn(-1)
+                .token(jwt)
+                .userId(user.getId())
+                .nickname(user.getNickname())
+                .avatar(user.getIcon())
+                .build();
+
+        return CommonResult.success(token);
     }
 
     // /**
@@ -220,13 +239,8 @@ public class UserController {
      * @return 用户信息
      */
     @GetMapping("/getUserInfo")
-    public CommonResult<UserInfoDto> getUserInfo(@RequestHeader(value = AuthConstant.USER_TOKEN_HEADER) String userStr) {
-        UserJwtDto dto = JSONUtil.toBean(URLUtil.decode(userStr), UserJwtDto.class);
-        UserInfoDto userInfo = userService.getUserInfo(dto.getUserName());
-        if (userInfo == null) {
-            Asserts.fail("用户信息查询有误");
-        }
-        userInfo.setAuthorities(dto.getAuthorities());
-        return CommonResult.success(userInfo);
+    public CommonResult<UserDto> getUserInfo(@CookieValue(name = "asoulFanToken") String token) {
+        UserDto userDto = jwtComponent.verify(token);
+        return CommonResult.success(userDto);
     }
 }

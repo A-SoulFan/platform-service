@@ -14,12 +14,13 @@ import org.springframework.web.server.ServerWebExchange;
 
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONException;
-import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.parser.ParserConfig;
-import com.alibaba.fastjson.util.TypeUtils;
 import com.asoulfan.common.api.CommonResult;
 import com.asoulfan.common.api.ResultCode;
 import com.asoulfan.common.api.SuccessWithExtraInfoResult;
+import com.google.gson.Gson;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import lombok.extern.slf4j.Slf4j;
 import reactor.core.publisher.Mono;
@@ -39,9 +40,16 @@ public class ModifyResponseBodyFilter implements GlobalFilter, Ordered {
         GatewayFilter delegate = modifyResponseBodyGatewayFilterFactory.apply(new ModifyResponseBodyGatewayFilterFactory.Config()
                 .setRewriteFunction(Object.class, Object.class, (exchange, result) -> {
                     try {
-                        JSONObject jsonObject = JSONObject.parseObject(JSON.toJSONString(result));
-                        if (String.valueOf(ResultCode.SUCCESS_THEN_STORE_INFO.getCode()).equals(jsonObject.getString("code"))) {
-                            SuccessWithExtraInfoResult<?> extraInfoResult = TypeUtils.cast(jsonObject, SuccessWithExtraInfoResult.class, ParserConfig.getGlobalInstance());
+                        JsonElement jsonElement = JsonParser.parseString(new Gson().toJson(result));
+                        if (jsonElement == null || !jsonElement.isJsonObject()) {
+                            return Mono.just(result);
+                        }
+                        if (((JsonObject) jsonElement).get("code") == null) {
+                            return Mono.just(result);
+                        }
+                        if (String.valueOf(ResultCode.SUCCESS_THEN_STORE_INFO.getCode()).equals(
+                                ((JsonObject) jsonElement).get("code").getAsString())) {
+                            SuccessWithExtraInfoResult<?> extraInfoResult = new Gson().fromJson(jsonElement, SuccessWithExtraInfoResult.class);
 
                             ServerHttpResponse response = exchange.getResponse();
                             extraInfoResult.getExtraInfo().forEach(info -> {
@@ -49,7 +57,7 @@ public class ModifyResponseBodyFilter implements GlobalFilter, Ordered {
                             });
                             return Mono.just(CommonResult.success(extraInfoResult.getData(), extraInfoResult.getMessage()));
                         }
-                        return Mono.just(jsonObject);
+                        return Mono.just(result);
                     } catch (JSONException ignore) {
                         return Mono.just(result);
                     } catch (Exception e) {
