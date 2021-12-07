@@ -7,9 +7,9 @@ import org.springframework.cloud.gateway.filter.GlobalFilter;
 import org.springframework.cloud.gateway.filter.NettyWriteResponseFilter;
 import org.springframework.cloud.gateway.filter.factory.rewrite.ModifyResponseBodyGatewayFilterFactory;
 import org.springframework.core.Ordered;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.server.reactive.ServerHttpResponse;
-import org.springframework.stereotype.Component;
 import org.springframework.web.server.ServerWebExchange;
 
 import com.alibaba.fastjson.JSON;
@@ -29,7 +29,7 @@ import reactor.core.publisher.Mono;
  * @author sensen
  * @since 2021-09-30
  */
-@Component
+// @Component
 @Slf4j
 public class ModifyResponseBodyFilter implements GlobalFilter, Ordered {
     @Autowired
@@ -37,7 +37,9 @@ public class ModifyResponseBodyFilter implements GlobalFilter, Ordered {
 
     @Override
     public Mono<Void> filter(ServerWebExchange serverWebExchange, GatewayFilterChain chain) {
+
         GatewayFilter delegate = modifyResponseBodyGatewayFilterFactory.apply(new ModifyResponseBodyGatewayFilterFactory.Config()
+                .setNewContentType(MediaType.APPLICATION_JSON_VALUE)
                 .setRewriteFunction(Object.class, Object.class, (exchange, result) -> {
                     try {
                         JsonElement jsonElement = JsonParser.parseString(new Gson().toJson(result));
