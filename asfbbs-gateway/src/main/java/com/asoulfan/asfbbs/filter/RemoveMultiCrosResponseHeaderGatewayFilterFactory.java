@@ -21,7 +21,7 @@ import reactor.core.publisher.Mono;
  */
 @Component
 @Slf4j
-public class RemoveMultiCrosResponseHeaderFilter extends AbstractGatewayFilterFactory<AbstractGatewayFilterFactory.NameConfig> {
+public class RemoveMultiCrosResponseHeaderGatewayFilterFactory extends AbstractGatewayFilterFactory<AbstractGatewayFilterFactory.NameConfig> {
 
     @Override
     public GatewayFilter apply(NameConfig config) {
@@ -41,7 +41,7 @@ public class RemoveMultiCrosResponseHeaderFilter extends AbstractGatewayFilterFa
             @Override
             public String toString() {
                 return filterToStringCreator(
-                        RemoveMultiCrosResponseHeaderFilter.this)
+                        RemoveMultiCrosResponseHeaderGatewayFilterFactory.this)
                         .append("name", config.getName()).toString();
             }
         };
