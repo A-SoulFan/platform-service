@@ -3,6 +3,7 @@ package com.asoulfan.asfbbs.filter;
 import static org.springframework.cloud.gateway.support.GatewayToStringStyler.filterToStringCreator;
 
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.cloud.gateway.filter.GatewayFilter;
@@ -22,6 +23,11 @@ import reactor.core.publisher.Mono;
 @Component
 @Slf4j
 public class RemoveMultiCrosResponseHeaderGatewayFilterFactory extends AbstractGatewayFilterFactory<AbstractGatewayFilterFactory.NameConfig> {
+
+    @Override
+    public List<String> shortcutFieldOrder() {
+        return Arrays.asList(NAME_KEY);
+    }
 
     @Override
     public GatewayFilter apply(NameConfig config) {
