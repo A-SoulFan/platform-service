@@ -24,6 +24,10 @@ import reactor.core.publisher.Mono;
 @Slf4j
 public class RemoveMultiCrosResponseHeaderGatewayFilterFactory extends AbstractGatewayFilterFactory<AbstractGatewayFilterFactory.NameConfig> {
 
+    public RemoveMultiCrosResponseHeaderGatewayFilterFactory() {
+        super(NameConfig.class);
+    }
+
     @Override
     public List<String> shortcutFieldOrder() {
         return Arrays.asList(NAME_KEY);
