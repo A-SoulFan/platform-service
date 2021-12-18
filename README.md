@@ -17,5 +17,5 @@ run --env MODE=standalone --name nacos -d -p 8848:8848 nacos/nacos-server
 
 #### 使用说明
 
-1.  依次启动 AsfbbsGateway -> AsfbbsAuth -> 其他服务
+1.  依次启动 Gateway -> User -> 其他服务
 

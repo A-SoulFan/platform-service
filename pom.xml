@@ -11,17 +11,15 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <groupId>com.asoulfan.asfbbs</groupId>
-    <artifactId>asfbbs</artifactId>
+    <groupId>com.asoulfan</groupId>
+    <artifactId>platform-service</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <modules>
-        <module>asfbbs-common</module>
-        <module>asfbbs-gateway</module>
-        <module>asfbbs-auth</module>
-        <module>asfbbs-admin</module>
-        <module>asfbbs-user</module>
+        <module>platform-common</module>
+        <module>platform-gateway</module>
+        <module>platform-user</module>
     </modules>
 
     <properties>
@@ -46,7 +44,7 @@
         <powermock.version>2.0.2</powermock.version>
         <easy-random.version>4.3.0</easy-random.version>
 
-        <asfbbs-common.version>1.0.0-SNAPSHOT</asfbbs-common.version>
+        <asoulfan-common.version>1.0.0-SNAPSHOT</asoulfan-common.version>
     </properties>
 
     <dependencies>
@@ -130,9 +128,9 @@
             <!-- region 二方包 -->
             <!--通用模块-->
             <dependency>
-                <groupId>com.asoulfan.asfbbs</groupId>
-                <artifactId>asfbbs-common</artifactId>
-                <version>${asfbbs-common.version}</version>
+                <groupId>com.asoulfan</groupId>
+                <artifactId>platform-common</artifactId>
+                <version>${asoulfan-common.version}</version>
             </dependency>
             <!-- endregion -->
 
