@@ -2,6 +2,7 @@ package com.asoulfan.platform.gateway.filter;
 
 import java.text.ParseException;
 
+import org.apache.commons.lang3.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
@@ -41,7 +42,7 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
             token = exchange.getRequest().getHeaders().getFirst(AuthConstant.JWT_TOKEN_HEADER);
         }
 
-        if (token == null) {
+        if (StringUtils.isBlank(token)) {
             return chain.filter(exchange);
         }
 
@@ -55,7 +56,7 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
             ServerHttpRequest request = exchange.getRequest().mutate().header(AuthConstant.USER_TOKEN_HEADER, userStr).build();
             exchange = exchange.mutate().request(request).build();
         } catch (ParseException e) {
-            e.printStackTrace();
+            LOGGER.error("转换jwt失败,jwt: {}", token, e);
         }
         return chain.filter(exchange);
     }
