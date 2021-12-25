@@ -12,7 +12,7 @@ public class LogConfig {
 
     private boolean logRoute = true;
 
-    private boolean logUser = true;
+    private boolean logUser = false;
 
     private boolean logRequest = false;
 

@@ -4,7 +4,6 @@ import org.springframework.validation.BindException;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
@@ -17,7 +16,7 @@ import com.asoulfan.platform.common.api.CommonResult;
  * @author Cscar
  * @since 2021-07-26 10:21
  */
-@ControllerAdvice
+// @ControllerAdvice
 public class GlobalExceptionHandler {
 
     @ResponseBody

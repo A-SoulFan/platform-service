@@ -48,11 +48,11 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
 
         try {
             //从token中解析用户信息并设置到Header中去
+            // TODO 2021/12/25 需要用用户系统的公钥验证
             String realToken = token.replace(AuthConstant.JWT_TOKEN_PREFIX, "");
             JWSObject jwsObject = JWSObject.parse(realToken);
             //解决中文乱码问题
             String userStr = URLUtil.encode(jwsObject.getPayload().toString());
-            LOGGER.info("AuthGlobalFilter.filter() user:{}", userStr);
             ServerHttpRequest request = exchange.getRequest().mutate().header(AuthConstant.USER_TOKEN_HEADER, userStr).build();
             exchange = exchange.mutate().request(request).build();
         } catch (ParseException e) {
@@ -63,6 +63,6 @@ public class AuthGlobalFilter implements GlobalFilter, Ordered {
 
     @Override
     public int getOrder() {
-        return 0;
+        return -3;
     }
 }
