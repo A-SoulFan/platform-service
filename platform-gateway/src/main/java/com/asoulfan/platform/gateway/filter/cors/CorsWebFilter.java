@@ -38,12 +38,18 @@ public class CorsWebFilter implements WebFilter, GlobalFilter, Ordered {
 
     public static final String ANY = "*";
 
+    public static final String LOCALHOST = "localhost";
+
     public static final String HTTP_AND_HTTPS_PREFIX = "^https://|http://";
 
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();
         ServerHttpResponse response = exchange.getResponse();
+
+        if (CorsUtils.isPreFlightRequest(request)) {
+            return chain.filter(exchange);
+        }
 
         if (CorsUtils.isCorsRequest(request) && !checkIsValidCors(request)) {
             rejectRequest(response);
@@ -52,16 +58,11 @@ public class CorsWebFilter implements WebFilter, GlobalFilter, Ordered {
         return chain.filter(exchange);
     }
 
-    public static void main(String[] args) {
-        String s = "https://tools.asoulfan.com";
-        s = RegExUtils.removePattern(s, "^https://|http://");
-        System.out.println(s);
-    }
-
     private boolean checkIsValidCors(ServerHttpRequest request) {
         String origin = request.getHeaders().getFirst(HttpHeaders.ORIGIN);
         String originRemovePrefix = RegExUtils.removePattern(origin, HTTP_AND_HTTPS_PREFIX);
-        boolean allowedOrigin = corsConfig.getAllowOrigin().contains(ANY)
+        boolean allowedOrigin = StringUtils.startsWith(originRemovePrefix, LOCALHOST)
+            || corsConfig.getAllowOrigin().contains(ANY)
             || corsConfig.getAllowOrigin().stream().anyMatch(allowOrigin -> StringUtils.equals(allowOrigin, originRemovePrefix));
         if (!allowedOrigin) {
             log.error("request url: {} use not allowed origin: {}", request.getURI(), origin);
