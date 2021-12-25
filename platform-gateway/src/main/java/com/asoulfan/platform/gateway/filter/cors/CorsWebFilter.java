@@ -48,6 +48,7 @@ public class CorsWebFilter implements WebFilter, GlobalFilter, Ordered {
         ServerHttpResponse response = exchange.getResponse();
 
         if (CorsUtils.isPreFlightRequest(request)) {
+            addAccessControlToResponseHeader(request.getHeaders().getOrigin(), response.getHeaders());
             return Mono.empty();
         }
 
@@ -101,12 +102,16 @@ public class CorsWebFilter implements WebFilter, GlobalFilter, Ordered {
                 responseHeaders.remove(HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS);
                 responseHeaders.remove(HttpHeaders.ACCESS_CONTROL_ALLOW_METHODS);
 
-                responseHeaders.add(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, origin);
-                responseHeaders.add(HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS, "true");
-                responseHeaders.add(HttpHeaders.ACCESS_CONTROL_ALLOW_METHODS, String.join(",", corsConfig.getAllowMethod()));
-                responseHeaders.add(HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS, String.join(",", corsConfig.getAllowHeader()));
+                addAccessControlToResponseHeader(origin, responseHeaders);
             }
         }));
+    }
+
+    private void addAccessControlToResponseHeader(String origin, HttpHeaders responseHeaders) {
+        responseHeaders.add(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, origin);
+        responseHeaders.add(HttpHeaders.ACCESS_CONTROL_ALLOW_CREDENTIALS, "true");
+        responseHeaders.add(HttpHeaders.ACCESS_CONTROL_ALLOW_METHODS, String.join(",", corsConfig.getAllowMethod()));
+        responseHeaders.add(HttpHeaders.ACCESS_CONTROL_ALLOW_HEADERS, String.join(",", corsConfig.getAllowHeader()));
     }
 
     @Override
