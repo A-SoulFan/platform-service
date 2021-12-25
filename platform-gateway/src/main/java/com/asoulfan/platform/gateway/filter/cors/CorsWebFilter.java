@@ -48,7 +48,7 @@ public class CorsWebFilter implements WebFilter, GlobalFilter, Ordered {
         ServerHttpResponse response = exchange.getResponse();
 
         if (CorsUtils.isPreFlightRequest(request)) {
-            return chain.filter(exchange);
+            return Mono.empty();
         }
 
         if (CorsUtils.isCorsRequest(request) && !checkIsValidCors(request)) {
