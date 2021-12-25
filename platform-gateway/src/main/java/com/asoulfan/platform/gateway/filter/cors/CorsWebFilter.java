@@ -2,6 +2,7 @@ package com.asoulfan.platform.gateway.filter.cors;
 
 import java.util.Set;
 
+import org.apache.commons.lang3.RegExUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.cloud.gateway.filter.GatewayFilterChain;
 import org.springframework.cloud.gateway.filter.GlobalFilter;
@@ -37,6 +38,8 @@ public class CorsWebFilter implements WebFilter, GlobalFilter, Ordered {
 
     public static final String ANY = "*";
 
+    public static final String HTTP_AND_HTTPS_PREFIX = "^https://|http://";
+
     @Override
     public Mono<Void> filter(ServerWebExchange exchange, WebFilterChain chain) {
         ServerHttpRequest request = exchange.getRequest();
@@ -49,9 +52,17 @@ public class CorsWebFilter implements WebFilter, GlobalFilter, Ordered {
         return chain.filter(exchange);
     }
 
+    public static void main(String[] args) {
+        String s = "https://tools.asoulfan.com";
+        s = RegExUtils.removePattern(s, "^https://|http://");
+        System.out.println(s);
+    }
+
     private boolean checkIsValidCors(ServerHttpRequest request) {
         String origin = request.getHeaders().getFirst(HttpHeaders.ORIGIN);
-        boolean allowedOrigin = corsConfig.getAllowOrigin().contains(ANY) || corsConfig.getAllowOrigin().stream().anyMatch(allowOrigin -> StringUtils.equals(allowOrigin, origin));
+        String originRemovePrefix = RegExUtils.removePattern(origin, HTTP_AND_HTTPS_PREFIX);
+        boolean allowedOrigin = corsConfig.getAllowOrigin().contains(ANY)
+            || corsConfig.getAllowOrigin().stream().anyMatch(allowOrigin -> StringUtils.equals(allowOrigin, originRemovePrefix));
         if (!allowedOrigin) {
             log.error("request url: {} use not allowed origin: {}", request.getURI(), origin);
             return false;
